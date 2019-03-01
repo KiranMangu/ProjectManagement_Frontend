@@ -23,4 +23,10 @@ describe('UserFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have user components - Add, View', ()=>{
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('app-add-user')).toBeTruthy();
+    expect(compiled.querySelector('app-view-user')).toBeTruthy();
+  })
 });

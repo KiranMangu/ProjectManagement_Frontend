@@ -1,3 +1,47 @@
-<p>
-  add-user works!
-</p>
+<div>
+  <form [formGroup]='userAddGrp'>
+    <mat-card>
+      <table>
+        <tr>
+          <td>
+            <mat-label>First Name:</mat-label>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput formControlName='firstName' #firstName>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-label>Last Name:</mat-label>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput formControlName='lastName' #lastName />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-label>Employee Id:</mat-label>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput formControlName='employeeId' #employeeId />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+            <!-- TODO: left aligh the buttons -->
+            <button mat-raised-button color="primary" class='btn'>Submit</button>
+            <button mat-raised-button color="primary" class='btn' (click)='resetFields()'>Reset</button>
+          </td>
+        </tr>
+      </table>
+    </mat-card>
+  </form>
+</div>
