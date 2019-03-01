@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validator } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-user',
@@ -13,14 +13,19 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit() {
     this.userAddGrp = this._fb.group({
-      firstName: 'One',
-      lastName: 'Two',
-      employeeId: 'Three'
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      employeeId: ['', [Validators.required]]
     });
   }
 
-  resetFields() {
+  resetFields(): void {
     this.userAddGrp.reset();
+    this.userAddGrp.updateValueAndValidity();
   }
 
+  addUser(): void {
+    // console.log("First Name:" + firstName.value + " Last Name:" + lastName + " Employee Id:" + employeeId);
+    // console.log("First Name:" + this.userAddGrp.controls.firstName.value + " Last Name:" + this.userAddGrp.controls.lastName + " Employee Id:" + this.userAddGrp.controls.employeeId);
+  }
 }

@@ -9,6 +9,7 @@
           <td>
             <mat-form-field>
               <input matInput formControlName='firstName' #firstName>
+              <mat-error>First Name is required</mat-error>
             </mat-form-field>
           </td>
         </tr>
@@ -19,6 +20,7 @@
           <td>
             <mat-form-field>
               <input matInput formControlName='lastName' #lastName />
+              <mat-error>Last Name is required</mat-error>
             </mat-form-field>
           </td>
         </tr>
@@ -29,6 +31,7 @@
           <td>
             <mat-form-field>
               <input matInput formControlName='employeeId' #employeeId />
+              <mat-error>Employee Id is required</mat-error>
             </mat-form-field>
           </td>
         </tr>
@@ -37,6 +40,7 @@
           </td>
           <td>
             <!-- TODO: left aligh the buttons -->
+            <!-- <button mat-raised-button color="primary" class='btn' (click)='addUser(firstName, lastName, employeeId)' >Submit</button> -->
             <button mat-raised-button color="primary" class='btn'>Submit</button>
             <button mat-raised-button color="primary" class='btn' (click)='resetFields()'>Reset</button>
           </td>
