@@ -1,0 +1,112 @@
+<div>
+  <form>
+    <mat-card>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable>Project: </mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <mat-form-field>
+            <input matInput placeholder=''>
+          </mat-form-field>
+          <button mat-raised-button color='primary' class='btn'>Search</button>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable>Task: </mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <mat-form-field>
+            <input matInput placeholder=''>
+          </mat-form-field>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable></mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <mat-checkbox> Parent Task</mat-checkbox>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable>Priority: </mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <mat-silder [min]='min' [max]='max'></mat-silder>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable>Parent Task:</mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <mat-form-field>
+            <input matInput placeholder=''>
+          </mat-form-field>
+          <button mat-raised-button color='primary' class='btn'>Search</button>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable>Start Date:</mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <div class='row'>
+            <div class='col-md-4'>
+              <mat-form-field>
+                <input matInput [matDatepicker]="startDate" placeholder="Start Date" disabled>
+                <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                <mat-datepicker #startDate disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class='col-md-4'>
+              <mat-label>End Date:</mat-label>
+            </div>
+            <div class='col-md-4'>
+              <mat-form-field>
+                <input matInput [matDatepicker]="endDate" placeholder="End Date" disabled>
+                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                <mat-datepicker #endDate disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+          <mat-lable>User: </mat-lable>
+        </div>
+        <div class='col-md-6'>
+          <mat-form-field>
+            <input matInput placeholder=''>
+          </mat-form-field>
+          <button mat-raised-button color='primary' class='btn'>Search</button>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-2'>
+        </div>
+        <div class='col-md-6'>
+          <div class='row'>
+            <div class='col-md-6'> </div>
+            <div class='col-md-6'>
+              <button mat-raised-button color='primary' class='btn'>Add Task</button>
+              <button mat-raised-button color='primary' class='btn'>Reset</button>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-4'> </div>
+      </div>
+    </mat-card>
+  </form>
+</div>

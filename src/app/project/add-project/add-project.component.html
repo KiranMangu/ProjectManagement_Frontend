@@ -1,0 +1,68 @@
+<div>
+  <form>
+    <!-- [formGroup]='projectGroup' -->
+    <mat-card>
+      <table>
+        <tr>
+          <td>Project:</td>
+          <td class="full-width-container">
+            <mat-form-field>
+              <input matInput placeholder='Project Name'>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="full-width-container">
+            <div>
+              <mat-checkbox class='pad'>Set Start and End Date</mat-checkbox>
+            </div>
+            <div>
+              <mat-form-field class='pad'>
+                <input matInput [matDatepicker]="startDate" placeholder="Start Date" disabled>
+                <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                <mat-datepicker #startDate disabled="false"></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class='pad'>
+                <input matInput [matDatepicker]="endDate" placeholder="End Date" disabled>
+                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                <mat-datepicker #endDate disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Priority:</td>
+          <td class='full-width-container'>
+            <mat-slider [max]="max" [min]="min" [thumbLabel]="thumbLabel">
+            </mat-slider>
+          </td>
+        </tr>
+        <tr>
+          <td>Manager: </td>
+          <td class='full-width-container'>
+            <table style='width:100%'>
+              <tr>
+                <td style='width:80%' >
+                  <mat-form-field class='full-width-container'>
+                    <input matInput placeholder='Manager Name'>
+                  </mat-form-field>
+                </td>
+                <td style='width:80%'>
+                  <button mat-raised-button color='primary' class='btn'>Search</button>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class='align-right'>
+            <button mat-raised-button color='primary' class='btn'>Add</button>
+            <button mat-raised-button color='primary' class='btn'>Reset</button>
+          </td>
+        </tr>
+      </table>
+    </mat-card>
+  </form>
+</div>
