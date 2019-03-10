@@ -1,0 +1,17 @@
+.full-width-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.pad {
+  padding: 5px;
+}
+
+.btn {
+  margin: 2px;
+}
+
+
+.align-right {
+  float: right;
+}

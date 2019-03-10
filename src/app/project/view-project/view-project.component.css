@@ -1,0 +1,21 @@
+.divpad {
+  padding-top: 5px
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-full-height {
+  height: 100%;
+  overflow: auto;
+}
+
+.btn {
+  margin: 2px;
+}
+
+
+.align-right {
+  float: right;
+}

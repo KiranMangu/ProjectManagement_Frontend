@@ -1,3 +1,97 @@
-<p>
-  view-project works!
-</p>
+<div>
+  <form>
+    <div class='divpad'>
+      <div class='row'>
+        <div class='col-md-6'>
+          <div style='background-color: #ccc'>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Enter value to search">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6'>
+          <div class="col-md-6; divpad">
+            <span class='btn'>Sort By:</span>
+            <button mat-raised-button class='btn'>Start Date</button>
+            <button mat-raised-button class='btn'>End Date</button>
+            <button mat-raised-button class='btn'>Priority</button>
+            <button mat-raised-button class='btn'>Completed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mat-elevation-z8">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor='let proj of projectList'>
+          <div class="row">
+            <div class="col-md-6">
+              <div class='row'>
+                <div class='col-md-8'>
+                  <ul class="list-group" style='background-color:#ccc;'>
+                    <li class="list-group-item">
+                      <div>
+                        <div>
+                          <span>Project:</span>
+                          <span>{{proj.project}}</span>
+                        </div>
+                        <div>
+                          <div class='row'>
+                            <div class='col-md-6'>
+                              <span>No of Tasks:</span>
+                              <spna>{{proj.noOfTasks}}</spna>
+                            </div>
+                            <div class='col-md-6'>
+                              <span>Completed:</span>
+                              <span>{{proj.status}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div class='row'>
+                            <div class='col-md-6'>
+                              <span>Start Date:</span>
+                              <span>{{proj.startDate}}</span>
+                            </div>
+                            <div class='col-md-6'>
+                              <span>End Date:</span>
+                              <span>{{proj.endDate}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class='col-md-2'>
+                  <div>
+                    <div>
+                      <span>
+                        Priority
+                      </span>
+                    </div>
+                    <div style='background-color:#ccc;'>
+                      <span  class='example-full-height'>
+                        {{proj.priority}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class='col-md-2'>
+                  <div>
+                    <div>
+                      <button mat-raised-button color='primary' class='btn'>Update</button>
+                    </div>
+                    <div>
+                      <button mat-raised-button color='primary' class='btn'>Suspend</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </ul>
+    </div>
+  </form>
+</div>

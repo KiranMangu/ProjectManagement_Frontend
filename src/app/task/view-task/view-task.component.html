@@ -1,3 +1,147 @@
-<p>
-  view-task works!
-</p>
+<div class='row' style='background-color:#ccc;'>
+  <div class='col-md-6'>
+    <div class='row'>
+      <div class='col-md-8'>
+        <mat-form-field class='full-width-container'>
+          <input matInput placeholder='Project Name'>
+        </mat-form-field>
+      </div>
+      <div class='col-md-4'>
+        <div>
+          <div>&nbsp;</div>
+          <div>
+            <button mat-raised-button color='primary' (click)="openDialog()">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-6'>
+    <div class='row'>
+      <div class='col-md-4'>
+        <div>
+          <div>&nbsp;</div>
+          <div>
+            <mat-label>Sort Task By:</mat-label>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-2'>
+        <div>
+          <div>&nbsp;</div>
+          <div>
+            <button mat-raised-button color='primary'>Start Date</button>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-2'>
+        <div>
+          <div>&nbsp;</div>
+          <div>
+            <button mat-raised-button color='primary'>End Date</button>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-2'>
+        <div>
+          <div>&nbsp;</div>
+          <div>
+            <button mat-raised-button color='primary'>Priority</button>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-2'>
+        <div>
+          <div>&nbsp;</div>
+          <div>
+            <button mat-raised-button color='primary'>Completed</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div class='row'>
+  <div class='col-md-6'>
+    <div class='row'>
+      <div class='col-md-6'>
+        <div>
+          <div>
+            <span>Task
+            </span>
+          </div>
+          <div>
+            <mat-card>
+              <mat-card-content>task</mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-6'>
+        <div>
+          <div>
+            <span>Project
+            </span>
+          </div>
+          <div>
+            <mat-card>
+              <mat-card-content>project</mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class='row'>
+      <div class='col-md-4'>
+        <div>
+          <div>
+            <span>Priority</span>
+          </div>
+          <div>
+            <mat-card>
+              <mat-card-content>priority</mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-4'>
+        <div>
+          <div>
+            <span>Start Date</span>
+          </div>
+          <div>
+            <mat-card>
+              <mat-card-content>startDate</mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-4'>
+        <div>
+          <div>
+            <span>End Date</span>
+          </div>
+          <div>
+            <mat-card>
+              <mat-card-content>endDate</mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-2'>
+    <div>
+      <div>
+        &nbsp;
+      </div>
+      <div>
+        <button mat-raised-button color='primary' class='btn'>Edit</button>
+        <button mat-raised-button color='primary' class='btn'>End Task</button>
+      </div>
+    </div>
+  </div>
+</div>
