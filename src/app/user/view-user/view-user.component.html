@@ -1,69 +1,70 @@
 <div>
-  <form>
+  <div>
     <div class='divpad'>
       <div class='row'>
         <div class='col-md-6'>
           <div class='row'>
-            <div class='col-md-6'>
-              <div style='background-color: #ccc'>
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Enter value to search">
-                </mat-form-field>
-              </div>
+            <div style='background-color: #ccc' class='col-md-10'>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Enter value to search" [(ngModel)]='searchKey' name="search">
+              </mat-form-field>
             </div>
-            <div class="col-md-6; divpad" >
-              <span class='btn'>Sort:</span>
-              <button mat-raised-button class='btn'>First Name</button>
-              <button mat-raised-button class='btn'>Last Name</button>
-              <button mat-raised-button class='btn'>Id</button>
+            <div class='col-md-2'>
+              <button mat-raised-button class='btn' (click)='searchUser()'>Search</button>
             </div>
           </div>
         </div>
+      </div>
+      <div class='row; divpad'>
         <div class='col-md-6'>
-          <!-- empty -->
+          <span class='btn'>Sort:</span>
+          <button mat-raised-button class='btn' (click)='sort(1)'>First Name</button>
+          <button mat-raised-button class='btn' (click)='sort(2)'>Last Name</button>
+          <button mat-raised-button class='btn' (click)='sort(3)'>Id</button>
         </div>
       </div>
     </div>
-    <div class="mat-elevation-z8">
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor='let user of usersData'>
-          <div class="row">
-            <div class="col-md-6">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <div class='row'>
-                    <div class='col-md-10' style='background-color:#ccc;'>
-                      <span>First Name:</span><span>{{user.firstName}}</span>
-                    </div>
-                    <div class='col-md-2'>
-                      <button mat-raised-button color='primary'>Edit</button>
-                    </div>
+  </div>
+  <div class="mat-elevation-z8">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor='let user of filteredUsersData'>
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class='row'>
+                  <div class='col-md-10' style='background-color:#ccc;'>
+                    <span>First Name: </span><span>{{user.firstName}}</span>
                   </div>
-                </li>
-                <li class="list-group-item">
-                  <div class='row'>
-                    <div class='col-md-10' style='background-color:#ccc;'>
-                      <span>Last Name:</span> <span>{{user.lastName}}</span>
-                    </div>
-                    <div class='col-md-2'>
-                      <button mat-raised-button color='warn'>Delete</button>
-                    </div>
+                  <div class='col-md-2'>
+                    <button mat-raised-button color='primary'>Edit</button>
                   </div>
-                </li>
-                <li class="list-group-item">
-                  <div class='row'>
-                    <div class='col-md-10' style='background-color:#ccc;'>
-                      <span>Employee Id:</span> <span>{{user.employeeId}}</span>
-                    </div>
-                    <div class='col-md-2'></div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class='row'>
+                  <div class='col-md-10' style='background-color:#ccc;'>
+                    <span>Last Name: </span> <span>{{user.lastName}}</span>
                   </div>
-                </li>
-              </ul>
-            </div>
+                  <div class='col-md-2'>
+                    <button mat-raised-button color='warn'>Delete</button>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class='row'>
+                  <div class='col-md-10' style='background-color:#ccc;'>
+                    <span>Employee Id: </span> <span>{{user.employeeId}}</span>
+                  </div>
+                  <div class='col-md-2'></div>
+                </div>
+              </li>
+            </ul>
           </div>
-        </li>
-      </ul>
-      <!-- <table mat-table [dataSource]='dataSource'>
+        </div>
+      </li>
+    </ul>
+    <!-- <table mat-table [dataSource]='dataSource'>
   <form [formGroup]='viewUserGrp'>
     <div>
       <table>
@@ -96,6 +97,5 @@
         <tr mat-header-row *matHeaderRowDef='userFields'></tr>
         <tr mat-row *matRowDef='let userData; columns: columnsToDisplay'></tr>
       </table> -->
-    </div>
-  </form>
+  </div>
 </div>

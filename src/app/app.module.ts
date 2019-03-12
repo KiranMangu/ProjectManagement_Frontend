@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -54,6 +55,7 @@ const routes: Routes = [
     MatInputModule, MatButtonModule, MatCardModule, MatRadioModule,
     MatDatepickerModule, MatNativeDateModule, MatSliderModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogComponent],

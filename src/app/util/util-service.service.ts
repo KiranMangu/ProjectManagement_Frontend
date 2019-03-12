@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { DailogData } from '../model/dialog.model';
 import { Project } from '../model/project.model';
 import { User } from '../model/user.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilServiceService {
 
+  apiURL: string = environment.baseAPIUrl;
   returnData: DailogData;
   constructor() { }
 
@@ -21,4 +23,9 @@ export class UtilServiceService {
     }
     // return data;
   }
+
+  getApi(): String {
+    return this.apiURL;
+  }
+
 }

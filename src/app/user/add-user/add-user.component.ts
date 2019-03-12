@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { User } from 'src/app/model/user.model';
+import { UserService } from 'src/app/service/user.service';
+import { UserSharedService } from '../user-shared.service'
 
 @Component({
   selector: 'app-add-user',
@@ -9,7 +12,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class AddUserComponent implements OnInit {
 
   userAddGrp: FormGroup;
-  constructor(private _fb: FormBuilder) { }
+  newUser: User;
+  constructor(private _fb: FormBuilder, private _userSrv: UserService, private _sharedSrv: UserSharedService) { };
+  @ViewChild('form') form; // TODO ViewChild?
 
   ngOnInit() {
     this.userAddGrp = this._fb.group({
@@ -17,15 +22,23 @@ export class AddUserComponent implements OnInit {
       lastName: ['', [Validators.required]],
       employeeId: ['', [Validators.required]]
     });
+    console.log('Add User');
+    this._sharedSrv.setUserList();
   }
 
   resetFields(): void {
-    this.userAddGrp.reset();
-    this.userAddGrp.updateValueAndValidity();
+    this.form.resetForm(); // MyComments: Work around for resetting the form value
+    // this.userAddGrp.reset(); // MyComments: Using Reactivformgroup reset is firing validation
+    // this.userAddGrp.updateValueAndValidity();
   }
 
   addUser(): void {
-    // console.log("First Name:" + firstName.value + " Last Name:" + lastName + " Employee Id:" + employeeId);
-    // console.log("First Name:" + this.userAddGrp.controls.firstName.value + " Last Name:" + this.userAddGrp.controls.lastName + " Employee Id:" + this.userAddGrp.controls.employeeId);
+    this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
+    this._userSrv.addUser(this.newUser).subscribe(() => {
+      console.log('Inserted');
+      this._sharedSrv.setUserList();
+      this.form.resetForm();
+      // this._viewCmp.loadUsers();
+    });
   }
 }

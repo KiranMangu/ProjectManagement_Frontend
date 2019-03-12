@@ -1,5 +1,5 @@
-<div>
-  <form [formGroup]='userAddGrp'>
+<div #resetForm>
+  <form #form="ngForm" [formGroup]='userAddGrp'>
     <mat-card>
       <table>
         <tr>
@@ -41,7 +41,7 @@
           <td>
             <!-- TODO: left aligh the buttons -->
             <!-- <button mat-raised-button color="primary" class='btn' (click)='addUser(firstName, lastName, employeeId)' >Submit</button> -->
-            <button mat-raised-button color="primary" class='btn'>Submit</button>
+            <button mat-raised-button color="primary" class='btn' (click)='addUser()'>Submit</button>
             <button mat-raised-button color="primary" class='btn' (click)='resetFields()'>Reset</button>
           </td>
         </tr>
