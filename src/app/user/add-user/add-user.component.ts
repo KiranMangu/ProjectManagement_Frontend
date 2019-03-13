@@ -1,20 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from 'src/app/model/user.model';
+import { User, ButtonActions } from 'src/app/model/user.model';
 import { UserService } from 'src/app/service/user.service';
-import { UserSharedService } from '../user-shared.service'
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit, OnChanges {
 
+  @Output() addedNewUser = new EventEmitter<any>();
+  @Input() data;
   userAddGrp: FormGroup;
   newUser: User;
-  constructor(private _fb: FormBuilder, private _userSrv: UserService, private _sharedSrv: UserSharedService) { };
+  constructor(private _fb: FormBuilder, private _userSrv: UserService) { };
   @ViewChild('form') form; // TODO ViewChild?
+  buttonAction: string = ButtonActions.Submit;
+  updateUserId: string;
 
   ngOnInit() {
     this.userAddGrp = this._fb.group({
@@ -23,7 +26,29 @@ export class AddUserComponent implements OnInit {
       employeeId: ['', [Validators.required]]
     });
     console.log('Add User');
-    this._sharedSrv.setUserList();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data']) {
+      var userId = changes['data'].currentValue;
+      if (userId !== undefined && userId.trim() !== '') {
+        this.updateUserId = userId;
+        this._userSrv.getUserById(changes['data'].currentValue)
+          .subscribe((res) => {
+            console.log(JSON.stringify(res[0]));
+            if (res[0] !== undefined) {
+              this.userAddGrp.setValue({
+                firstName: res[0].firstName,
+                lastName: res[0].lastName,
+                employeeId: res[0].employeeId
+              });
+              this.buttonAction = ButtonActions.Update;
+            }
+          });
+      }
+      // console.log('getUserById:' + JSON.stringify(userObject[0]));
+      // this.userAddGrp.setValue(userObject);
+    }
   }
 
   resetFields(): void {
@@ -32,13 +57,32 @@ export class AddUserComponent implements OnInit {
     // this.userAddGrp.updateValueAndValidity();
   }
 
-  addUser(): void {
-    this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
-    this._userSrv.addUser(this.newUser).subscribe(() => {
-      console.log('Inserted');
-      this._sharedSrv.setUserList();
-      this.form.resetForm();
-      // this._viewCmp.loadUsers();
-    });
+  addUser(userAction): void {
+    if (userAction === ButtonActions.Submit) {
+      this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
+      this._userSrv.addUser(this.newUser).subscribe(() => {
+        console.log('Inserted');
+        this.refreshData();
+        // this._viewCmp.loadUsers();
+      });
+    }
+    else if (userAction === ButtonActions.Update) {
+      var updateUser = new User({
+        _id: this.updateUserId,
+        firstName: this.userAddGrp.controls.firstName.value,
+        lastName: this.userAddGrp.controls.lastName.value,
+        employeeId: this.userAddGrp.controls.employeeId.value
+      })
+      this._userSrv.updateUserById(updateUser).subscribe(() => {
+        console.log('Updated User');
+        this.buttonAction = ButtonActions.Submit;
+        this.refreshData();
+      });
+    }
+  }
+
+  refreshData(): void {
+    this.addedNewUser.emit('Test');
+    this.form.resetForm();
   }
 }

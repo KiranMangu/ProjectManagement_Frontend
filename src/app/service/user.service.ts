@@ -22,6 +22,22 @@ export class UserService implements OnInit {
     return this._http.get(this.apiUrl);
   }
 
+  getUserById(id): any {
+    return this._http.get(this.apiUrl + id);
+  }
+
+  addUser(newUser: User): any {
+    return this._http.post(this.apiUrl + 'create', newUser);
+  }
+
+  updateUserById(updateUser: any): any {
+    return this._http.put(this.apiUrl + 'update', updateUser);
+  }
+
+  deleteUser(id: string): any {
+    return this._http.delete(this.apiUrl + 'delete/' + id, { responseType: 'text' }); // MyComments: Return text
+  }
+
   sortData(sortOn, sortOrder): any {
     return (a, b) => {
       if (a[sortOn] > b[sortOn]) {
@@ -35,9 +51,5 @@ export class UserService implements OnInit {
 
   toggleOrder(sortOrder: number): number {
     return (sortOrder * -1)
-  }
-
-  addUser(newUser: User): any {
-    return this._http.post(this.apiUrl + 'create', newUser);
   }
 }

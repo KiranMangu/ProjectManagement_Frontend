@@ -1,5 +1,5 @@
 <div>
-  <app-add-user></app-add-user>
-  <mat-divider>  </mat-divider>
-  <app-view-user></app-view-user>
+  <app-add-user (addedNewUser)='reloadView($event)' [data]='userId'></app-add-user>
+  <mat-divider> </mat-divider>
+  <app-view-user [data]='usersData' (updateUser)='updateUser($event)'></app-view-user>
 </div>
