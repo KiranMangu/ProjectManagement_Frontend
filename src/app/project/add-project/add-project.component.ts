@@ -31,17 +31,17 @@ export class AddProjectComponent implements OnInit {
     private _dialog: MatDialog, private dialogSrv: UtilServiceService) { }
   // dateRequired: boolean = false;
   dateDisable: boolean = true;
-  diableInput: boolean = true;
+  thumbLabel = true;
 
   ngOnInit() {
     this.projectGroup = this._fb.group({
-      projectName: ['', [Validators.required]],
+      project: ['', [Validators.required]],
       dateRequired: [false], // Not neede for backend operations
       startDate: [''],
       endDate: [''],
       priority: [0],
       status: ['Open'],
-      user: ['', { value: '', disabled: true }, [Validators.required]]
+      user: [{ value: '', disabled: true }, [Validators.required]]
     });
   }
 
@@ -99,6 +99,15 @@ export class AddProjectComponent implements OnInit {
     this._projSrv.addProject(this.newProject)
       .subscribe((res) => {
         console.log(res);
+        this.selectedUser.projectId = res._id;
+        console.log(this.selectedUser);
+        this._usrSrv.updateUserProject(this.selectedUser)
+          .subscribe((res) => {
+            console.log('Succssfully created Project and updated ProjectId in User');
+          },
+            (error) => {
+              console.log('Failed: Updating Project Idon user failed' + error);
+            });
       },
         (error) => {
           console.log(error);
