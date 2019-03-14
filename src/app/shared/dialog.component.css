@@ -1,10 +1,16 @@
 .example-radio-group {
   display: inline-flex;
   flex-direction: column;
+  
 }
 
+.mat-radio-outer-circle
+{
+  border-color: black;
+}
 .example-radio-button {
   margin: 5px;
+  border-color: black;
 }
 
 .example-selected-value {
@@ -13,4 +19,37 @@
 
 mat-card-content {
   background-color: whitesmoke;
+}
+
+.dailogDimension
+{
+  width: 700px;
+  height: 750px;
+}
+
+.header{
+  position:fixed;
+  width: 700px;
+  height: 50px;
+  background-color: darkslategray;
+  padding: 5px
+}
+
+.contentDimension
+{
+  top:50px;
+  background-color:white;
+  position: relative;
+  overflow: auto;
+  color:black;
+}
+
+.footer{
+  position: fixed;
+  width: 700px;
+  height: 50px;
+  top:805px;
+  background-color: darkslategray;
+  padding-left: 600px;
+  padding-top: 10px;
 }

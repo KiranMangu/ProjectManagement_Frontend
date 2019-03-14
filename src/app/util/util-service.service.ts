@@ -15,10 +15,17 @@ export class UtilServiceService {
 
   mapDailogData(data: DailogData, sourceDate: any, type: String): void {
     data.title = type;
-    if (type === 'Project') {
+    if (type === 'Project' && sourceDate !== undefined) {
       sourceDate.forEach(element => {
         console.log('pr: ' + element.project, + ' Id: ' + element.projectId);
         data.list.push({ name: element.project, Id: element.projectId });
+      });
+    }
+    else if (type === 'Users' && sourceDate !== undefined) {
+      sourceDate.forEach(element => {
+        var fullName = element.lastName + ', ' + element.firstName + ' (' + element.employeeId + ')'
+        console.log('user: ' + fullName + ' Id: ' + element._id);
+        data.list.push({ name: fullName, Id: element._id });
       });
     }
     // return data;

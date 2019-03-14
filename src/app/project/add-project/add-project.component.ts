@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../model/user.model';
+import { Project } from '../../model/project.model';
 import { UserService } from '../../service/user.service';
+import { ProjectService } from '../../service/project.service';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../../shared/dialog.component';
+import { DailogData } from 'src/app/model/dialog.model';
+import { UtilServiceService } from '../../util/util-service.service';
 
 @Component({
   selector: 'app-add-project',
@@ -9,11 +15,23 @@ import { UserService } from '../../service/user.service';
   styleUrls: ['./add-project.component.css']
 })
 export class AddProjectComponent implements OnInit {
+  targetData: DailogData = {
+    title: '',
+    list: [{
+      name: '',
+      Id: ''
+    }]
+  };
 
+  usertList: User[];
+  selectedUser: User;
+  newProject: Project;
   projectGroup: FormGroup;
-  constructor(private _fb: FormBuilder, private _usrSrv: UserService) { }
+  constructor(private _fb: FormBuilder, private _usrSrv: UserService, private _projSrv: ProjectService,
+    private _dialog: MatDialog, private dialogSrv: UtilServiceService) { }
   // dateRequired: boolean = false;
   dateDisable: boolean = true;
+  diableInput: boolean = true;
 
   ngOnInit() {
     this.projectGroup = this._fb.group({
@@ -22,6 +40,7 @@ export class AddProjectComponent implements OnInit {
       startDate: [''],
       endDate: [''],
       priority: [0],
+      status: ['Open'],
       user: ['', { value: '', disabled: true }, [Validators.required]]
     });
   }
@@ -44,11 +63,46 @@ export class AddProjectComponent implements OnInit {
   }
 
   getUsers(): void {
+    this._usrSrv.getUsers()
+      .subscribe((users) => {
+        this.usertList = users;
+        console.log(this.usertList);
+        this.dialogSrv.mapDailogData(this.targetData, this.usertList, 'Users'); // TODO Need to include a spinner
+      },
+        (error) => {
+          console.log('Error: add-project.component: ' + error);
+        });
 
+    const dialogRef = this._dialog.open(DialogComponent, {
+      data: { title: this.targetData.title, data: this.targetData }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(result);
+      this.projectGroup.controls.user.setValue(result.name);
+
+      //Native For is better in this case than Foreach 
+      for (var i = 0, len = this.usertList.length; i < len; i++) {
+        if (this.usertList[i]._id === result.Id) {
+          this.selectedUser = this.usertList[i];
+          break;
+        }
+      }
+
+      console.log('selected:' + JSON.stringify(this.selectedUser));
+    });
   }
 
   addProject(): void {
-
+    this.newProject = new Project(this.projectGroup.value);
+    console.log(this.newProject);
+    this._projSrv.addProject(this.newProject)
+      .subscribe((res) => {
+        console.log(res);
+      },
+        (error) => {
+          console.log(error);
+        });
   }
 
   resetControls(): void {

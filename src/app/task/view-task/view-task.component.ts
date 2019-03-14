@@ -12,7 +12,7 @@ import { DailogData } from 'src/app/model/dialog.model';
 })
 export class ViewTaskComponent implements OnInit {
 
-  targetData: DailogData = {
+   targetData: DailogData = {
     title: '',
     list: [{
       name: '',
@@ -20,20 +20,7 @@ export class ViewTaskComponent implements OnInit {
     }]
   };
 
-  data: Project[] = [
-    {
-      project: 'project_1', projectId: 'A12', endDate: new Date('01/01/2019'),
-      startDate: new Date('12/11/2019'), status: 'Completed', priority: 1, manager: 'User 1'
-    },
-    {
-      project: 'project_2', projectId: 'A7', endDate: new Date('01/01/2019'),
-      startDate: new Date('12/11/2019'), status: 'Completed', priority: 1, manager: 'User 1'
-    },
-    {
-      project: 'project_3', projectId: 'A1', endDate: new Date('01/01/2019'),
-      startDate: new Date('12/11/2019'), status: 'Completed', priority: 1, manager: 'User 1'
-    }
-  ];
+  data: Project[] ;
 
   constructor(private dialog: MatDialog, private src: UtilServiceService) { }
 

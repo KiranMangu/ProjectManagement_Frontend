@@ -20,4 +20,8 @@ export class DialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  selectedItem(item: any): void {
+    this.dialogRef.close(item);
+  }
 }

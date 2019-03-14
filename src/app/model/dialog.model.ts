@@ -3,5 +3,5 @@ export interface DailogData {
     list: [{
         name: String;
         Id: String;
-    }];
+    }]
 }
