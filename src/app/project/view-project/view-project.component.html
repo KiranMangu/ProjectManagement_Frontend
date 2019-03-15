@@ -5,7 +5,7 @@
         <div class='col-md-6'>
           <div style='background-color: #ccc'>
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Enter value to search">
+              <input matInput placeholder="Search by Project Name">
             </mat-form-field>
           </div>
         </div>
@@ -14,17 +14,17 @@
         <div class='col-md-6'>
           <div class="col-md-6; divpad">
             <span class='btn'>Sort By:</span>
-            <button mat-raised-button class='btn'>Start Date</button>
-            <button mat-raised-button class='btn'>End Date</button>
-            <button mat-raised-button class='btn'>Priority</button>
-            <button mat-raised-button class='btn'>Completed</button>
+            <button mat-raised-button class='btn' (click)='sort(1)'>Start Date</button>
+            <button mat-raised-button class='btn' (click)='sort(2)'>End Date</button>
+            <button mat-raised-button class='btn' (click)='sort(3)'>Priority</button>
+            <button mat-raised-button class='btn' (click)='sort(4)'>Completed</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z8" style="overflow: auto; max-height: 400px">
       <ul class="list-group">
-        <li class="list-group-item" *ngFor='let proj of projectList'>
+        <li class="list-group-item" *ngFor='let proj of filteredProjecList'>
           <div class="row">
             <div class="col-md-6">
               <div class='row'>
@@ -81,10 +81,10 @@
                 <div class='col-md-2'>
                   <div>
                     <div>
-                      <button mat-raised-button color='primary' class='btn'>Update</button>
+                      <button mat-raised-button color='primary' class='btn' (click)='editUser()'>Update</button>
                     </div>
                     <div>
-                      <button mat-raised-button color='primary' class='btn'>Suspend</button>
+                      <button mat-raised-button color='primary' class='btn' (click)='suspendProject()'>Suspend</button>
                     </div>
                   </div>
                 </div>

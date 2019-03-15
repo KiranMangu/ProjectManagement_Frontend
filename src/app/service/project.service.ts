@@ -18,11 +18,11 @@ export class ProjectService {
     // this.apiUrl = this._util.apiURL; //TODO: Need to check this step as this is not being called before getUsers..!!!
   }
 
-  getUsers(): any {
+  getProjects(): any {
     return this._http.get(this.apiUrl);
   }
 
-  getUserById(id): any {
+  getProjectById(id): any {
     return this._http.get(this.apiUrl + id);
   }
 
@@ -30,11 +30,11 @@ export class ProjectService {
     return this._http.post(this.apiUrl + 'create', newProject);
   }
 
-  updateUserById(updateUser: any): any {
+  updateProjectById(updateUser: any): any {
     return this._http.put(this.apiUrl + 'update', updateUser);
   }
 
-  deleteUser(id: string): any {
+  suspendProject(id: string): any {
     return this._http.delete(this.apiUrl + 'delete/' + id, { responseType: 'text' }); // MyComments: Return text
   }
 
@@ -46,6 +46,22 @@ export class ProjectService {
         return (-1 * sortOrder);
       }
       return 0;
+    }
+  }
+
+  sortByDate(sortOn, sorOrder): any {
+    console.log('sortByDate');
+    return (a, b) => {
+      if (sortOn === 'startDate') {
+        var returnVal = new Date(a.startDate.date).getTime() - new Date(b.startDate.date).getTime();
+        return returnVal * sorOrder;
+      }
+      else if (sortOn === 'endDate') {
+        {
+          var returnVal = new Date(a.endDate.date).getTime() - new Date(b.endDate.date).getTime();
+          return returnVal * sorOrder;
+        }
+      }
     }
   }
 

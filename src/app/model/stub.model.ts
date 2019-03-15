@@ -16,16 +16,16 @@ export const usersData: userModel.User[] = [
 
 
 export const projectData: projectModel.ProjectList[] = [
-    {
-        project: 'Test Project 1', noOfTasks: 2, startDate: new Date('01/01/2019'),
-        endDate: new Date('02/01/2019'), priority: 29, status: 'Open'
-    },
-    {
-        project: 'Test Project 2', noOfTasks: 2, startDate: new Date('02/01/2019'),
-        endDate: new Date('03/01/2019'), priority: 1, status: 'In-progress'
-    },
-    {
-        project: 'Test Project 3', noOfTasks: 2, startDate: new Date('03/01/2019'),
-        endDate: new Date('04/01/2019'), priority: 7, status: 'Completed'
-    },
+    // {
+    //     project: 'Test Project 1', noOfTasks: 2, startDate: new Date('01/01/2019'),
+    //     endDate: new Date('02/01/2019'), priority: 29, status: 'Open'
+    // },
+    // {
+    //     project: 'Test Project 2', noOfTasks: 2, startDate: new Date('02/01/2019'),
+    //     endDate: new Date('03/01/2019'), priority: 1, status: 'In-progress'
+    // },
+    // {
+    //     project: 'Test Project 3', noOfTasks: 2, startDate: new Date('03/01/2019'),
+    //     endDate: new Date('04/01/2019'), priority: 7, status: 'Completed'
+    // },
 ];

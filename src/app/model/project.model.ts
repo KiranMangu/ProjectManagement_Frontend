@@ -12,6 +12,7 @@ export class Project {
 }
 
 export interface ProjectList {
+    _id: String;
     project: String;
     noOfTasks: Number;
     startDate: Date;
