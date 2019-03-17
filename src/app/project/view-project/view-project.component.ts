@@ -15,8 +15,8 @@ export class ViewProjectComponent implements OnInit {
 
 
   // viewUserGrp: FormGroup;
-  @Input() data: Project[];
-  @Output() updateUser: any = new EventEmitter<any>();
+  @Input() refresh: Project[];
+  @Output() updateProject: any = new EventEmitter<any>();
 
   // filteredUsersData: User[];
   // copyusersData: User[];
@@ -34,10 +34,10 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['data']) {
+    if (changes['refresh']) {
       // MyComments: Subsequent load i.e, load after a new value is entered
-      this.filteredProjecList = changes['data'].currentValue
-      this.copyProjectList = changes['data'].currentValue
+      this.filteredProjecList = changes['refresh'].currentValue
+      this.copyProjectList = changes['refresh'].currentValue
       // console.log('On Change' + changes['data'].currentValue);
       //this.loadUsers();
     }
@@ -46,7 +46,7 @@ export class ViewProjectComponent implements OnInit {
   loadProjects(): void {
     this._prjSrv.getProjects()
       .subscribe((projects) => {
-        console.log('View: ' + JSON.stringify(projects));
+        // console.log('View: ' + JSON.stringify(projects));
         this.copyProjectList = projects;
         this.filteredProjecList = projects;
       });
@@ -61,17 +61,17 @@ export class ViewProjectComponent implements OnInit {
     else if (sortBy === 2) {
       // console.log('Last Name')
       this.endDateOrder = this._prjSrv.toggleOrder(this.endDateOrder)
-      this.filteredProjecList.sort(this._prjSrv.sortByDate('lastName', this.endDateOrder));
+      this.filteredProjecList.sort(this._prjSrv.sortByDate('endDate', this.endDateOrder));
     }
     else if (sortBy === 3) {
       // console.log('Id')
       this.priorityOrder = this._prjSrv.toggleOrder(this.priorityOrder)
-      this.filteredProjecList.sort(this._prjSrv.sortData('Id', this.priorityOrder));
+      this.filteredProjecList.sort(this._prjSrv.sortData('priority', this.priorityOrder));
     }
-    else if (sortBy === 3) {
+    else if (sortBy === 4) {
       // console.log('Id')
       this.completedOrder = this._prjSrv.toggleOrder(this.completedOrder)
-      this.filteredProjecList.sort(this._prjSrv.sortData('Id', this.completedOrder));
+      this.filteredProjecList.sort(this._prjSrv.sortData('completed', this.completedOrder));
     }
     else {
       console.log('Invalid Sort request');
@@ -79,20 +79,16 @@ export class ViewProjectComponent implements OnInit {
     // console.log(this.usersData);
   }
 
-  // TODO: Small letter data types vs Capital letter data typels Number vs number and String vs string
+  // TODO: Small letter data types vs Capital letter data types Number vs number and String vs string
   // TODO: user.firstName.indexOf(this.searchKey) .... compilation error
   // TODO: this._prjSrv.toggleOrder(this.IdSrtOrdr) .... compilation error
-  searchUser(): void {
-    // console.log('searchKey: ' + this.searchKey);
-    var searchKey = this.searchKey.toLowerCase();
-    if (this.searchKey.trim() !== '') {
-      // TODO: Look for a filter that acts on all the keys on a Json
-      var dataByFN = this.filteredProjecList.filter(project => project.project.toLowerCase().indexOf(searchKey) !== -1);
-      // var dataById = this.filteredProjecList.filter(project => project.startDate === searchKey));
-      // var dataById = this.filteredProjecList.filter(project => project.endDate === searchKey));
-      // this.filteredProjecList = Object.assign(dataByFN, dataaByLN, dataById);
+  searchProject(searchKey: string): void {
+    console.log('searchKey: ' + searchKey);
+    if (searchKey !== undefined && searchKey.trim() !== '') {
+      this.filteredProjecList = this.copyProjectList;
+      console.log('list: ' + this.filteredProjecList);
+      var dataByFN = this.filteredProjecList.filter(project => project.project.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1);
       this.filteredProjecList = Object.assign(dataByFN);
-      // this.usersData = this.usersData.filter(user => user.firstName.indexOf(this.searchKey) !== -1);
     }
     else {
       this.filteredProjecList = this.copyProjectList;
@@ -100,17 +96,19 @@ export class ViewProjectComponent implements OnInit {
     // console.log('data' + this.data);
   }
 
-  editUser(id: string): void {
-    // console.log(id);
-    this.updateUser.emit(id); // MyComments: Should have sent the User Object directly.!!!
+  editProject(project: Project): void {
+    // console.log('Select project to edit');
+    // console.log(project);
+    this.updateProject.emit(project); // MyComments: Should have sent the User Object directly.!!!
   }
 
   suspendProject(id: string): void {
-    this._prjSrv.suspendProject(id)
-      .subscribe((res) => {
-        this.loadProjects();
-        console.log(res);
-      })
+    console.log('Implementation details not mentioned..!!!');
+    // this._prjSrv.suspendProject(id)
+    //   .subscribe((res) => {
+    //     this.loadProjects();
+    //     console.log(res);
+    //   })
   }
 
 }

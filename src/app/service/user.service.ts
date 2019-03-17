@@ -34,6 +34,9 @@ export class UserService implements OnInit {
     return this._http.put(this.apiUrl + 'update', updateUser);
   }
 
+  updateUserProjectAndTask(updateUser: any){
+    return this._http.post(this.apiUrl + 'update/userprojecttask', updateUser);
+  }
   updateUserProject(updateUser: any): any {
     return this._http.post(this.apiUrl + 'update/userproject', updateUser);
   }
@@ -45,6 +48,10 @@ export class UserService implements OnInit {
   deleteUser(id: string): any {
     return this._http.delete(this.apiUrl + 'delete/' + id, { responseType: 'text' }); // MyComments: Return text
   }
+
+  // getUserByProjectId(id): any {
+  //   return this._http.get(this.apiUrl + 'project/' + id);
+  // }
 
   sortData(sortOn, sortOrder): any {
     return (a, b) => {

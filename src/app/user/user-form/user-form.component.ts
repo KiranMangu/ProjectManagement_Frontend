@@ -17,6 +17,7 @@ export class UserFormComponent implements OnInit {
     // this.loadUsers();
   }
 
+  // Trigger the On-change by sending the Input ting the value to View Component
   loadUsers(): void {
     this._usrSrv.getUsers()
       .subscribe((users) => {
@@ -25,11 +26,13 @@ export class UserFormComponent implements OnInit {
       });
   }
 
+  // After update change the View Component
   reloadView(payload): void {
     console.log('Reload function');
     this.loadUsers();
   }
 
+  // Send data to Add Component
   updateUser(payload): void {
     console.log('payload' + payload);
     this.userId = payload;

@@ -47,7 +47,7 @@
               <tr>
                 <td style='width:80%'>
                   <mat-form-field class='full-width-container'>
-                    <input matInput placeholder='Manager Name' formControlName='user' >
+                    <input matInput placeholder='Manager Name' formControlName='manager' >
                   </mat-form-field>
                 </td>
                 <td style='width:80%'>
@@ -61,7 +61,7 @@
         <tr>
           <td></td>
           <td class='align-right'>
-            <button mat-raised-button color='primary' class='btn' (click)='addProject()'>Add</button>
+            <button mat-raised-button color='primary' class='btn' (click)='addProject()'>{{buttonAction}}</button>
             <button mat-raised-button color='primary' class='btn' type='button' (click)='resetControls()'>Reset</button>
           </td>
         </tr>

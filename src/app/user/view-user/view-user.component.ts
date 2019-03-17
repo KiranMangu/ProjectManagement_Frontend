@@ -75,6 +75,7 @@ export class ViewUserComponent implements OnInit, OnChanges {
     // console.log('searchKey: ' + this.searchKey);
     var searchKey = this.searchKey.toLowerCase();
     if (this.searchKey.trim() !== '') {
+      this.filteredUsersData = this.copyusersData;
       // TODO: Look for a filter that acts on all the keys on a Json
       var dataByFN = this.filteredUsersData.filter(user => user.firstName.toLowerCase().indexOf(searchKey) !== -1);
       var dataaByLN = this.filteredUsersData.filter(user => user.lastName.toLowerCase().indexOf(searchKey) !== -1);

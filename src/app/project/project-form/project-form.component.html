@@ -1,6 +1,5 @@
-
 <div>
-  <app-add-project></app-add-project>
+  <app-add-project [data]='updateProject' (refreshProjectDetails)='refreshProjectDetails($event)'></app-add-project>
   <mat-divider></mat-divider>
-  <app-view-project></app-view-project>
+  <app-view-project [refresh]='refreshList' (updateProject)='UpdateProject($event)'></app-view-project>
 </div>

@@ -4,19 +4,20 @@ export class Project {
     startDate: Date;
     endDate: Date;
     priority: Number;
-    status: String;
-    // manager: String;
+    // status: String;
+    manager: String;
     public constructor(init?: Partial<Project>) {
         Object.assign(this, init);
     }
 }
 
-export interface ProjectList {
+export class ProjectList {
     _id: String;
     project: String;
     noOfTasks: Number;
     startDate: Date;
     endDate: Date;
-    status: String;
+    completed: Number = 0;
     priority: Number;
+    manager: String;
 }

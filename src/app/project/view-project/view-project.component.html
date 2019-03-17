@@ -3,10 +3,15 @@
     <div class='divpad'>
       <div class='row'>
         <div class='col-md-6'>
-          <div style='background-color: #ccc'>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Search by Project Name">
-            </mat-form-field>
+          <div class='row'>
+            <div class='col-md-10' style='background-color: #ccc'>
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search by Project Name" [(ngModel)] ='searchKey' name="search" >
+              </mat-form-field>
+            </div>
+            <div class='col-md-2'>
+              <button mat-raised-button color='primary' class='btn' (click)='searchProject(searchKey)'>Search</button>
+            </div>
           </div>
         </div>
       </div>
@@ -44,7 +49,7 @@
                             </div>
                             <div class='col-md-6'>
                               <span>Completed:</span>
-                              <span>{{proj.status}}</span>
+                              <span>{{proj.completed}}</span>
                             </div>
                           </div>
                         </div>
@@ -52,11 +57,11 @@
                           <div class='row'>
                             <div class='col-md-6'>
                               <span>Start Date:</span>
-                              <span>{{proj.startDate}}</span>
+                              <span>{{proj.startDate  | date: 'MM/dd/yyyy'}}</span>
                             </div>
                             <div class='col-md-6'>
                               <span>End Date:</span>
-                              <span>{{proj.endDate}}</span>
+                              <span>{{proj.endDate  | date: 'MM/dd/yyyy'}}</span>
                             </div>
                           </div>
                         </div>
@@ -72,7 +77,7 @@
                       </span>
                     </div>
                     <div style='background-color:#ccc;'>
-                      <span  class='example-full-height'>
+                      <span class='example-full-height'>
                         {{proj.priority}}
                       </span>
                     </div>
@@ -81,7 +86,7 @@
                 <div class='col-md-2'>
                   <div>
                     <div>
-                      <button mat-raised-button color='primary' class='btn' (click)='editUser()'>Update</button>
+                      <button mat-raised-button color='primary' class='btn' (click)='editProject(proj)'>Update</button>
                     </div>
                     <div>
                       <button mat-raised-button color='primary' class='btn' (click)='suspendProject()'>Suspend</button>

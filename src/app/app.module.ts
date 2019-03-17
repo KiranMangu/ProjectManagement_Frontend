@@ -25,6 +25,7 @@ import { AddTaskComponent } from './task/add-task/add-task.component';
 import { ViewTaskComponent } from './task/view-task/view-task.component';
 import { TaskFormComponent } from './task/task-form/task-form.component';
 import { DialogComponent } from './shared/dialog.component';
+import { ObserveService } from './util/observe.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -60,7 +61,7 @@ const routes: Routes = [
   ],
   entryComponents: [DialogComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  providers: [],
+  providers: [ObserveService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

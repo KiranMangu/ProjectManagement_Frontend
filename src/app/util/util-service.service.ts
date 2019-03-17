@@ -15,10 +15,10 @@ export class UtilServiceService {
 
   mapDailogData(data: DailogData, sourceDate: any, type: String): void {
     data.title = type;
-    if (type === 'Project' && sourceDate !== undefined) {
+    if (type === 'Projects' && sourceDate !== undefined) {
       sourceDate.forEach(element => {
-        console.log('pr: ' + element.project, + ' Id: ' + element.projectId);
-        data.list.push({ name: element.project, Id: element.projectId });
+        console.log('pr: ' + element.project, + ' Id: ' + element._id);
+        data.list.push({ name: element.project, Id: element._id });
       });
     }
     else if (type === 'Users' && sourceDate !== undefined) {
@@ -27,6 +27,12 @@ export class UtilServiceService {
         console.log('user: ' + fullName + ' Id: ' + element._id);
         data.list.push({ name: fullName, Id: element._id });
       });
+    }
+    else if (type === 'ParentTasks' && sourceDate !== undefined) {
+      sourceDate.forEach(element => {
+        data.list.push({ name: element.parentTask, Id: element._id });
+        console.log('parent: ' + element.parentTask + ' Id: ' + element._id);
+      })
     }
     // return data;
   }

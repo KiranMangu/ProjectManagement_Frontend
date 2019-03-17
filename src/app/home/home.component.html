@@ -1,4 +1,8 @@
-<mat-tab-group>
+<div></div>
+<h3>
+  {{tabTitle}}
+</h3>
+<mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="tabChanged($event)">
   <mat-tab label='Add Project'>
     <app-project-form></app-project-form>
   </mat-tab>

@@ -1,5 +1,5 @@
 <div>
-  <form>
+  <form [formGroup]='taskGroup'>
     <mat-card>
       <table>
         <tr>
@@ -11,11 +11,13 @@
               <tr>
                 <td style='width:80%'>
                   <mat-form-field class='full-width-container'>
-                    <input matInput placeholder='Project Name'>
+                    <input matInput placeholder='Project Name' formControlName='projectName' readonly>
+                    <mat-error>Project is required </mat-error>
                   </mat-form-field>
                 </td>
                 <td style='width:20%'>
-                  <button mat-raised-button color='primary' class='btn'>Search</button>
+                  <button mat-raised-button color='primary' type='button' class='btn'
+                    (click)='getProjects()'>Search</button>
                 </td>
               </tr>
             </table>
@@ -30,7 +32,8 @@
               <tr width='100%'>
                 <td>
                   <mat-form-field class='full-width-container'>
-                    <input matInput placeholder='Task'>
+                    <input matInput placeholder='Task' formControlName='task'>
+                    <mat-error>Task name is required</mat-error>
                   </mat-form-field>
                 </td>
               </tr>
@@ -42,7 +45,7 @@
             <mat-lable></mat-lable>
           </td>
           <td>
-            <mat-checkbox> Parent Task</mat-checkbox>
+            <mat-checkbox (click)='onParentTaskSelected()' formControlName='isParentTask'> Parent Task</mat-checkbox>
           </td>
         </tr>
         <tr>
@@ -50,7 +53,10 @@
             <mat-lable>Priority: </mat-lable>
           </td>
           <td>
-            <mat-slider [min]='min' [max]='max' class='full-width-container'></mat-slider>
+            <mat-slider [min]='min' [max]='max' class='full-width-container' formControlName='priority'
+              [thumbLabel]="thumbLabel" [disabled]='disableControl'>
+              <mat-error>Prority is required</mat-error>
+            </mat-slider>
           </td>
         </tr>
         <tr>
@@ -62,11 +68,12 @@
               <tr>
                 <td width='80%'>
                   <mat-form-field class='full-width-container'>
-                    <input matInput placeholder='Parent Task'>
+                    <input matInput placeholder='Parent Task' formControlName='parentTask' readonly>
                   </mat-form-field>
                 </td>
                 <td width='80%'>
-                  <button mat-raised-button color='primary' class='btn'>Search</button>
+                  <button mat-raised-button color='primary' type='button' class='btn' (click)='getParentTasks()'
+                    [disabled]='disableControl'>Search</button>
                 </td>
               </tr>
             </table>
@@ -81,16 +88,18 @@
         <tr>
           <td>
             <mat-form-field class='btn'>
-              <input matInput [matDatepicker]="startDate" placeholder="Start Date" disabled>
+              <input matInput [matDatepicker]="startDate" placeholder="Start Date" formControlName='startDate' readonly>
+              <mat-error>Start date required</mat-error>
               <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-              <mat-datepicker #startDate disabled="false"></mat-datepicker>
+              <mat-datepicker #startDate [disabled]='disableControl'></mat-datepicker>
             </mat-form-field>
           </td>
           <td>
             <mat-form-field class='btn'>
-              <input matInput [matDatepicker]="endDate" placeholder="End Date" disabled>
+              <input matInput [matDatepicker]="endDate" placeholder="End Date" formControlName='endDate' readonly>
+              <mat-error>End date required</mat-error>
               <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-              <mat-datepicker #endDate disabled="false"></mat-datepicker>
+              <mat-datepicker #endDate [disabled]='disableControl'></mat-datepicker>
             </mat-form-field>
           </td>
         </tr>
@@ -106,11 +115,12 @@
               <tr>
                 <td width='80%'>
                   <mat-form-field class='full-width-container'>
-                    <input matInput placeholder='User'>
+                    <input matInput placeholder='User' formControlName='user' readonly>
                   </mat-form-field>
                 </td>
                 <td width='20%'>
-                  <button mat-raised-button color='primary' class='btn'>Search</button>
+                  <button mat-raised-button color='primary' type='button' class='btn' (click)='getUsers()'
+                    [disabled]='disableControl'>Search</button>
                 </td>
               </tr>
             </table>
@@ -120,8 +130,8 @@
           <td>
           </td>
           <td class='align-right'>
-            <button mat-raised-button color='primary' class='btn'>Add Task</button>
-            <button mat-raised-button color='primary' type='button' class='btn'>Reset</button>
+            <button mat-raised-button color='primary' class='btn' (click)='addTask()'>{{buttonAction}}</button>
+            <button mat-raised-button color='primary' type='button' class='btn' (click)='resetControls()'>Reset</button>
           </td>
         </tr>
       </table>
