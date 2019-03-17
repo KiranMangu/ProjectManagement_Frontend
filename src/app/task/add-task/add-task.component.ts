@@ -58,21 +58,45 @@ export class AddTaskComponent implements OnInit, OnChanges {
     this._obSrv.cast
       .subscribe((task) => {
         if (task !== undefined) {
+          console.log('Triggered event');
+          console.log('task.projectId:' + task.projectId);
+          if (task.projectId !== undefined && task.projectId !== '') {
+            this.getOtherFields(task.projectId, task.parentId);
+          }
           this.fillFieldsForUpdate(task);
+        }
+      });
+  }
+
+  getOtherFields(prjId: String, prntId: String): any {
+    this._prjSrv.getProjectById(prjId)
+      .subscribe((prjName) => {
+        if (prjName !== undefined) {
+          this.taskGroup.controls.projectName.setValue(prjName[0].project);
+          if (prntId !== null) {
+            this._tskSrv.getParentTaskById(prntId)
+              .subscribe((parentTask) => {
+                if (parentTask !== undefined) {
+                  // console.log('parentId:' + JSON.stringify(parentTask[0].parentTask));
+                  this.taskGroup.controls.parentTask.setValue(parentTask[0].parentTask);
+                  // return parentTask;
+                }
+              });
+          }
         }
       });
   }
 
   fillFieldsForUpdate(task: any) {
     this.buttonAction = ButtonActions.UpdateTask;
-    this.taskGroup.controls.task = task.task;
-    this.taskGroup.controls.parentId = task.parentId;
-    this.taskGroup.controls.startDate = task.startDate;
-    this.taskGroup.controls.endDate = task.endDate;
-    this.taskGroup.controls.user = task.user;
-    this.taskGroup.controls.status = task.status;
+    this.taskGroup.controls.task.setValue(task.task);
+    // this.taskGroup.controls.parentId.setValue(task.parentId);
+    this.taskGroup.controls.startDate.setValue(task.startDate);
+    this.taskGroup.controls.endDate.setValue(task.endDate);
+    this.taskGroup.controls.priority.setValue(task.priority);
+    // this.taskGroup.controls.status.setValue(task.status);
   }
-  
+
   /**
   projectName: ['', [Validators.required]],
       projectId: [''],

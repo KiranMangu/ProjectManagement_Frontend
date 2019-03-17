@@ -55,6 +55,10 @@ export class TaskService {
   //   return this._http.get(this.apiUrl + 'project/' + id);
   // }
 
+  getParentTaskById(Id: String) {
+    return this._http.get(this.parentTaskUrl + Id);
+  }
+
   sortData(sortOn, sortOrder): any {
     return (a, b) => {
       if (a[sortOn] > b[sortOn]) {
@@ -81,7 +85,7 @@ export class TaskService {
       }
     }
   }
-  
+
   toggleOrder(sortOrder: number): number {
     return (sortOrder * -1)
   }
