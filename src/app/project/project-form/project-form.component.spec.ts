@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectFormComponent } from './project-form.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 describe('ProjectFormComponent', () => {
   let component: ProjectFormComponent;
@@ -8,9 +10,12 @@ describe('ProjectFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectFormComponent ]
+      imports: [HttpClientModule],
+      declarations: [ProjectFormComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [HttpClient]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

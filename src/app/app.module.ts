@@ -12,6 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule, MatButtonModule, MatCardModule, MatNativeDateModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { MatSliderModule } from '@angular/material';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSnackBarModule } from '@angular/material';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
@@ -24,8 +25,9 @@ import { ProjectFormComponent } from './project/project-form/project-form.compon
 import { AddTaskComponent } from './task/add-task/add-task.component';
 import { ViewTaskComponent } from './task/view-task/view-task.component';
 import { TaskFormComponent } from './task/task-form/task-form.component';
-import { DialogComponent } from './shared/dialog.component';
-import { ObserveService } from './util/observe.service';
+import { ObserveService } from './_util/observe.service';
+import { DialogComponent } from './_shared/dialog.component';
+import { ShowMessageComponent } from './_shared/show-message/show-message.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -46,6 +48,7 @@ const routes: Routes = [
     ViewTaskComponent,
     TaskFormComponent,
     DialogComponent,
+    ShowMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ const routes: Routes = [
     MatToolbarModule, MatTabsModule, MatDividerModule, MatCheckboxModule,
     MatInputModule, MatButtonModule, MatCardModule, MatRadioModule,
     MatDatepickerModule, MatNativeDateModule, MatSliderModule,
+    MatSnackBarModule,
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(routes)

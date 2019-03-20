@@ -84,27 +84,28 @@
             <mat-lable>Start Date:</mat-lable>
           </td>
           <td>
-            <tabel>
-        <tr>
-          <td>
-            <mat-form-field class='btn'>
-              <input matInput [matDatepicker]="startDate" placeholder="Start Date" formControlName='startDate' readonly>
-              <mat-error>Start date required</mat-error>
-              <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-              <mat-datepicker #startDate [disabled]='disableControl'></mat-datepicker>
-            </mat-form-field>
+            <table>
+              <tr>
+                <td>
+                  <mat-form-field class='btn'>
+                    <input matInput [matDatepicker]="startDate" placeholder="Start Date" formControlName='startDate'
+                      readonly>
+                    <mat-error>Start date required</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                    <mat-datepicker #startDate [disabled]='disableControl'></mat-datepicker>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class='btn'>
+                    <input matInput [matDatepicker]="endDate" placeholder="End Date" formControlName='endDate' readonly>
+                    <mat-error>End date required</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                    <mat-datepicker #endDate [disabled]='disableControl'></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </table>
           </td>
-          <td>
-            <mat-form-field class='btn'>
-              <input matInput [matDatepicker]="endDate" placeholder="End Date" formControlName='endDate' readonly>
-              <mat-error>End date required</mat-error>
-              <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-              <mat-datepicker #endDate [disabled]='disableControl'></mat-datepicker>
-            </mat-form-field>
-          </td>
-        </tr>
-        </tabel>
-        </td>
         </tr>
         <tr>
           <td>

@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User, ButtonActions } from 'src/app/model/user.model';
-import { UserService } from 'src/app/service/user.service';
+import { User, ButtonActions } from '../../_models/user.model';
+import { UserService } from '../../_services/user.service';
+import { MatSnackBar } from '@angular/material';
+import { UtilServiceService } from 'src/app/_util/util-service.service';
 
 @Component({
   selector: 'app-add-user',
@@ -14,7 +16,8 @@ export class AddUserComponent implements OnInit, OnChanges {
   @Input() data;
   userAddGrp: FormGroup;
   newUser: User;
-  constructor(private _fb: FormBuilder, private _userSrv: UserService) { };
+  constructor(private _fb: FormBuilder, private _userSrv: UserService, 
+    private _snkBar: MatSnackBar, private util: UtilServiceService) { };
   @ViewChild('form') form; // TODO ViewChild?
   buttonAction: string = ButtonActions.Submit;
   updateUserId: string;
@@ -25,7 +28,7 @@ export class AddUserComponent implements OnInit, OnChanges {
       lastName: ['', [Validators.required]],
       employeeId: ['', [Validators.required]]
     });
-    console.log('Add User');
+    // console.log('Add User');
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -52,19 +55,25 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
 
   resetFields(): void {
-    this.form.resetForm(); // MyComments: Work around for resetting the form value
-    // this.userAddGrp.reset(); // MyComments: Using Reactivformgroup reset is firing validation
+    // this.form.resetForm(); // MyComments: Work around for resetting the form value
+    this.userAddGrp.reset(); // MyComments: Using Reactivformgroup reset is firing validation
     // this.userAddGrp.updateValueAndValidity();
   }
 
   addUser(userAction): void {
     if (userAction === ButtonActions.Submit) {
       this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
-      this._userSrv.addUser(this.newUser).subscribe(() => {
-        console.log('Inserted');
-        this.refreshData();
-        // this._viewCmp.loadUsers();
-      });
+      this._userSrv.addUser(this.newUser)
+        .subscribe(() => {
+          console.log('Inserted');
+          this.util.showAlert('Successfully created the User', 'OK')
+          // this.showAlert('Successfully created the User', 'OK')
+          this.refreshData();
+          // this._viewCmp.loadUsers();
+        },
+          (error) => {
+            this.util.showAlert('Failed to create the User', 'OK');
+          });
     }
     else if (userAction === ButtonActions.Update) {
       var updateUser = new User({
@@ -73,11 +82,16 @@ export class AddUserComponent implements OnInit, OnChanges {
         lastName: this.userAddGrp.controls.lastName.value,
         employeeId: this.userAddGrp.controls.employeeId.value
       })
-      this._userSrv.updateUserById(updateUser).subscribe(() => {
-        console.log('Updated User');
-        this.buttonAction = ButtonActions.Submit;
-        this.refreshData();
-      });
+      this._userSrv.updateUserById(updateUser)
+        .subscribe(() => {
+          console.log('Updated User');
+          this.buttonAction = ButtonActions.Submit;
+          this.util.showAlert('Successfully updated the User', 'OK');
+          this.refreshData();
+        },
+          (error) => {
+            this.util.showAlert('Failed to update the User', 'OK');
+          });
     }
   }
 

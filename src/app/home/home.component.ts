@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ObserveService } from '../util/observe.service';
+import { ObserveService } from '../_util/observe.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

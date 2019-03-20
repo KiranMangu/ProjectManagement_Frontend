@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { User } from '../../model/user.model';
+import { User } from '../../_models/user.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../_services/user.service';
+import { UtilServiceService } from '../../_util/util-service.service';
 
 @Component({
   selector: 'app-view-user',
@@ -21,7 +22,7 @@ export class ViewUserComponent implements OnInit, OnChanges {
   lNSrtOrdr: number = -1;
   IdSrtOrdr: number = -1;
   searchKey: string = '';
-  constructor(private _usrSrv: UserService) { }
+  constructor(private _usrSrv: UserService, private util: UtilServiceService) { }
 
   ngOnInit() {
     this.loadUsers();  // MyComments: Initial load
@@ -58,9 +59,11 @@ export class ViewUserComponent implements OnInit, OnChanges {
       this.filteredUsersData.sort(this._usrSrv.sortData('lastName', this.lNSrtOrdr));
     }
     else if (sortBy === 3) {
-      // console.log('Id')
+      console.log('22' + JSON.stringify(this.filteredUsersData));
+
       this.IdSrtOrdr = this._usrSrv.toggleOrder(this.IdSrtOrdr)
-      this.filteredUsersData.sort(this._usrSrv.sortData('Id', this.IdSrtOrdr));
+      this.filteredUsersData.sort(this._usrSrv.sortData('employeeId', this.IdSrtOrdr));
+      console.log('11' + JSON.stringify(this.filteredUsersData));
     }
     else {
       console.log('Invalid Sort request');
@@ -99,6 +102,12 @@ export class ViewUserComponent implements OnInit, OnChanges {
       .subscribe((res) => {
         this.loadUsers();
         console.log(res);
-      })
+        this.util.showAlert('Successfully deleted the User', 'OK');
+      },
+        (error) => {
+          console.log('Failed user deletion:' + JSON.stringify(error));
+          this.util.showAlert('Failed User deletion', 'OK');
+        })
   }
+
 }

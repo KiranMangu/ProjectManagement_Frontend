@@ -61,7 +61,7 @@
         <tr>
           <td></td>
           <td class='align-right'>
-            <button mat-raised-button color='primary' class='btn' (click)='addProject()'>{{buttonAction}}</button>
+            <button mat-raised-button color='primary' [disabled]='projectGroup.invalid && projectGroup.touched' class='btn' (click)='addProject()'>{{buttonAction}}</button>
             <button mat-raised-button color='primary' class='btn' type='button' (click)='resetControls()'>Reset</button>
           </td>
         </tr>

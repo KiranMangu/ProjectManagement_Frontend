@@ -1,15 +1,17 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from 'src/app/service/user.service';
-import { ProjectService } from 'src/app/service/project.service';
+import { UserService } from '../../_services/user.service';
+import { ProjectService } from '../../_services/project.service';
 import { MatDialog } from '@angular/material';
-import { DialogComponent } from '../../shared/dialog.component';
-import { DailogData } from 'src/app/model/dialog.model';
-import { UtilServiceService } from '../../util/util-service.service';
-import { TaskService } from '../../service/task.service';
-import { Task, ParentTask } from '../../model/task.model';
-import { ObserveService } from '../../util/observe.service';
-import { ButtonActions } from '../../model/user.model';
+import { DialogComponent } from '../../_shared/dialog.component';
+import { DailogData } from 'src/app/_models/dialog.model';
+import { UtilServiceService } from '../../_util/util-service.service';
+import { TaskService } from '../../_services/task.service';
+import { Task, ParentTask } from '../../_models/task.model';
+import { ObserveService } from '../../_util/observe.service';
+import { ButtonActions } from '../../_models/user.model';
+import { MatSnackBar } from '@angular/material';
+
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -27,7 +29,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
   constructor(private _fb: FormBuilder, private _usrSrv: UserService,
     private _prjSrv: ProjectService, private _dialog: MatDialog,
     private _utilSrv: UtilServiceService, private _tskSrv: TaskService,
-    private _obSrv: ObserveService) { }
+    private _obSrv: ObserveService, private _snakBar: MatSnackBar) { }
   disableControl: boolean = false;
   targetData: DailogData = {
     title: '',
@@ -176,8 +178,6 @@ export class AddTaskComponent implements OnInit, OnChanges {
       });
   }
 
-
-
   getParentTasks(): void {
     // throw new Error("Method not implemented.");
     var dialogRef;
@@ -267,14 +267,15 @@ export class AddTaskComponent implements OnInit, OnChanges {
           //     (error) => {
           //       console.log('Error Updating user project and Task' + error);
           //     });
+          this._snakBar.open('Successfully created new Task');
           this.resetControls();
+
         },
           (error) => {
+            this._snakBar.open('Failed: Inserting the task');
             console.log('Failed inserting task: ' + JSON.stringify(error));
           });
     }
-
-
   }
 
   clearTagetObject() {

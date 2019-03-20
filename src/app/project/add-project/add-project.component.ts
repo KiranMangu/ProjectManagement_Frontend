@@ -1,13 +1,13 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User, ButtonActions } from '../../model/user.model';
-import { Project } from '../../model/project.model';
-import { UserService } from '../../service/user.service';
-import { ProjectService } from '../../service/project.service';
 import { MatDialog } from '@angular/material';
-import { DialogComponent } from '../../shared/dialog.component';
-import { DailogData } from 'src/app/model/dialog.model';
-import { UtilServiceService } from '../../util/util-service.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DailogData } from '../../_models/dialog.model';
+import { User, ButtonActions } from '../../_models/user.model';
+import { Project } from '../../_models/project.model';
+import { UserService } from '../../_services/user.service';
+import { ProjectService } from '../../_services/project.service';
+import { DialogComponent } from '../../_shared/dialog.component';
+import { UtilServiceService } from '../../_util/util-service.service';
 
 @Component({
   selector: 'app-add-project',
@@ -37,8 +37,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
   @Output() refreshProjectDetails = new EventEmitter<any>()
 
   constructor(private _fb: FormBuilder, private _usrSrv: UserService, private _projSrv: ProjectService,
-    private _dialog: MatDialog, private dialogSrv: UtilServiceService) { }
-  // dateRequired: boolean = false;
+    private _dialog: MatDialog, private util: UtilServiceService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
@@ -50,8 +49,9 @@ export class AddProjectComponent implements OnInit, OnChanges {
         this.projectGroup.controls.startDate.setValue(currentProject.startDate);
         this.projectGroup.controls.endDate.setValue(currentProject.endDate);
         this.projectGroup.controls.priority.setValue(currentProject.priority);
-        if (currentProject.manager !== undefined)
-          this.projectGroup.controls.manager.setValue(currentProject.manager);
+        this.projectGroup.controls.managerId.setValue(currentProject.manager)
+        this.projectGroup.controls.manager.setValue(currentProject.managerName);
+
         this.editProjectId = currentProject._id;
         this.buttonAction = ButtonActions.Update;
       }
@@ -79,11 +79,24 @@ export class AddProjectComponent implements OnInit, OnChanges {
       // status: ['Open'],
       manager: [{ value: '', disabled: true }, [Validators.required]],
       managerId: ['']
-    });
+    }, { validator: this.checkDates });
+  }
+
+  checkDates(group: FormGroup): any {
+    if ((group.controls.endDate.value !== null) && group.controls.startDate.value > group.controls.endDate.value) {
+      console.log("invalid  :" + group.controls.endDate.value + ":");
+      return { notValid: true };
+    }
+    console.log("valid");
+    return null;
   }
 
   onSetDateChange(): void {
+    this.setDateFields();
+  }
+  setDateFields(): void {
     this.dateDisable = this.projectGroup.controls.dateRequired.value;
+    console.log('dateDisable' + this.dateDisable);
     if (this.dateDisable) {
       this.projectGroup.controls.startDate.setValue('');
       this.projectGroup.controls.endDate.setValue('');
@@ -105,10 +118,11 @@ export class AddProjectComponent implements OnInit, OnChanges {
         this.usertList = users;
         console.log(this.usertList);
         this.clearTagetObject();
-        this.dialogSrv.mapDailogData(this.targetData, this.usertList, 'Users'); // TODO Need to include a spinner
+        this.util.mapDailogData(this.targetData, this.usertList, 'Users'); // TODO Need to include a spinner
       },
         (error) => {
           console.log('Error: add-project.component: ' + error);
+          this.util.showAlert('Failed getting users', 'OK', true);
         });
 
     const dialogRef = this._dialog.open(DialogComponent, {
@@ -130,55 +144,64 @@ export class AddProjectComponent implements OnInit, OnChanges {
   }
 
   addProject(): void {
-    if (this.buttonAction === ButtonActions.Add) {
-      this.newProject = new Project(this.projectGroup.value);
-      console.log(this.newProject);
-      this._projSrv.addProject(this.newProject)
-        .subscribe((res) => {
-          console.log(res);
-          this.selectedUser.projectId = res._id;
-          console.log(this.selectedUser);
-          this.resetControls();
-          // this._usrSrv.updateUserProject(this.selectedUser)
-          //   .subscribe((res) => {
-          //     console.log('Succssfully created Project and updated ProjectId in User');
-          //   },
-          //     (error) => {
-          //       console.log('Failed: Updating Project Id on user failed' + error);
-          //     });
-        },
-          (error) => {
-            console.log(error);
-          });
-    }
-    else if (this.buttonAction === ButtonActions.Update) {
-      console.log('grp' + JSON.stringify(this.projectGroup.value));
-      console.log('edit project:' + this.projectGroup.controls.manager.value);
-      var updateProject = new Project(this.projectGroup.value);
-      updateProject._id = this.editProjectId;
-      updateProject.manager = this.projectGroup.controls.managerId.value;
+    if (this.projectGroup.valid) {
+      if (this.buttonAction === ButtonActions.Add) {
+        this.newProject = new Project(this.projectGroup.getRawValue());
+        console.log(this.newProject);
+        this._projSrv.addProject(this.newProject)
+          .subscribe((res) => {
+            console.log(res);
+            this.selectedUser.projectId = res._id;
+            console.log(this.selectedUser);
+            this.util.showAlert('Successfully created Project', 'OK');
+            this.resetControls();
+            // this._usrSrv.updateUserProject(this.selectedUser)
+            //   .subscribe((res) => {
+            //     console.log('Succssfully created Project and updated ProjectId in User');
+            //   },
+            //     (error) => {
+            //       console.log('Failed: Updating Project Id on user failed' + error);
+            //     });
+          },
+            (error) => {
+              this.util.showAlert('Failed Project creation', 'OK');
+              console.log(error);
+            });
+      }
+      else if (this.buttonAction === ButtonActions.Update) {
+        console.log('grp' + JSON.stringify(this.projectGroup.value));
+        console.log('edit project:' + this.projectGroup.controls.manager.value);
+        var updateProject = new Project(this.projectGroup.getRawValue());
+        updateProject._id = this.editProjectId;
+        updateProject.manager = this.projectGroup.controls.managerId.value;
 
-      console.log('updateProject:' + JSON.stringify(updateProject));
-      this._projSrv.updateProjectById(updateProject)
-        .subscribe((res) => {
-          console.log('Updated project' + res);
-          this.refreshProjectDetails.emit(res);
-          this.resetControls();
-          // this.editUser.projectId = res._id;
-          // console.log('User to Edit: ' + this.editUser);
-          // this._usrSrv.updateUserProject(this.editUser)
-          //   .subscribe((res) => {
-          //     this.resetControls();
-          //     this.buttonAction = ButtonActions.Add;
-          //     console.log('Succssfully updated Project and updated ProjectId in User');
-          //   },
-          //     (error) => {
-          //       console.log('Failed: Updating Project Id on user failed' + error);
-          //     });
-        },
-          (error) => {
-            console.log(error);
-          });
+        console.log('updateProject:' + JSON.stringify(updateProject));
+        this._projSrv.updateProjectById(updateProject)
+          .subscribe((res) => {
+            console.log('Updated project' + res);
+            this.refreshProjectDetails.emit(res);
+            this.resetControls();
+            this.util.showAlert('Successfully updated Project', 'OK');
+            // this.editUser.projectId = res._id;
+            // console.log('User to Edit: ' + this.editUser);
+            // this._usrSrv.updateUserProject(this.editUser)
+            //   .subscribe((res) => {
+            //     this.resetControls();
+            //     this.buttonAction = ButtonActions.Add;
+            //     console.log('Succssfully updated Project and updated ProjectId in User');
+            //   },
+            //     (error) => {
+            //       console.log('Failed: Updating Project Id on user failed' + error);
+            //     });
+          },
+            (error) => {
+              this.util.showAlert('Failed Project updation', 'OK');
+              console.log(error);
+            });
+      }
+    }
+    else {
+      this.util.showAlert('Invalid/Missing Project entries', 'OK', true);
     }
   }
 
@@ -191,6 +214,9 @@ export class AddProjectComponent implements OnInit, OnChanges {
   }
 
   resetControls(): void {
+    this.projectGroup.controls.project.setValue(''); // TODO : Validation is firing should remove
+    this.projectGroup.controls.dateRequired.setValue(true);
+    this.setDateFields();
     this.projectGroup.reset();
   }
 }

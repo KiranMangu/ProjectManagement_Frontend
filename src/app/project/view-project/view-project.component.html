@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="mat-elevation-z8" style="overflow: auto; max-height: 400px">
+    <div class="mat-elevation-z8" style="overflow: auto; max-height: 400px; font-size:14px">
       <ul class="list-group">
         <li class="list-group-item" *ngFor='let proj of filteredProjecList'>
           <div class="row">
@@ -38,17 +38,17 @@
                     <li class="list-group-item">
                       <div>
                         <div>
-                          <span>Project:</span>
+                          <span>Project: </span>
                           <span>{{proj.project}}</span>
                         </div>
                         <div>
                           <div class='row'>
                             <div class='col-md-6'>
-                              <span>No of Tasks:</span>
-                              <spna>{{proj.noOfTasks}}</spna>
+                              <span>No of Tasks: </span>
+                              <span>{{proj.noOfTasks}}</span>
                             </div>
                             <div class='col-md-6'>
-                              <span>Completed:</span>
+                              <span>Completed: </span>
                               <span>{{proj.completed}}</span>
                             </div>
                           </div>
@@ -56,11 +56,11 @@
                         <div>
                           <div class='row'>
                             <div class='col-md-6'>
-                              <span>Start Date:</span>
+                              <span>Start Date: </span>
                               <span>{{proj.startDate  | date: 'MM/dd/yyyy'}}</span>
                             </div>
                             <div class='col-md-6'>
-                              <span>End Date:</span>
+                              <span>End Date: </span>
                               <span>{{proj.endDate  | date: 'MM/dd/yyyy'}}</span>
                             </div>
                           </div>

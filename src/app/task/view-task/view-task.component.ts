@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { DialogComponent } from '../../shared/dialog.component';
+import { DialogComponent } from '../../_shared/dialog.component';
 import { MatDialog } from '@angular/material';
-import { Project } from 'src/app/model/project.model';
-import { UtilServiceService } from '../../util/util-service.service';
-import { DailogData } from 'src/app/model/dialog.model';
-import { Task, TaskView, ParentTask } from 'src/app/model/task.model';
-import { TaskService } from '../../service/task.service';
-import { ObserveService } from '../../util/observe.service';
+import { Project } from 'src/app/_models/project.model';
+import { UtilServiceService } from '../../_util/util-service.service';
+import { DailogData } from 'src/app/_models/dialog.model';
+import { Task, TaskView, ParentTask } from 'src/app/_models/task.model';
+import { TaskService } from '../../_services/task.service';
+import { ObserveService } from '../../_util/observe.service';
 
 @Component({
   selector: 'app-view-task',
