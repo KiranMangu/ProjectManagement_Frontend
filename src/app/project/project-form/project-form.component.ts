@@ -42,21 +42,27 @@ export class ProjectFormComponent implements OnInit {
         .subscribe((tasks) => {
           if (tasks) {
             let taskObject = JSON.parse(JSON.stringify(tasks));
-            let totalTask = taskObject.length;
-            project.noOfTasks = totalTask;
-            project.completed = 0;
-            if (totalTask > 0) {
-              var openedTask = 0;
-              taskObject.forEach(element => {
-                // element.status === undefined -> Initial data was having status as undefined
-                if (element.status === undefined || (element.status !== undefined && element.status === 'Open')) {
-                  openedTask++;
-                }
-              });
-              project.completed = totalTask - openedTask;
+            if (taskObject) {
+              let totalTask = taskObject.length;
+              project.noOfTasks = totalTask;
+              project.completed = 0;
+              if (totalTask > 0) {
+                var openedTask = 0;
+                taskObject.forEach(element => {
+                  // element.status === undefined -> Initial data was having status as undefined
+                  if (element.status === undefined || (element.status !== undefined && element.status === 'Open')) {
+                    openedTask++;
+                  }
+                });
+                project.completed = totalTask - openedTask;
+              }
+              else {
+                project.completed = 0;
+              }
             }
             else {
               project.completed = 0;
+              project.noOfTasks = 0;
             }
             // console.log('Tasks Count:' + JSON.parse(JSON.stringify(tasks)).length)
             if (project.manager !== undefined && project.manager !== null) {

@@ -100,7 +100,7 @@ describe('AddUserComponent: Call user functions', () => {
     // spyOn(userService, 'addUser').and.callFake((arguments) => { });
     // spyOn(userService, 'addUser').and.callFake((temp) => { });
     spyOn(cmpInstace, 'refreshData');
-    spyOn(userService, 'addUser').and.returnValue({ subscribe: () => { cmpInstace.refreshData() } })
+    spyOn(userService, 'addUser').and.returnValue({ subscribe: () => { cmpInstace.refreshData() } });
     cmpInstace.addUser(ButtonActions.Submit);
     expect(cmpInstace.refreshData).toHaveBeenCalled();
     expect(userService.addUser).toHaveBeenCalled();
