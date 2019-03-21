@@ -87,7 +87,11 @@ export class ViewProjectComponent implements OnInit {
               this.getManagerName(project)
             }
           }
-        })
+        },
+          (error) => {
+            console.log('Failed getting Project details:' + error);
+            this.util.showAlert('Failed getting Project details', 'OK', true);
+          })
     })
   }
 

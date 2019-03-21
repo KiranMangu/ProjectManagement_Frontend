@@ -2,9 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewUserComponent } from './view-user.component';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
+import { MatFormFieldModule, MatInputModule, MatSnackBarModule } from '@angular/material';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserService } from '../../_services/user.service';
+import { Observable } from 'rxjs';
+import { SimpleChanges, SimpleChange } from '@angular/core';
 
 describe('ViewUserComponent', () => {
   let component: ViewUserComponent;
@@ -18,8 +21,10 @@ describe('ViewUserComponent', () => {
         BrowserAnimationsModule,
         FormsModule,
         MatFormFieldModule,
-        MatInputModule
-      ]
+        MatInputModule,
+        MatSnackBarModule
+      ],
+      providers: [UserService]
     })
       .compileComponents();
   }));
@@ -45,8 +50,40 @@ describe('ViewUserComponent', () => {
   });
 
   it('should containt search controls', () => {
-    // expect(compiled.querySelector('input[formControlName="searchField"] ')).toBeTruthy();
+    component.copyusersData = [
+      { '_id': 'id001', 'firstName': 'firstName1', 'lastName': 'lastName1', 'employeeId': 'e001', 'projectId': 'pId001', 'taskId': 'tId001' },
+      { '_id': 'id002', 'firstName': 'firstName2', 'lastName': 'lastName2', 'employeeId': 'e002', 'projectId': 'pId002', 'taskId': 'tId002' },
+      { '_id': 'id003', 'firstName': 'firstName3', 'lastName': 'lastName3', 'employeeId': 'e003', 'projectId': 'pId003', 'taskId': 'tId003' }
+    ];
+    const test = [{ '_id': 'id001', 'firstName': 'firstName1', 'lastName': 'lastName1', 'employeeId': 'e001', 'projectId': 'pId001', 'taskId': 'tId001' }];
+    component.searchKey = 'firstName1';
+    component.searchUser();
+    expect(component.filteredUsersData).toEqual(test);
+    component.searchKey = '';
+    component.searchUser();
+    expect(component.copyusersData).toEqual(component.copyusersData);
+    expect(component.searchUser).toBeTruthy();
   });
+
+  it('editUser', () => {
+    component.editUser('0');
+    expect(component.editUser).toBeTruthy();
+  });
+
+  it('deleteUser', () => {
+    // TODO: Need to check for calling service methods which are initialized in contructor
+    // TODO: For public variables/service objects shouldn't be an issue..!!!
+    spyOn(component, 'deleteUser');
+    component.deleteUser('000');
+    expect(component.deleteUser).toBeTruthy();
+  });
+
+  it('ngOnChanges', () => {
+    component.ngOnChanges({
+      data: new SimpleChange('prevValue', 'currentValue', true)
+    });
+    expect(component.sort).toBeTruthy();
+  })
 
   it('sort ', () => {
     component.filteredUsersData = [];

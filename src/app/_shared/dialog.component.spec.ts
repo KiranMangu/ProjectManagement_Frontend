@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { DialogComponent } from './dialog.component';
 import { MatDialogModule, MatRadioModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormsModule } from '@angular/forms';
@@ -21,19 +21,19 @@ xdescribe('DialogComponent', () => {
       .compileComponents();
   }));
 
-  TestBed.overrideModule(BrowserDynamicTestingModule, {
-    set: {
-      entryComponents: [DialogComponent]
-    }
-  });
-  
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+TestBed.overrideModule(BrowserDynamicTestingModule, {
+  set: {
+    entryComponents: [DialogComponent]
+  }
+});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+beforeEach(() => {
+  fixture = TestBed.createComponent(DialogComponent);
+  component = fixture.componentInstance;
+  fixture.detectChanges();
+});
+
+it('should create', () => {
+  expect(component).toBeTruthy();
+});
 });

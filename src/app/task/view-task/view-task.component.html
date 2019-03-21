@@ -62,85 +62,87 @@
   </div>
 </div>
 <mat-divider></mat-divider>
-<div class='row' *ngFor='let task of filteredTasksList'>
-  <div class='col-md-6'>
-    <div class='row'>
-      <div class='col-md-6'>
-        <div>
+<div style='overflow: auto; max-height: 650px; background:white '>
+  <div class='row' *ngFor='let task of filteredTasksList'>
+    <div class='col-md-6'>
+      <div class='row'>
+        <div class='col-md-6'>
           <div>
-            <span>Task
-            </span>
-          </div>
-          <div>
-            <mat-card>
-              <mat-card-content>{{task.task}}</mat-card-content>
-            </mat-card>
-          </div>
-        </div>
-      </div>
-      <div class='col-md-6'>
-        <div>
-          <div>
-            <span>Parent
-            </span>
-          </div>
-          <div>
-            <mat-card>
-              <mat-card-content>{{task.parentTask}}</mat-card-content>
-            </mat-card>
+            <div>
+              <span>Task
+              </span>
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>{{task.task}}</mat-card-content>
+              </mat-card>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class='col-md-4'>
-    <div class='row'>
-      <div class='col-md-4'>
-        <div>
+        <div class='col-md-6'>
           <div>
-            <span>Priority</span>
-          </div>
-          <div>
-            <mat-card>
-              <mat-card-content>{{task.priority}}</mat-card-content>
-            </mat-card>
-          </div>
-        </div>
-      </div>
-      <div class='col-md-4'>
-        <div>
-          <div>
-            <span>Start Date</span>
-          </div>
-          <div>
-            <mat-card>
-              <mat-card-content>{{task.startDate | date: 'MM/dd/yyyy'}}</mat-card-content>
-            </mat-card>
-          </div>
-        </div>
-      </div>
-      <div class='col-md-4'>
-        <div>
-          <div>
-            <span>End Date</span>
-          </div>
-          <div>
-            <mat-card>
-              <mat-card-content>{{task.endDate | date: 'MM/dd/yyyy'}}</mat-card-content>
-            </mat-card>
+            <div>
+              <span>Parent
+              </span>
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>{{task.parentTask}}</mat-card-content>
+              </mat-card>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class='col-md-2'>
-    <div>
-      <div>
-        &nbsp;
+    <div class='col-md-4'>
+      <div class='row'>
+        <div class='col-md-4'>
+          <div>
+            <div>
+              <span>Priority</span>
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>{{task.priority}}</mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div>
+            <div>
+              <span>Start Date</span>
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>{{task.startDate | date: 'MM/dd/yyyy'}}</mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div>
+            <div>
+              <span>End Date</span>
+            </div>
+            <div>
+              <mat-card>
+                <mat-card-content>{{task.endDate | date: 'MM/dd/yyyy'}}</mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class='col-md-2'>
       <div>
-        <button mat-raised-button color='primary' class='btn' (click)='editTask(task)'>Edit</button>
-        <button mat-raised-button color='primary' class='btn'>End Task</button>
+        <div>
+          &nbsp;
+        </div>
+        <div>
+          <button mat-raised-button color='primary' class='btn' (click)='editTask(task._id)'>Edit</button>
+          <button mat-raised-button color='primary'  [disabled]="task.status === 'Completed'" class='btn' (click)='endTask(task)'>End Task</button>
+        </div>
       </div>
     </div>
   </div>

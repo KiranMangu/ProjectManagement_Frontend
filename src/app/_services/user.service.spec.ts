@@ -3,10 +3,14 @@ import { UserService } from './user.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { User } from '../_models/user.model';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('UserService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [HttpClientModule]
+    imports: [
+      HttpClientModule,
+      MatSnackBarModule
+    ]
   }));
 
   it('should be created', () => {
@@ -21,7 +25,10 @@ describe('UserService calls', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        MatSnackBarModule
+      ],
       providers: [UserService]
     }).compileComponents().then(() => {
       // MyComments: Not being used??

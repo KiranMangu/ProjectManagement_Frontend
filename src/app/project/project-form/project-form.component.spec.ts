@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProjectFormComponent } from './project-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('ProjectFormComponent', () => {
   let component: ProjectFormComponent;
@@ -10,7 +11,7 @@ describe('ProjectFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, MatSnackBarModule],
       declarations: [ProjectFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [HttpClient]

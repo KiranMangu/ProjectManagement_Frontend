@@ -15,7 +15,6 @@ import { ObserveService } from '../../_util/observe.service';
 })
 export class ViewTaskComponent implements OnInit {
 
-
   TasksList: Task[];
   filteredTasksList: TaskView[];
   copyTasksList: TaskView[];
@@ -49,6 +48,10 @@ export class ViewTaskComponent implements OnInit {
     this.loadTasks();
     // this._tskSrv.mapParentIdToName(this.filteredTasksList, this.parentList);
     this.copyTasksList = this.filteredTasksList;
+    this._obsSrv.changed
+      .subscribe((dummyValue) => {
+        this.loadTasks();
+      });
   }
 
   getParentTasks(): void {
@@ -63,6 +66,7 @@ export class ViewTaskComponent implements OnInit {
       },
         (error) => {
           console.log('Failed getting Parent Tasks' + error);
+          this.src.showAlert('Failed getting Parent Tasks', 'OK', true);
         });
   }
 
@@ -94,6 +98,17 @@ export class ViewTaskComponent implements OnInit {
     this._obsSrv.editTask(task);
   }
 
+  endTask(taskId): void {
+    this._tskSrv.updateTaskStatusToComplete(taskId)
+      .subscribe(() => {
+        this.src.showAlert('Updated the Task status as Completed', 'OK');
+        this.loadTasks();
+      },
+        (error) => {
+          this.src.showAlert('Failed updating the Task status', 'OK', true);
+        });
+  }
+
   loadTasks(): void {
     this._tskSrv.getTasks()
       .subscribe((tasks) => {
@@ -104,6 +119,7 @@ export class ViewTaskComponent implements OnInit {
       },
         (error) => {
           console.log('Failed getting tasks' + error);
+          this.src.showAlert('Failed getting tasks', 'OK', true);
         });
   }
 

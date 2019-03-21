@@ -10,7 +10,7 @@ import { ObserveService } from '../_util/observe.service';
 export class HomeComponent implements OnInit {
   //TODO: on tab click the tab name should be displayed on top fo the page
   tabTitle: string;
-  tabNames: string[] = ['Add Project', 'Add Task', 'User', 'View Task'];
+  tabNames: string[] = ['User', 'Add Project', 'Add Task', 'View Task'];
   selectedTab: number;
 
   constructor(private _obSrv: ObserveService) {
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     this._obSrv.cast
       .subscribe((task) => {
         if (task !== undefined) {
-          this.selectedTab = 1;
+          this.selectedTab = 2;
         }
       });
   }
@@ -29,5 +29,9 @@ export class HomeComponent implements OnInit {
     if (this.tabNames !== undefined)
       this.tabTitle = this.tabNames[tabeSelected];
     this.selectedTab = tabeSelected;
+    // View Task
+    if (tabeSelected === 3) {
+      this._obSrv.tabChanged(3);
+    }
   }
 }

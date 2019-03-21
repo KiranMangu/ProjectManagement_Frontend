@@ -36,7 +36,7 @@ export class UtilServiceService {
         data.list.push({ name: element.parentTask, Id: element._id });
         console.log('parent: ' + element.parentTask + ' Id: ' + element._id);
       });
-      
+      data.list.splice(0, 1);
     }
     // return data;
   }

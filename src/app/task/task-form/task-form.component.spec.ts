@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskFormComponent } from './task-form.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('TaskFormComponent', () => {
   let component: TaskFormComponent;
@@ -9,6 +10,9 @@ describe('TaskFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatSnackBarModule
+      ],
       declarations: [TaskFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })

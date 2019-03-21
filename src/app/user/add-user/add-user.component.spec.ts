@@ -86,16 +86,16 @@ describe('AddUserComponent: Call user functions', () => {
   }));
 
   it('resetFields()', () => {
-    spyOn(cmpInstace, 'resetFields').and.callFake(() => { });
+    spyOn(cmpInstace, 'resetFields');
     cmpInstace.resetFields();
     expect(cmpInstace.resetFields).toHaveBeenCalled();
   });
 
   it('adduser', () => {
     cmpInstace.ngOnInit();
-    cmpInstace.userAddGrp.firstName = 'firstName';
-    cmpInstace.userAddGrp.lastName = 'lastName';
-    cmpInstace.userAddGrp.employeeId = 'Emp000';
+    cmpInstace.userAddGrp.controls.firstName.setValue('firstName');
+    cmpInstace.userAddGrp.controls.lastName.setValue('lastName');
+    cmpInstace.userAddGrp.controls.employeeId.setValue('Emp000');
     var temp = new User({ firstName: '11', lastName: '11', employeeId: '11' });
     // spyOn(userService, 'addUser').and.callFake((arguments) => { });
     // spyOn(userService, 'addUser').and.callFake((temp) => { });
@@ -120,8 +120,11 @@ describe('AddUserComponent: Call user functions', () => {
   });
 
   it('NgOnchanges', () => {
-    spyOn(cmpInstace, 'ngOnChanges').and.callFake(() => { });
-    cmpInstace.ngOnChanges();
-    expect(cmpInstace.ngOnChanges).toHaveBeenCalled();
+    // spyOn(cmpInstace, 'ngOnChanges').and.callFake(() => { });
+    cmpInstace.ngOnChanges({
+      data: new SimpleChange('prevValue', 'currencValue', true),
+    });
+    expect(cmpInstace.updateUserId).toEqual("currencValue");
+    expect(cmpInstace.buttonAction).toEqual(ButtonActions.Submit);
   });
 });

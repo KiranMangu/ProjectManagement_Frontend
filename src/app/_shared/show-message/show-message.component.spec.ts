@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShowMessageComponent } from './show-message.component';
+import { MatSnackBarModule, MAT_SNACK_BAR_DATA } from '@angular/material';
 
 describe('ShowMessageComponent', () => {
   let component: ShowMessageComponent;
@@ -8,9 +9,16 @@ describe('ShowMessageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShowMessageComponent ]
+      imports: [
+        MatSnackBarModule
+      ],
+      declarations: [ShowMessageComponent],
+      providers: [{
+        provide: MAT_SNACK_BAR_DATA,
+        useValue: {}
+      }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

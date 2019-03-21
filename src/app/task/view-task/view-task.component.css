@@ -24,3 +24,7 @@ span {
 .transparent-card {
   background-color: transparent;
 }
+
+.mat-raised-button[disabled]{
+  background-color: grey;
+}

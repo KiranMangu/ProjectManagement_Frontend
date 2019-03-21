@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddProjectComponent } from './add-project.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSliderModule } from '@angular/material';
+import { MatDatepickerModule, MatNativeDateModule, MatCheckboxModule, MatSliderModule, MatSnackBarModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('AddProjectComponent', () => {
@@ -19,6 +19,7 @@ describe('AddProjectComponent', () => {
         MatNativeDateModule,
         MatCheckboxModule,
         MatSliderModule
+        , MatSnackBarModule
       ],
       declarations: [AddProjectComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]

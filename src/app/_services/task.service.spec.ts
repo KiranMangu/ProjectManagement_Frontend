@@ -3,9 +3,17 @@ import { TestBed, async } from '@angular/core/testing';
 import { TaskService } from './task.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Task } from '../_models/task.model';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('TaskService', () => {
-  beforeEach(() => TestBed.configureTestingModule({ imports: [HttpClientModule] }));
+  beforeEach(() => TestBed
+    .configureTestingModule(
+      {
+        imports: [
+          HttpClientModule,
+          MatSnackBarModule
+        ]
+      }));
 
   it('should be created', () => {
     const service: TaskService = TestBed.get(TaskService);
@@ -17,25 +25,30 @@ describe('UserService calls', () => {
   let service, http, newTask;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-    }).compileComponents().then(() => {
-      // MyComments: Not being used??
-      // inject([TaskService, HttpClient], (service: TaskService, http: HttpClient) => {
-      // });
-      http = TestBed.get(HttpClient);
-      service = TestBed.get(TaskService);
+    TestBed
+      .configureTestingModule(
+        {
+          imports: [
+            HttpClientModule,
+            MatSnackBarModule
+          ]
+        }).compileComponents().then(() => {
+          // MyComments: Not being used??
+          // inject([TaskService, HttpClient], (service: TaskService, http: HttpClient) => {
+          // });
+          http = TestBed.get(HttpClient);
+          service = TestBed.get(TaskService);
 
-      newTask = new Task({
-        task: 'taskName',
-        startDate: new Date(new Date().toISOString()),
-        endDate: new Date(new Date().toISOString()),
-        priority: 0,
-        status: 'Open',
-        projectId: '000',
-        parentId: '000'
-      });
-    });
+          newTask = new Task({
+            task: 'taskName',
+            startDate: new Date(new Date().toISOString()),
+            endDate: new Date(new Date().toISOString()),
+            priority: 0,
+            status: 'Open',
+            projectId: '000',
+            parentId: '000'
+          });
+        });
   }));
 
   /////////////////
@@ -59,6 +72,13 @@ describe('UserService calls', () => {
     spyOn(http, 'put').and.returnValue('test');
     const ret = service.updateTaskById(newTask);
     expect(service.updateTaskById).toBeTruthy();
+    expect(ret).toEqual('test');
+  });
+
+  it('updateTaskStatusToComplete', () => {
+    spyOn(http, 'post').and.returnValue('test');
+    const ret = service.updateTaskStatusToComplete(newTask);
+    expect(service.updateTaskStatusToComplete).toBeTruthy();
     expect(ret).toEqual('test');
   });
 

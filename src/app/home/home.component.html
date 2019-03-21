@@ -3,16 +3,16 @@
   {{tabTitle}}
 </h3>
 <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="tabChanged($event)">
-  <mat-tab label='Add Project'>
-    <app-project-form></app-project-form>
-  </mat-tab>
-  <mat-tab label='Add Task'>
-    <app-task-form></app-task-form>
-  </mat-tab>
-  <mat-tab label='User'>
+  <mat-tab [label]='tabNames[0]'>
     <app-user-form></app-user-form>
   </mat-tab>
-  <mat-tab label='View Task'>
+  <mat-tab [label]='tabNames[1]'>
+    <app-project-form></app-project-form>
+  </mat-tab>
+  <mat-tab [label]='tabNames[2]'>
+    <app-task-form></app-task-form>
+  </mat-tab>
+  <mat-tab [label]='tabNames[3]'>
     <app-view-task></app-view-task>
   </mat-tab>
 </mat-tab-group>

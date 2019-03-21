@@ -63,6 +63,10 @@ export class TaskService {
     return this._http.get(this.parentTaskUrl + Id);
   }
 
+  updateTaskStatusToComplete(task: any) {
+    return this._http.post(this.apiUrl + 'updateTaskStatus/', task);
+  }
+
   sortData(sortOn, sortOrder): any {
     return (a, b) => {
       if (a[sortOn] > b[sortOn]) {

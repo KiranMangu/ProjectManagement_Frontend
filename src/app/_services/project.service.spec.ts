@@ -3,9 +3,16 @@ import { ProjectService } from './project.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Project } from '../_models/project.model';
 import { User } from '../_models/user.model';
+import { MatSnackBarModule } from '@angular/material';
 
 describe('ProjectService', () => {
-  beforeEach(() => TestBed.configureTestingModule({ imports: [HttpClientModule] }));
+  beforeEach(() => TestBed
+    .configureTestingModule({
+      imports: [
+        HttpClientModule,
+        MatSnackBarModule
+      ]
+    }));
 
   it('should be created', () => {
     const service: ProjectService = TestBed.get(ProjectService);
@@ -18,7 +25,10 @@ describe('Project Service calls', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        MatSnackBarModule
+      ]
     }).compileComponents().then(() => {
 
       service = TestBed.get(ProjectService);
@@ -51,6 +61,13 @@ describe('Project Service calls', () => {
     expect(retValue).toEqual('test');
   });
 
+  it('getManagerByProjectId', () => {
+    spyOn(http, 'get').and.returnValue('test');
+    const retValue = service.getManagerByProjectId(tempProject);
+    expect(service.getManagerByProjectId).toBeTruthy();
+    expect(retValue).toEqual('test');
+  });
+
   it('addProject', () => {
     spyOn(http, 'post').and.returnValue('test');
     const retValue = service.addProject(tempProject);
@@ -72,6 +89,10 @@ describe('Project Service calls', () => {
     expect(retValue).toEqual('test');
   });
 
+  it('ngOnInit', () => {
+    service.ngOnInit();
+  });
+  
   it('getSelectedUser', () => {
     const usertList: User[] = [
       new User({ _id: '1', firstName: 'firstName1', lastName: 'lastName1', employeeId: 'Emp001' }),

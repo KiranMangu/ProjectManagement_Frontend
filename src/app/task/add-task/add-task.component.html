@@ -131,7 +131,7 @@
           <td>
           </td>
           <td class='align-right'>
-            <button mat-raised-button color='primary' class='btn' (click)='addTask()'>{{buttonAction}}</button>
+            <button mat-raised-button color='primary' [disabled]='taskGroup.invalid && taskGroup.touched' class='btn' (click)='addTask()'>{{buttonAction}}</button>
             <button mat-raised-button color='primary' type='button' class='btn' (click)='resetControls()'>Reset</button>
           </td>
         </tr>

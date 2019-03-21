@@ -29,7 +29,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
   constructor(private _fb: FormBuilder, private _usrSrv: UserService,
     private _prjSrv: ProjectService, private _dialog: MatDialog,
     private _utilSrv: UtilServiceService, private _tskSrv: TaskService,
-    private _obSrv: ObserveService, private _snakBar: MatSnackBar) { }
+    private _obSrv: ObserveService, ) { }
   disableControl: boolean = false;
   targetData: DailogData = {
     title: '',
@@ -56,7 +56,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
       userId: [''],
       status: ['Open'],
       priority: ['', [Validators.required]]
-    });
+    }, { validator: this.checkDate });
     this._obSrv.cast
       .subscribe((task) => {
         if (task !== undefined) {
@@ -68,6 +68,15 @@ export class AddTaskComponent implements OnInit, OnChanges {
           this.fillFieldsForUpdate(task);
         }
       });
+  }
+
+  checkDate(group: FormGroup): any {
+    if ((group.controls.endDate.value !== null) && group.controls.startDate.value > group.controls.endDate.value) {
+      console.log("invalid  :" + group.controls.endDate.value + ":");
+      return { notValid: true };
+    }
+    console.log("valid");
+    return null;
   }
 
   getOtherFields(prjId: String, prntId: String): any {
@@ -113,19 +122,11 @@ export class AddTaskComponent implements OnInit, OnChanges {
       status: ['Open'],
       priority: ['', [Validators.required]]
    */
-  ValidateControls(cntrlGrp: FormGroup) {
-    // if ((cntrlGrp.controls.endDate.value !== null) && cntrlGrp.controls.startDate < cntrlGrp.controls.endDate) {
-    //   return {
-    //     notValid: true
-    //   }
-    //   return null;
-    // }
-    console.log('Validation fired');
-    // if (cntrlGrp.controls.projectName.value === undefined || cntrlGrp.controls.projectName.value.trim() === '') {
-    return { notValid: true };
-    // }
-
-  }
+  // Commented ValidateControls
+  // ValidateControls(cntrlGrp: FormGroup) {
+  //   console.log('Validation fired');
+  //   return { notValid: true };
+  // }
 
   onParentTaskSelected(): void {
     // throw new Error("Method not implemented.");
@@ -174,7 +175,11 @@ export class AddTaskComponent implements OnInit, OnChanges {
               this.taskGroup.controls.projectName.setValue(result.name);
               this.taskGroup.controls.projectId.setValue(result.Id);
             }
-          });
+          },
+            (error) => {
+              console.log('Failed getting Project list: ' + JSON.stringify(error));
+              this._utilSrv.showAlert('Failed getting Project list', 'OK', true);
+            });
       });
   }
 
@@ -196,7 +201,11 @@ export class AddTaskComponent implements OnInit, OnChanges {
               this.taskGroup.controls.parentTask.setValue(result.name);
               this.taskGroup.controls.parentTaskId.setValue(result.Id);
             }
-          });
+          },
+            (error) => {
+              console.log('Failed getting Parent Task list: ' + JSON.stringify(error));
+              this._utilSrv.showAlert('Failed getting Parent Task list', 'OK', true);
+            });
       })
 
   }
@@ -218,7 +227,11 @@ export class AddTaskComponent implements OnInit, OnChanges {
               this.taskGroup.controls.user.setValue(result.name);
               this.taskGroup.controls.userId.setValue(result.Id);
             }
-          });
+          },
+            (error) => {
+              console.log('Failed getting User list: ' + JSON.stringify(error));
+              this._utilSrv.showAlert('Failed getting User list', 'OK', true);
+            });
       });
   }
 
@@ -227,54 +240,57 @@ export class AddTaskComponent implements OnInit, OnChanges {
     console.log(this.taskGroup.invalid);
     if (this.taskGroup.invalid)
       return;
-
-    console.log(this.taskGroup.controls.isParentTask.value);
-    if (this.taskGroup.controls.isParentTask.value) {
-      console.log('Parent Task insertion');
-      const newParentTask = new ParentTask(this.taskGroup.controls.task.value);
-      console.log('task:', JSON.stringify(newParentTask));
-      this._tskSrv.addParentTask(newParentTask)
-        .subscribe((res) => {
-          console.log('Success: Created a new Parent Task')
-
-          this.resetControls();
-          // console.log(res.parentTask._id);
-          // this.taskGroup.controls.parentId.setValue(res.parentTask._id);
-        },
-          (error) => {
-            console.log('Failed creating parent task' + error);
-          })
-    }
     else {
-      const newTask = new Task(this.taskGroup.getRawValue()); // MyComments: getRawValue to get values even from disabled controls
-      console.log('parentTaskId:');
-      // console.log('parentId' + this.taskGroup.controls.projectId.value);
-      console.log('newTask:' + JSON.stringify(newTask));
-      // console.log(new Date(temp.endDate).toISOString());
-      this._tskSrv.addTask(newTask)
-        .subscribe((res) => {
-          console.log('Task Inserted');
-          const updateUser = {
-            _id: this.taskGroup.controls.userId.value,
-            projectId: this.taskGroup.controls.projectId.value,
-            taskId: res.taskId
-          };
-          console.log(JSON.stringify(res));
-          // this._usrSrv.updateUserProjectAndTask(updateUser)
-          //   .subscribe((res) => {
-          //     console.log('Successful: updated user project and task' + res);
-          //   },
-          //     (error) => {
-          //       console.log('Error Updating user project and Task' + error);
-          //     });
-          this._snakBar.open('Successfully created new Task');
-          this.resetControls();
+      console.log(this.taskGroup.controls.isParentTask.value);
+      if (this.taskGroup.controls.isParentTask.value) {
+        console.log('Parent Task insertion');
+        const newParentTask = new ParentTask(this.taskGroup.controls.task.value);
+        console.log('task:', JSON.stringify(newParentTask));
+        this._tskSrv.addParentTask(newParentTask)
+          .subscribe((res) => {
+            console.log('Success: Created a new Parent Task')
 
-        },
-          (error) => {
-            this._snakBar.open('Failed: Inserting the task');
-            console.log('Failed inserting task: ' + JSON.stringify(error));
-          });
+            this.resetControls();
+            this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK', true);
+            // console.log(res.parentTask._id);
+            // this.taskGroup.controls.parentId.setValue(res.parentTask._id);
+          },
+            (error) => {
+              console.log('Failed creating parent task' + error);
+              this._utilSrv.showAlert('Failed creating the new Parent Task', 'OK', true);
+            })
+      }
+      else {
+        const newTask = new Task(this.taskGroup.getRawValue()); // MyComments: getRawValue to get values even from disabled controls
+        console.log('parentTaskId:');
+        // console.log('parentId' + this.taskGroup.controls.projectId.value);
+        console.log('newTask:' + JSON.stringify(newTask));
+        // console.log(new Date(temp.endDate).toISOString());
+        this._tskSrv.addTask(newTask)
+          .subscribe((res) => {
+            console.log('Task Inserted');
+            const updateUser = {
+              _id: this.taskGroup.controls.userId.value,
+              projectId: this.taskGroup.controls.projectId.value,
+              taskId: res.taskId
+            };
+            console.log(JSON.stringify(res));
+            // this._usrSrv.updateUserProjectAndTask(updateUser)
+            //   .subscribe((res) => {
+            //     console.log('Successful: updated user project and task' + res);
+            //   },
+            //     (error) => {
+            //       console.log('Error Updating user project and Task' + error);
+            //     });
+            this._utilSrv.showAlert('Successfully created new Task', 'OK', true);
+            this.resetControls();
+
+          },
+            (error) => {
+              console.log('Failed inserting task: ' + JSON.stringify(error));
+              this._utilSrv.showAlert('Failed new Task creation', 'OK', true);
+            });
+      }
     }
   }
 
