@@ -40,30 +40,30 @@ describe('ViewProjectComponent', () => {
     let priorityRev, stRev, retValue;
     beforeEach(() => {
 
-
+      let today = new Date();
       component.filteredProjecList = [
-        { endDate: new Date(), startDate: new Date(), project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project2', priority: 2, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project3', priority: 3, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project4', priority: 4, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project5', priority: 5, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' }
+        { endDate: today, startDate: today, project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project2', priority: 2, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project3', priority: 3, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project4', priority: 4, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project5', priority: 5, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' }
       ];
       priorityRev = [
-        { endDate: new Date(), startDate: new Date(), project: 'project5', priority: 5, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project4', priority: 4, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project3', priority: 3, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project2', priority: 2, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project5', priority: 5, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project4', priority: 4, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project3', priority: 3, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project2', priority: 2, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
       ];
       stRev = [
-        { endDate: new Date(), startDate: new Date(), project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project2', priority: 2, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project3', priority: 3, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project4', priority: 4, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
-        { endDate: new Date(), startDate: new Date(), project: 'project5', priority: 5, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' }
+        { endDate: today, startDate: today, project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project2', priority: 2, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project3', priority: 3, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project4', priority: 4, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' },
+        { endDate: today, startDate: today, project: 'project5', priority: 5, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' }
       ];
 
-      retValue = [{ endDate: new Date(), startDate: new Date(), project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' }]
+      retValue = [{ endDate: today, startDate: today, project: 'project1', priority: 1, noOfTasks: 0, completed: 0, managerName: '', manager: '', _id: '12' }]
     });
     it('ngOnChanges', () => {
       component.ngOnChanges({

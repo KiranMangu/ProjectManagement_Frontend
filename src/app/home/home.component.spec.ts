@@ -40,4 +40,14 @@ describe('HomeComponent', () => {
     expect(compiled.querySelector('app-user-form')).toBeTruthy();
   });
 
+  it('tabChanged', () => {
+    component.tabChanged(0);
+    expect(component.tabChanged).toBeTruthy();
+  });
+
+  it('tabChanged', () => {
+    component.tabChanged(3);
+    expect(component.tabChanged).toBeTruthy();
+  });
+
 });

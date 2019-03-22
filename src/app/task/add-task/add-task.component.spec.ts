@@ -7,11 +7,13 @@ import { MatDatepickerModule, MatSnackBarModule, MatNativeDateModule, MatCheckbo
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectService } from 'src/app/_services/project.service';
 import { Task } from 'src/app/_models/task.model';
+import { TaskService } from 'src/app/_services/task.service';
+import { UserService } from 'src/app/_services/user.service';
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
   let fixture: ComponentFixture<AddTaskComponent>;
-  let prjSrv;
+  let prjSrv, tskSrv, usrSrv;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,6 +37,8 @@ describe('AddTaskComponent', () => {
     component = fixture.componentInstance;
     const debugElement = fixture.debugElement;
     prjSrv = debugElement.injector.get(ProjectService);
+    tskSrv = debugElement.injector.get(TaskService);
+    usrSrv = debugElement.injector.get(UserService);
     fixture.detectChanges();
   });
 
@@ -60,9 +64,10 @@ describe('AddTaskComponent', () => {
       expect(retValue).toEqual({ notValid: true });
     });
     // TODO: Subscribe
-    xit('getOtherFields', () => {
-      spyOn(prjSrv, 'getProjectById');
+    it('getOtherFields', () => {
+      spyOn(prjSrv, 'getProjectById').and.returnValue({ subscribe: () => { } });
       component.getOtherFields('pd01', 'rnt01')
+      expect(prjSrv.getProjectById).toHaveBeenCalled();
     });
 
     it('fillFieldsForUpdate', () => {
@@ -87,8 +92,9 @@ describe('AddTaskComponent', () => {
 
     // TODO Subscribe
     it('getProjects', () => {
-      spyOn(component, 'getProjects').and.returnValue(true);
+      spyOn(prjSrv, 'getProjects').and.returnValue({ subscribe: () => { } });
       component.getProjects();
+      expect(prjSrv.getProjects).toHaveBeenCalled();
       expect(component.getProjects).toBeTruthy();
       // spyOn(prjSrv, 'getProjects').and.returnValue(true);
       // component.getProjects();
@@ -96,14 +102,16 @@ describe('AddTaskComponent', () => {
     });
 
     it('getParentTasks', () => {
-      spyOn(component, 'getParentTasks').and.returnValue(true);
+      spyOn(tskSrv, 'getAllParentTasks').and.returnValue({ subscribe: () => { } });
       component.getParentTasks();
+      expect(tskSrv.getAllParentTasks).toHaveBeenCalled();
       expect(component.getParentTasks).toBeTruthy();
     });
 
     it('getUsers', () => {
-      spyOn(component, 'getUsers').and.returnValue(true);
+      spyOn(usrSrv, 'getUsers').and.returnValue({ subscribe: () => { } });
       component.getUsers();
+      expect(usrSrv.getUsers).toHaveBeenCalled();
       expect(component.getUsers).toBeTruthy();
     });
 
@@ -119,6 +127,12 @@ describe('AddTaskComponent', () => {
     it('clearTagetObject', () => {
       component.clearTagetObject();
       expect(component.clearTagetObject).toBeTruthy();
+    });
+
+    it('resetControls', () => {
+      spyOn(component.taskGroup, 'reset');
+      component.resetControls();
+      expect(component.taskGroup.reset).toHaveBeenCalled();
     });
 
   });

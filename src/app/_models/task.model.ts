@@ -35,7 +35,7 @@ export class TaskView {
 export class ParentTask {
     parentTask: String;
 
-    constructor(parentTask: string) {
+    constructor(parentTask: String) {
         this.parentTask = parentTask;
     }
 }

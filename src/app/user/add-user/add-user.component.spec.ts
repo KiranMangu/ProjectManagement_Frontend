@@ -120,11 +120,16 @@ describe('AddUserComponent: Call user functions', () => {
   });
 
   it('NgOnchanges', () => {
-    // spyOn(cmpInstace, 'ngOnChanges').and.callFake(() => { });
     cmpInstace.ngOnChanges({
       data: new SimpleChange('prevValue', 'currencValue', true),
     });
     expect(cmpInstace.updateUserId).toEqual("currencValue");
     expect(cmpInstace.buttonAction).toEqual(ButtonActions.Submit);
   });
+
+  xit('refreshData', () => {
+    spyOn(component.form, 'resetForm');
+    cmpInstace.refreshData();
+  });
+
 });

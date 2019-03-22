@@ -12,7 +12,7 @@ import { SimpleChanges, SimpleChange } from '@angular/core';
 describe('ViewUserComponent', () => {
   let component: ViewUserComponent;
   let fixture: ComponentFixture<ViewUserComponent>;
-  let compiled;
+  let compiled, usrSrv;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewUserComponent],
@@ -32,6 +32,8 @@ describe('ViewUserComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ViewUserComponent);
     component = fixture.componentInstance;
+    const debugElement = fixture.debugElement;
+    usrSrv = debugElement.injector.get(UserService);
     fixture.detectChanges();
     compiled = fixture.debugElement.nativeElement;
   });
@@ -73,9 +75,9 @@ describe('ViewUserComponent', () => {
   it('deleteUser', () => {
     // TODO: Need to check for calling service methods which are initialized in contructor
     // TODO: For public variables/service objects shouldn't be an issue..!!!
-    spyOn(component, 'deleteUser');
+    spyOn(usrSrv, 'deleteUser').and.returnValue({ subscribe: () => { } });
     component.deleteUser('000');
-    expect(component.deleteUser).toBeTruthy();
+    expect(usrSrv.deleteUser).toHaveBeenCalled();
   });
 
   it('ngOnChanges', () => {

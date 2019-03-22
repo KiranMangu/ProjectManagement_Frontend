@@ -113,12 +113,14 @@ describe('ViewTaskComponent', () => {
     });
 
     it('endTask', () => {
-      // spyOn( tskSrv, 'updateTaskStatusToComplete').and.returnValue(true);
-      spyOn(component, 'endTask');
+      spyOn(tskSrv, 'updateTaskStatusToComplete').and.returnValue({ subscribe: () => { } });
       component.endTask('000');
-      // expect(tskSrv.updateTaskStatusToComplete).toHaveBeenCalled();
-      expect(component.endTask).toHaveBeenCalled();
+      expect(tskSrv.updateTaskStatusToComplete).toHaveBeenCalled();
+      expect(component.endTask).toBeTruthy();
     });
-
+    
+    xit('openDialog', () => {
+      component.openDialog();
+    })
   });
 });
