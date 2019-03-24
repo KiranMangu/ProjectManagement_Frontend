@@ -1,6 +1,7 @@
  FROM node:latest
  RUN mkdir -p /usr/src/app
  WORKDIR /usr/src/app
+ RUN npm i -g @angular/cli
  COPY package.json /usr/src/app
 # # RUN npm cache clean
  RUN npm install
