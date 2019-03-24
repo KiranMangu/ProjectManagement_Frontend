@@ -7,7 +7,8 @@
  RUN npm install
  COPY . /usr/src/app
  RUN ng build
- RUN ls
+ RUN pwd
+ RUN ls -R
 # EXPOSE 4200
 # CMD ["ng","serve"]
 # CMD ["echo","testing"]
