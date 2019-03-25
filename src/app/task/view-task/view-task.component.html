@@ -3,14 +3,14 @@
     <div class='row'>
       <div class='col-md-8'>
         <mat-form-field class='full-width-container'>
-          <input matInput placeholder='Project Name'>
+          <input matInput placeholder='Project Name' [(ngModel)]='searchKey'>
         </mat-form-field>
       </div>
       <div class='col-md-4'>
         <div>
           <div>&nbsp;</div>
           <div>
-            <button mat-raised-button color='primary' (click)="openDialog()">Search</button>
+            <button mat-raised-button color='primary' (click)="searchByProject()">Search</button>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@
           &nbsp;
         </div>
         <div>
-          <button mat-raised-button color='primary' class='btn' (click)='editTask(task._id)'>Edit</button>
+          <button mat-raised-button color='primary' class='btn' (click)='editTask(task)'>Edit</button>
           <button mat-raised-button color='primary'  [disabled]="task.status === 'Completed'" class='btn' (click)='endTask(task)'>End Task</button>
         </div>
       </div>

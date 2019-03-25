@@ -48,6 +48,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
       projectId: [''],
       isParentTask: [false],
       task: ['', [Validators.required]],
+      taskId: [undefined],
       parentTask: [''],// MyComments: [{ value: '', disabled: true }], disable at this level is holding the validations instead use readonly on  input
       parentTaskId: [undefined],
       startDate: [undefined, [Validators.required]],
@@ -66,6 +67,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
             this.getOtherFields(task.projectId, task.parentId);
           }
           this.fillFieldsForUpdate(task);
+          console.log(JSON.stringify(task));
         }
       });
   }
@@ -100,6 +102,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
 
   fillFieldsForUpdate(task: any) {
     this.buttonAction = ButtonActions.UpdateTask;
+    this.taskGroup.controls.taskId.setValue(task._id);
     this.taskGroup.controls.task.setValue(task.task);
     // this.taskGroup.controls.parentId.setValue(task.parentId);
     this.taskGroup.controls.startDate.setValue(task.startDate);
@@ -242,54 +245,98 @@ export class AddTaskComponent implements OnInit, OnChanges {
       return;
     else {
       console.log(this.taskGroup.controls.isParentTask.value);
-      if (this.taskGroup.controls.isParentTask.value) {
-        console.log('Parent Task insertion');
-        const newParentTask = new ParentTask(this.taskGroup.controls.task.value);
-        console.log('task:', JSON.stringify(newParentTask));
-        this._tskSrv.addParentTask(newParentTask)
-          .subscribe((res) => {
-            console.log('Success: Created a new Parent Task')
+      if (this.buttonAction === ButtonActions.AddTask) {
+        if (this.taskGroup.controls.isParentTask.value) {
+          console.log('Parent Task insertion');
+          const newParentTask = new ParentTask(this.taskGroup.controls.parentTask.value);
+          console.log('task:', JSON.stringify(newParentTask));
+          this._tskSrv.addParentTask(newParentTask)
+            .subscribe((res) => {
+              console.log('Success: Created a new Parent Task')
 
-            this.resetControls();
-            this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK', true);
-            // console.log(res.parentTask._id);
-            // this.taskGroup.controls.parentId.setValue(res.parentTask._id);
-          },
-            (error) => {
-              console.log('Failed creating parent task' + error);
-              this._utilSrv.showAlert('Failed creating the new Parent Task', 'OK', true);
-            })
+              this.resetControls();
+              this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK', true);
+              // console.log(res.parentTask._id);
+              // this.taskGroup.controls.parentId.setValue(res.parentTask._id);
+            },
+              (error) => {
+                console.log('Failed creating parent task' + error);
+                this._utilSrv.showAlert('Failed creating the new Parent Task', 'OK', true);
+              })
+        }
+        else {
+          const newTask = new Task(this.taskGroup.getRawValue()); // MyComments: getRawValue to get values even from disabled controls
+          console.log('parentTaskId:');
+          // console.log('parentId' + this.taskGroup.controls.projectId.value);
+          console.log('newTask:' + JSON.stringify(newTask));
+          // console.log(new Date(temp.endDate).toISOString());
+          this._tskSrv.addTask(newTask)
+            .subscribe((res) => {
+              console.log('Task Inserted');
+              const updateUser = {
+                _id: this.taskGroup.controls.userId.value,
+                projectId: this.taskGroup.controls.projectId.value,
+                taskId: res.taskId
+              };
+              console.log(JSON.stringify(res));
+              // this._usrSrv.updateUserProjectAndTask(updateUser)
+              //   .subscribe((res) => {
+              //     console.log('Successful: updated user project and task' + res);
+              //   },
+              //     (error) => {
+              //       console.log('Error Updating user project and Task' + error);
+              //     });
+              this._utilSrv.showAlert('Successfully created new Task', 'OK', true);
+              this.resetControls();
+
+            },
+              (error) => {
+                console.log('Failed inserting task: ' + JSON.stringify(error));
+                this._utilSrv.showAlert('Failed new Task creation', 'OK', true);
+              });
+        }
       }
       else {
-        const newTask = new Task(this.taskGroup.getRawValue()); // MyComments: getRawValue to get values even from disabled controls
-        console.log('parentTaskId:');
-        // console.log('parentId' + this.taskGroup.controls.projectId.value);
-        console.log('newTask:' + JSON.stringify(newTask));
-        // console.log(new Date(temp.endDate).toISOString());
-        this._tskSrv.addTask(newTask)
-          .subscribe((res) => {
-            console.log('Task Inserted');
-            const updateUser = {
-              _id: this.taskGroup.controls.userId.value,
-              projectId: this.taskGroup.controls.projectId.value,
-              taskId: res.taskId
-            };
-            console.log(JSON.stringify(res));
-            // this._usrSrv.updateUserProjectAndTask(updateUser)
-            //   .subscribe((res) => {
-            //     console.log('Successful: updated user project and task' + res);
-            //   },
-            //     (error) => {
-            //       console.log('Error Updating user project and Task' + error);
-            //     });
-            this._utilSrv.showAlert('Successfully created new Task', 'OK', true);
-            this.resetControls();
+        if (this.taskGroup.controls.isParentTask.value) {
+          console.log('Update Parent Task');
+          const newParentTask = {
+            'id': this.taskGroup.controls.parentId.value,
+            'parentTask': this.taskGroup.controls.parentTask.value
+          };
+          console.log('task:', JSON.stringify(newParentTask));
+          // this._tskSrv.updateParenTsk(newParentTask)
+          //   .subscribe((res) => {
+          //     if (res) {
+          //       console.log('Success: updated the Parent Task')
+          //       this.resetControls();
+          //       this._utilSrv.showAlert('Successfully updated theParent Task', 'OK', true);
+          //     }
+          //   },
+          //     (error) => {
+          //       console.log('Failed updating the parent task' + error);
+          //       this._utilSrv.showAlert('Failed updating Parent Task', 'OK', true);
+          //     });
+        }
+        else {
+          const updateTask = new Task(this.taskGroup.getRawValue());
+          console.log('update task:' + JSON.stringify(updateTask));
+          console.log('update task:' + this.taskGroup.controls.taskId.value);
+          updateTask.taskId = this.taskGroup.controls.taskId.value;
+          this._tskSrv.updateTaskById(updateTask)
+            .subscribe((res) => {
+              if (res) {
+                console.log('Task updated');
+                console.log(JSON.stringify(res));
+                this._utilSrv.showAlert('Successfully updated the Task', 'OK', true);
+                this.resetControls();
+              }
 
-          },
-            (error) => {
-              console.log('Failed inserting task: ' + JSON.stringify(error));
-              this._utilSrv.showAlert('Failed new Task creation', 'OK', true);
-            });
+            },
+              (error) => {
+                console.log('Failed updating the task: ' + JSON.stringify(error));
+                this._utilSrv.showAlert('Failed updating the Task', 'OK', true);
+              });
+        }
       }
     }
   }

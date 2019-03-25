@@ -17,6 +17,7 @@ export class TaskService {
   }
 
   getTasks(): any {
+    console.log('GetTasks');
     return this._http.get(this.apiUrl);
   }
 
@@ -29,6 +30,7 @@ export class TaskService {
   }
 
   updateTaskById(updateTask: any): any {
+    console.log('Update task controller');
     return this._http.put(this.apiUrl + 'update', updateTask);
   }
 
@@ -46,6 +48,10 @@ export class TaskService {
 
   addParentTask(newParentTask: ParentTask): any {
     return this._http.post(this.parentTaskUrl + 'create', newParentTask);
+  }
+
+  updateParenTsk(parenTask: any): any {
+    return this._http.post(this.parentTaskUrl + 'update', parenTask);
   }
 
   getAllParentTasks() {
@@ -69,12 +75,25 @@ export class TaskService {
 
   sortData(sortOn, sortOrder): any {
     return (a, b) => {
-      if (a[sortOn] > b[sortOn]) {
-        return (1 * sortOrder);
-      } else if (a[sortOn] < b[sortOn]) {
-        return (-1 * sortOrder);
+      // TODO: Data problem. has has coded for sorting purpose
+      if (sortOn === 'status') {
+        const var1 = a[sortOn] === null ? 'Open' : a[sortOn];
+        const var2 = b[sortOn] === null ? 'Open' : b[sortOn];
+        if (var1 > var2) {
+          return (1 * sortOrder);
+        } else if (var1 < var2) {
+          return (-1 * sortOrder);
+        }
+        return 0;
       }
-      return 0;
+      else {
+        if (a[sortOn] > b[sortOn]) {
+          return (1 * sortOrder);
+        } else if (a[sortOn] < b[sortOn]) {
+          return (-1 * sortOrder);
+        }
+        return 0;
+      }
     }
   }
 

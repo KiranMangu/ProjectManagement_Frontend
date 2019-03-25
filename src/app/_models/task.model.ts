@@ -1,4 +1,5 @@
 export class Task {
+    taskId: String;
     task: String;
     startDate: Date;
     endDate: Date;
@@ -27,7 +28,7 @@ export class TaskView {
     endDate: Date;
     status: String;
     priority: Number;
-    // projectId: String;
+    projectId: String;
     parentId: String;
     // parentTask: String;
 }

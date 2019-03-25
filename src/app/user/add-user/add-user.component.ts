@@ -57,6 +57,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   resetFields(): void {
     // this.form.resetForm(); // MyComments: Work around for resetting the form value
     this.userAddGrp.reset(); // MyComments: Using Reactivformgroup reset is firing validation
+    this.buttonAction = ButtonActions.Submit;
     // this.userAddGrp.updateValueAndValidity();
   }
 
@@ -96,6 +97,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
 
   refreshData(): void {
+    this.buttonAction = ButtonActions.Submit;
     this.addedNewUser.emit('Test');
     this.form.resetForm();
   }

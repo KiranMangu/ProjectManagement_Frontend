@@ -147,6 +147,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
     if (this.projectGroup.valid) {
       if (this.buttonAction === ButtonActions.Add) {
         this.newProject = new Project(this.projectGroup.getRawValue());
+        this.newProject.manager = this.projectGroup.controls.managerId.value;
         console.log(this.newProject);
         this._projSrv.addProject(this.newProject)
           .subscribe((res) => {
@@ -176,10 +177,11 @@ export class AddProjectComponent implements OnInit, OnChanges {
         updateProject.manager = this.projectGroup.controls.managerId.value;
 
         console.log('updateProject:' + JSON.stringify(updateProject));
+
         this._projSrv.updateProjectById(updateProject)
           .subscribe((res) => {
             console.log('Updated project' + res);
-            this.refreshProjectDetails.emit(res);
+            // this.refreshProjectDetails.emit(res);
             this.resetControls();
             this.util.showAlert('Successfully updated Project', 'OK');
             // this.editUser.projectId = res._id;
@@ -195,8 +197,8 @@ export class AddProjectComponent implements OnInit, OnChanges {
             //     });
           },
             (error) => {
-              this.util.showAlert('Failed Project updation', 'OK');
               console.log(error);
+              this.util.showAlert('Failed Project updation', 'OK');
             });
       }
     }
@@ -214,9 +216,11 @@ export class AddProjectComponent implements OnInit, OnChanges {
   }
 
   resetControls(): void {
+    this.buttonAction = ButtonActions.Add;
     this.projectGroup.controls.project.setValue(''); // TODO : Validation is firing should remove
     this.projectGroup.controls.dateRequired.setValue(true);
     this.setDateFields();
     this.projectGroup.reset();
+    this.refreshProjectDetails.emit('refresh');
   }
 }

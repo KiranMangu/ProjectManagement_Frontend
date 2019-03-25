@@ -7,6 +7,7 @@ import { DailogData } from 'src/app/_models/dialog.model';
 import { Task, TaskView, ParentTask } from 'src/app/_models/task.model';
 import { TaskService } from '../../_services/task.service';
 import { ObserveService } from '../../_util/observe.service';
+import { ProjectService } from 'src/app/_services/project.service';
 
 @Component({
   selector: 'app-view-task',
@@ -19,6 +20,7 @@ export class ViewTaskComponent implements OnInit {
   filteredTasksList: TaskView[];
   copyTasksList: TaskView[];
   projectList: Project[];
+  searchKey: String;
   // parentList: ParentTask[];
   parentList: any;
   sdSortToggle: number = 1;
@@ -38,7 +40,7 @@ export class ViewTaskComponent implements OnInit {
   data: Project[];
 
   constructor(private dialog: MatDialog, private src: UtilServiceService, private _tskSrv: TaskService,
-    private _obsSrv: ObserveService) { }
+    private _obsSrv: ObserveService, private _prjSrv: ProjectService) { }
 
   ngOnInit() {
     this.src.mapDailogData(this.targetData, this.data, 'Project');
@@ -84,8 +86,11 @@ export class ViewTaskComponent implements OnInit {
       this.filteredTasksList.sort(this._tskSrv.sortData('priority', this.priSortToggle));
     }
     else if (param === 4) {
+      console.log('Sort by Status');
+      console.log('before' + JSON.stringify(this.filteredTasksList));
       this.stSortToggle = this._tskSrv.toggleOrder(this.stSortToggle);
       this.filteredTasksList.sort(this._tskSrv.sortData('status', this.stSortToggle));
+      console.log('after' + JSON.stringify(this.filteredTasksList));
     }
     else {
       this.filteredTasksList = this.copyTasksList;
@@ -109,7 +114,35 @@ export class ViewTaskComponent implements OnInit {
         });
   }
 
+  searchByProject() {
+    if (this.searchKey !== undefined && this.searchKey.trim() === '') {
+      this.filteredTasksList = this.copyTasksList;
+    }
+    else {
+      var filterList = this.projectList.filter((project) => {
+        return this.searchKey.toLowerCase().indexOf(project.project.toLowerCase()) > -1;
+      });
+
+      // if (filterList !== undefined && filterList.length > 0) {
+      //   var fillteredTskLst = this.filteredTasksList.filter((task) => {
+      //     return filterList.indexOf(task.projectId) > -1;
+      //   });
+    }
+  }
+
+  getAllProjects(): void {
+    this._prjSrv.getProjects()
+      .subscribe((projects) => {
+        this.projectList = projects;
+      }, (error) => {
+        console.log('Failed getting projects' + error);
+        this.src.showAlert('Failed getting projects', 'OK', true);
+      });
+    // this._prjSrv.getProjectById
+  }
+
   loadTasks(): void {
+    this.getAllProjects();
     this._tskSrv.getTasks()
       .subscribe((tasks) => {
         this.filteredTasksList = tasks;

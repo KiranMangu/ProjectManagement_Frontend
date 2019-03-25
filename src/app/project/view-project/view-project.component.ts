@@ -163,8 +163,8 @@ export class ViewProjectComponent implements OnInit {
   }
 
   suspendProject(id: string): void {
-    this.util.showAlert('Implementation details not mentioned', 'OK');
-    console.log('Implementation details not mentioned..!!!');
+    this.util.showAlert('Implementation details not avalialble', 'OK');
+    console.log('Implementation details avalialble..!!!');
     // this._prjSrv.suspendProject(id)
     //   .subscribe((res) => {
     //     this.loadProjects();
