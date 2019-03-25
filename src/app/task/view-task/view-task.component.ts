@@ -49,7 +49,7 @@ export class ViewTaskComponent implements OnInit {
     // this.getParentTasks();
     this.loadTasks();
     // this._tskSrv.mapParentIdToName(this.filteredTasksList, this.parentList);
-    this.copyTasksList = this.filteredTasksList;
+    // this.copyTasksList = this.filteredTasksList;
     this._obsSrv.changed
       .subscribe((dummyValue) => {
         this.loadTasks();
@@ -115,18 +115,30 @@ export class ViewTaskComponent implements OnInit {
   }
 
   searchByProject() {
-    if (this.searchKey !== undefined && this.searchKey.trim() === '') {
+    let fillteredTskLst: any[] = [];
+    if (this.searchKey === undefined || this.searchKey.trim() === '') {
+      console.log('empty' + JSON.stringify(this.copyTasksList));
       this.filteredTasksList = this.copyTasksList;
     }
     else {
+      console.log('this.searchKey' + JSON.stringify(this.searchKey));
+      console.log('this.projectList' + JSON.stringify(this.projectList));
       var filterList = this.projectList.filter((project) => {
-        return this.searchKey.toLowerCase().indexOf(project.project.toLowerCase()) > -1;
+        return project.project.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1;
       });
+      console.log('filterList' + JSON.stringify(filterList));
 
-      // if (filterList !== undefined && filterList.length > 0) {
-      //   var fillteredTskLst = this.filteredTasksList.filter((task) => {
-      //     return filterList.indexOf(task.projectId) > -1;
-      //   });
+      if (filterList !== undefined && filterList.length > 0) {
+        for (var i = 0; i < filterList.length; i++) {
+          for (var j = 0; j < this.filteredTasksList.length; j++) {
+            if (this.filteredTasksList[j].projectId !== undefined && (this.filteredTasksList[j].projectId === filterList[i]._id)) {
+              fillteredTskLst.push(this.filteredTasksList[j]);
+            }
+          }
+        }
+      }
+      console.log('fillteredTskLst' + JSON.stringify(fillteredTskLst));
+      this.filteredTasksList = fillteredTskLst;
     }
   }
 
@@ -147,6 +159,7 @@ export class ViewTaskComponent implements OnInit {
       .subscribe((tasks) => {
         this.filteredTasksList = tasks;
         if (this.filteredTasksList !== undefined) {
+          this.copyTasksList = tasks;
           this.getParentTasks();
         }
       },
