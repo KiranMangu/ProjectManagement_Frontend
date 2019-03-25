@@ -16,5 +16,5 @@
  COPY wrapper.sh /
  WORKDIR /usr/src/app
  RUN pwd
- COPY /dist/proejctmanagement /usr/share/nginx/html
+ RUN cp -a /dist/proejctmanagement/. /usr/share/nginx/html
  CMD ["./wrapper.sh"]
