@@ -15,5 +15,5 @@
 
  FROM nginx:latest
  COPY wrapper.sh /
- COPY /dist/proejctmanagement /usr/share/nginx/html
+ COPY ./dist/proejctmanagement /usr/share/nginx/html
  CMD ["./wrapper.sh"]
