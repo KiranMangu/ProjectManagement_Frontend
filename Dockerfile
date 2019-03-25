@@ -8,12 +8,11 @@
  COPY . /usr/src/app
  RUN ng build
  RUN pwd
- RUN ls -R
 # EXPOSE 4200
 # CMD ["ng","serve"]
 # CMD ["echo","testing"]
 
  FROM nginx:latest
  COPY wrapper.sh /
- COPY ./dist/proejctmanagement /usr/share/nginx/html
+ COPY /dist/proejctmanagement /usr/share/nginx/html
  CMD ["./wrapper.sh"]
