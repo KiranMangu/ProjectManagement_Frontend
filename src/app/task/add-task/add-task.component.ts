@@ -61,23 +61,23 @@ export class AddTaskComponent implements OnInit, OnChanges {
     this._obSrv.cast
       .subscribe((task) => {
         if (task !== undefined) {
-          console.log('Triggered event');
-          console.log('task.projectId:' + task.projectId);
+          // console.log('Triggered event');
+          // console.log('task.projectId:' + task.projectId);
           if (task.projectId !== undefined && task.projectId !== '') {
             this.getOtherFields(task.projectId, task.parentId);
           }
           this.fillFieldsForUpdate(task);
-          console.log(JSON.stringify(task));
+          // console.log(JSON.stringify(task));
         }
       });
   }
 
   checkDate(group: FormGroup): any {
     if ((group.controls.endDate.value !== null) && group.controls.startDate.value > group.controls.endDate.value) {
-      console.log("invalid  :" + group.controls.endDate.value + ":");
+      // console.log("invalid  :" + group.controls.endDate.value + ":");
       return { notValid: true };
     }
-    console.log("valid");
+    // console.log("valid");
     return null;
   }
 
@@ -240,19 +240,19 @@ export class AddTaskComponent implements OnInit, OnChanges {
 
   addTask(): void {
     // throw new Error("Method not implemented.");
-    console.log(this.taskGroup.invalid);
+    // console.log(this.taskGroup.invalid);
     if (this.taskGroup.invalid)
       return;
     else {
-      console.log(this.taskGroup.controls.isParentTask.value);
+      // console.log(this.taskGroup.controls.isParentTask.value);
       if (this.buttonAction === ButtonActions.AddTask) {
         if (this.taskGroup.controls.isParentTask.value) {
-          console.log('Parent Task insertion');
+          // console.log('Parent Task insertion');
           const newParentTask = new ParentTask(this.taskGroup.controls.parentTask.value);
-          console.log('task:', JSON.stringify(newParentTask));
+          // console.log('task:', JSON.stringify(newParentTask));
           this._tskSrv.addParentTask(newParentTask)
             .subscribe((res) => {
-              console.log('Success: Created a new Parent Task')
+              // console.log('Success: Created a new Parent Task')
 
               this.resetControls();
               this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK', true);
@@ -266,26 +266,18 @@ export class AddTaskComponent implements OnInit, OnChanges {
         }
         else {
           const newTask = new Task(this.taskGroup.getRawValue()); // MyComments: getRawValue to get values even from disabled controls
-          console.log('parentTaskId:');
-          // console.log('parentId' + this.taskGroup.controls.projectId.value);
-          console.log('newTask:' + JSON.stringify(newTask));
+          // console.log('parentTaskId:');
+          // console.log('newTask:' + JSON.stringify(newTask));
           // console.log(new Date(temp.endDate).toISOString());
           this._tskSrv.addTask(newTask)
             .subscribe((res) => {
-              console.log('Task Inserted');
+              // console.log('Task Inserted');
               const updateUser = {
                 _id: this.taskGroup.controls.userId.value,
                 projectId: this.taskGroup.controls.projectId.value,
                 taskId: res.taskId
               };
               console.log(JSON.stringify(res));
-              // this._usrSrv.updateUserProjectAndTask(updateUser)
-              //   .subscribe((res) => {
-              //     console.log('Successful: updated user project and task' + res);
-              //   },
-              //     (error) => {
-              //       console.log('Error Updating user project and Task' + error);
-              //     });
               this._utilSrv.showAlert('Successfully created new Task', 'OK', true);
               this.resetControls();
 
@@ -298,35 +290,23 @@ export class AddTaskComponent implements OnInit, OnChanges {
       }
       else {
         if (this.taskGroup.controls.isParentTask.value) {
-          console.log('Update Parent Task');
+          // console.log('Update Parent Task');
           const newParentTask = {
             'id': this.taskGroup.controls.parentId.value,
             'parentTask': this.taskGroup.controls.parentTask.value
           };
-          console.log('task:', JSON.stringify(newParentTask));
-          // this._tskSrv.updateParenTsk(newParentTask)
-          //   .subscribe((res) => {
-          //     if (res) {
-          //       console.log('Success: updated the Parent Task')
-          //       this.resetControls();
-          //       this._utilSrv.showAlert('Successfully updated theParent Task', 'OK', true);
-          //     }
-          //   },
-          //     (error) => {
-          //       console.log('Failed updating the parent task' + error);
-          //       this._utilSrv.showAlert('Failed updating Parent Task', 'OK', true);
-          //     });
+          // console.log('task:', JSON.stringify(newParentTask));
         }
         else {
           const updateTask = new Task(this.taskGroup.getRawValue());
-          console.log('update task:' + JSON.stringify(updateTask));
-          console.log('update task:' + this.taskGroup.controls.taskId.value);
+          // console.log('update task:' + JSON.stringify(updateTask));
+          // console.log('update task:' + this.taskGroup.controls.taskId.value);
           updateTask.taskId = this.taskGroup.controls.taskId.value;
           this._tskSrv.updateTaskById(updateTask)
             .subscribe((res) => {
               if (res) {
-                console.log('Task updated');
-                console.log(JSON.stringify(res));
+                // console.log('Task updated');
+                // console.log(JSON.stringify(res));
                 this._utilSrv.showAlert('Successfully updated the Task', 'OK', true);
                 this.resetControls();
               }

@@ -13,8 +13,8 @@ export class DialogComponent {
   // MyComments: Inject in constructor
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DailogData) {
-    console.log('data');
-    console.log(data);
+    // console.log('data');
+    // console.log(data);
   }
 
   onNoClick(): void {

@@ -27,7 +27,7 @@ export class UserService implements OnInit {
   }
 
   addUser(newUser: User): any {
-    console.log('jasmine');
+    // console.log('jasmine');
     return this._http.post(this.apiUrl + 'create', newUser);
   }
 

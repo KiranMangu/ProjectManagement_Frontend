@@ -22,19 +22,19 @@ export class UserFormComponent implements OnInit {
     this._usrSrv.getUsers()
       .subscribe((users) => {
         this.usersData = users;
-        console.log('parent' + users);
+        // console.log('parent' + users);
       });
   }
 
   // After update change the View Component
   reloadView(payload): void {
-    console.log('Reload function');
+    // console.log('Reload function');
     this.loadUsers();
   }
 
   // Send data to Add Component
   updateUser(payload): void {
-    console.log('payload' + payload);
+    // console.log('payload' + payload);
     this.userId = payload;
   }
 

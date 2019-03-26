@@ -17,7 +17,6 @@ export class TaskService {
   }
 
   getTasks(): any {
-    console.log('GetTasks');
     return this._http.get(this.apiUrl);
   }
 
@@ -30,7 +29,6 @@ export class TaskService {
   }
 
   updateTaskById(updateTask: any): any {
-    console.log('Update task controller');
     return this._http.put(this.apiUrl + 'update', updateTask);
   }
 
@@ -61,9 +59,6 @@ export class TaskService {
   getAllTasksByProjectId(projectId: String) {
     return this._http.get(this.apiUrl + 'tasksByProjectId/' + projectId);
   }
-  // getUserByProjectId(id): any {
-  //   return this._http.get(this.apiUrl + 'project/' + id);
-  // }
 
   getParentTaskById(Id: String) {
     return this._http.get(this.parentTaskUrl + Id);
@@ -98,7 +93,6 @@ export class TaskService {
   }
 
   sortByDate(sortOn, sorOrder): any {
-    // console.log('sortByDate');
     return (a, b) => {
       if (sortOn === 'startDate') {
         var returnVal = new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
@@ -118,11 +112,7 @@ export class TaskService {
   }
 
   mapParentIdToName(taskViewList: any, parentTasks: any): void {
-    // console.log('taskViewList' + JSON.stringify(taskViewList));
-    // console.log('parentTasks' + JSON.stringify(parentTasks));
     taskViewList.forEach(element => {
-      // console.log('task: ' + element.task);
-      // console.log('parentId: ' + element.parentId);
       parentTasks.forEach(parentelement => {
         if (parentelement._id === element.parentId) {
           element.parentTask = parentelement.parentTask;

@@ -42,7 +42,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       var currentProject = changes['data'].currentValue;
-      console.log('onChange' + JSON.stringify(currentProject));
+      // console.log('onChange' + JSON.stringify(currentProject));
       if (currentProject !== undefined && currentProject !== '') {
         this.resetControls();
         this.projectGroup.controls.project.setValue(currentProject.project);
@@ -57,17 +57,6 @@ export class AddProjectComponent implements OnInit, OnChanges {
       }
     }
   }
-
-  // getUserByProjectId(id: string): User {
-  //   var editUser;
-  //   this._usrSrv.getUserByProjectId(id)
-  //     .subscribe((user) => {
-  //       this.editUser = user;
-  //       editUser = user.lastName + ', ' + user.firstName + ' (' + user.employeeId + ')'
-  //     })
-  //   console.log(editUser);
-  //   return editUser;
-  // }
 
   ngOnInit() {
     this.projectGroup = this._fb.group({
@@ -84,10 +73,10 @@ export class AddProjectComponent implements OnInit, OnChanges {
 
   checkDates(group: FormGroup): any {
     if ((group.controls.endDate.value !== null) && group.controls.startDate.value > group.controls.endDate.value) {
-      console.log("invalid  :" + group.controls.endDate.value + ":");
+      // console.log("invalid  :" + group.controls.endDate.value + ":");
       return { notValid: true };
     }
-    console.log("valid");
+    // console.log("valid");
     return null;
   }
 
@@ -96,7 +85,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
   }
   setDateFields(): void {
     this.dateDisable = this.projectGroup.controls.dateRequired.value;
-    console.log('dateDisable' + this.dateDisable);
+    // console.log('dateDisable' + this.dateDisable);
     if (this.dateDisable) {
       this.projectGroup.controls.startDate.setValue('');
       this.projectGroup.controls.endDate.setValue('');
@@ -107,16 +96,13 @@ export class AddProjectComponent implements OnInit, OnChanges {
       today.setDate(today.getDate() + 1);
       this.projectGroup.controls.endDate.setValue(today);
     }
-    // console.log('11' + this.projectGroup.controls.dateRequired.value);
-    // this.projectGroup.controls.dateRequired.setValue(!this.projectGroup.controls.dateRequired.value);
-    // console.log('22' + this.projectGroup.controls.dateRequired.value);
   }
 
   getUsers(): void {
     this._usrSrv.getUsers()
       .subscribe((users) => {
         this.usertList = users;
-        console.log(this.usertList);
+        // console.log(this.usertList);
         this.clearTagetObject();
         this.util.mapDailogData(this.targetData, this.usertList, 'Users'); // TODO Need to include a spinner
       },
@@ -131,14 +117,14 @@ export class AddProjectComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        console.log('dialog closed' + result);
+        // console.log('dialog closed' + result);
         this.projectGroup.controls.manager.setValue(result.name);
-        console.log('manager: ' + this.projectGroup.controls.manager.value);
+        // console.log('manager: ' + this.projectGroup.controls.manager.value);
         this.projectGroup.controls.managerId.setValue(result.Id);
         //Native For is better in this case than Foreach 
         this.selectedUser = this._projSrv.getSelectedUser(this.usertList, result.Id);
 
-        console.log('selected:' + JSON.stringify(this.selectedUser));
+        // console.log('selected:' + JSON.stringify(this.selectedUser));
       }
     });
   }
@@ -148,12 +134,12 @@ export class AddProjectComponent implements OnInit, OnChanges {
       if (this.buttonAction === ButtonActions.Add) {
         this.newProject = new Project(this.projectGroup.getRawValue());
         this.newProject.manager = this.projectGroup.controls.managerId.value;
-        console.log(this.newProject);
+        // console.log(this.newProject);
         this._projSrv.addProject(this.newProject)
           .subscribe((res) => {
-            console.log(res);
+            // console.log(res);
             this.selectedUser.projectId = res._id;
-            console.log(this.selectedUser);
+            // console.log(this.selectedUser);
             this.util.showAlert('Successfully created Project', 'OK');
             this.resetControls();
             // this._usrSrv.updateUserProject(this.selectedUser)
@@ -170,17 +156,17 @@ export class AddProjectComponent implements OnInit, OnChanges {
             });
       }
       else if (this.buttonAction === ButtonActions.Update) {
-        console.log('grp' + JSON.stringify(this.projectGroup.value));
-        console.log('edit project:' + this.projectGroup.controls.manager.value);
+        // console.log('grp' + JSON.stringify(this.projectGroup.value));
+        // console.log('edit project:' + this.projectGroup.controls.manager.value);
         var updateProject = new Project(this.projectGroup.getRawValue());
         updateProject._id = this.editProjectId;
         updateProject.manager = this.projectGroup.controls.managerId.value;
 
-        console.log('updateProject:' + JSON.stringify(updateProject));
+        // console.log('updateProject:' + JSON.stringify(updateProject));
 
         this._projSrv.updateProjectById(updateProject)
           .subscribe((res) => {
-            console.log('Updated project' + res);
+            // console.log('Updated project' + res);
             // this.refreshProjectDetails.emit(res);
             this.resetControls();
             this.util.showAlert('Successfully updated Project', 'OK');

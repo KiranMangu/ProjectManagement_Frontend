@@ -49,21 +49,16 @@ export class ViewUserComponent implements OnInit, OnChanges {
 
   sort(sortBy: Number): void {
     if (sortBy === 1) {
-      // console.log('First Name')
       this.fNSrtOrdr = this._usrSrv.toggleOrder(this.fNSrtOrdr)
       this.filteredUsersData.sort(this._usrSrv.sortData('firstName', this.fNSrtOrdr));
     }
     else if (sortBy === 2) {
-      // console.log('Last Name')
       this.lNSrtOrdr = this._usrSrv.toggleOrder(this.lNSrtOrdr)
       this.filteredUsersData.sort(this._usrSrv.sortData('lastName', this.lNSrtOrdr));
     }
     else if (sortBy === 3) {
-      console.log('22' + JSON.stringify(this.filteredUsersData));
-
       this.IdSrtOrdr = this._usrSrv.toggleOrder(this.IdSrtOrdr)
       this.filteredUsersData.sort(this._usrSrv.sortData('employeeId', this.IdSrtOrdr));
-      console.log('11' + JSON.stringify(this.filteredUsersData));
     }
     else {
       console.log('Invalid Sort request');
@@ -101,7 +96,6 @@ export class ViewUserComponent implements OnInit, OnChanges {
     this._usrSrv.deleteUser(id)
       .subscribe((res) => {
         this.loadUsers();
-        console.log(res);
         this.util.showAlert('Successfully deleted the User', 'OK');
       },
         (error) => {

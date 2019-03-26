@@ -22,7 +22,7 @@ export class ProjectFormComponent implements OnInit {
 
   // Passing the project details to Add Component
   UpdateProject(project: Project): void {
-    console.log('Payload' + project)
+    // console.log('Payload' + project)
     this.updateProject = project;
   }
 

@@ -86,11 +86,8 @@ export class ViewTaskComponent implements OnInit {
       this.filteredTasksList.sort(this._tskSrv.sortData('priority', this.priSortToggle));
     }
     else if (param === 4) {
-      console.log('Sort by Status');
-      console.log('before' + JSON.stringify(this.filteredTasksList));
       this.stSortToggle = this._tskSrv.toggleOrder(this.stSortToggle);
       this.filteredTasksList.sort(this._tskSrv.sortData('status', this.stSortToggle));
-      console.log('after' + JSON.stringify(this.filteredTasksList));
     }
     else {
       this.filteredTasksList = this.copyTasksList;
@@ -98,8 +95,6 @@ export class ViewTaskComponent implements OnInit {
   }
 
   editTask(task): void {
-    console.log('edit task');
-    console.log(task);
     this._obsSrv.editTask(task);
   }
 
@@ -117,16 +112,12 @@ export class ViewTaskComponent implements OnInit {
   searchByProject() {
     let fillteredTskLst: any[] = [];
     if (this.searchKey === undefined || this.searchKey.trim() === '') {
-      console.log('empty' + JSON.stringify(this.copyTasksList));
       this.filteredTasksList = this.copyTasksList;
     }
     else {
-      console.log('this.searchKey' + JSON.stringify(this.searchKey));
-      console.log('this.projectList' + JSON.stringify(this.projectList));
       var filterList = this.projectList.filter((project) => {
         return project.project.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1;
       });
-      console.log('filterList' + JSON.stringify(filterList));
 
       if (filterList !== undefined && filterList.length > 0) {
         for (var i = 0; i < filterList.length; i++) {
@@ -137,7 +128,6 @@ export class ViewTaskComponent implements OnInit {
           }
         }
       }
-      console.log('fillteredTskLst' + JSON.stringify(fillteredTskLst));
       this.filteredTasksList = fillteredTskLst;
     }
   }

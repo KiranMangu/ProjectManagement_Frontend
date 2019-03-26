@@ -28,7 +28,6 @@ export class AddUserComponent implements OnInit, OnChanges {
       lastName: ['', [Validators.required]],
       employeeId: ['', [Validators.required]]
     });
-    // console.log('Add User');
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -38,7 +37,7 @@ export class AddUserComponent implements OnInit, OnChanges {
         this.updateUserId = userId;
         this._userSrv.getUserById(changes['data'].currentValue)
           .subscribe((res) => {
-            console.log(JSON.stringify(res[0]));
+            // console.log(JSON.stringify(res[0]));
             if (res[0] !== undefined) {
               this.userAddGrp.setValue({
                 firstName: res[0].firstName,
@@ -66,7 +65,6 @@ export class AddUserComponent implements OnInit, OnChanges {
       this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
       this._userSrv.addUser(this.newUser)
         .subscribe(() => {
-          console.log('Inserted');
           this.util.showAlert('Successfully created the User', 'OK')
           // this.showAlert('Successfully created the User', 'OK')
           this.refreshData();
@@ -85,7 +83,6 @@ export class AddUserComponent implements OnInit, OnChanges {
       })
       this._userSrv.updateUserById(updateUser)
         .subscribe(() => {
-          console.log('Updated User');
           this.buttonAction = ButtonActions.Submit;
           this.util.showAlert('Successfully updated the User', 'OK');
           this.refreshData();
