@@ -35,7 +35,7 @@ export class UserService implements OnInit {
     return this._http.put(this.apiUrl + 'update', updateUser);
   }
 
-  updateUserProjectAndTask(updateUser: any){
+  updateUserProjectAndTask(updateUser: any): any {
     return this._http.post(this.apiUrl + 'update/userprojecttask', updateUser);
   }
   updateUserProject(updateUser: any): any {
@@ -62,10 +62,10 @@ export class UserService implements OnInit {
         return (-1 * sortOrder);
       }
       return 0;
-    }
+    };
   }
 
   toggleOrder(sortOrder: number): number {
-    return (sortOrder * -1)
+    return sortOrder * -1;
   }
 }

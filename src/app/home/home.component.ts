@@ -8,7 +8,7 @@ import { ObserveService } from '../_util/observe.service';
   // ref: https://stackoverflow.com/questions/45940965/angular-material-customize-tab?rq=1
 })
 export class HomeComponent implements OnInit {
-  //TODO: on tab click the tab name should be displayed on top fo the page
+  // TODO: on tab click the tab name should be displayed on top fo the page
   tabTitle: string;
   tabNames: string[] = ['User', 'Add Project', 'Add Task', 'View Task'];
   selectedTab: number;
@@ -26,12 +26,13 @@ export class HomeComponent implements OnInit {
   }
 
   tabChanged(tabeSelected: number): void {
-    if (this.tabNames !== undefined)
-      this.tabTitle = this.tabNames[tabeSelected];
+    if (this.tabNames !== undefined) {
+    this.tabTitle = this.tabNames[tabeSelected];
+    }
     this.selectedTab = tabeSelected;
     // View Task
-    if (tabeSelected === 3) {
-      this._obSrv.tabChanged(3);
-    }
+    // if (tabeSelected === 3) {
+      this._obSrv.tabChanged(tabeSelected);
+    // }
   }
 }

@@ -21,7 +21,7 @@ export class ViewUserComponent implements OnInit, OnChanges {
   fNSrtOrdr: number = -1;
   lNSrtOrdr: number = -1;
   IdSrtOrdr: number = -1;
-  searchKey: string = '';
+  searchKey: String = '';
   constructor(private _usrSrv: UserService, private util: UtilServiceService) { }
 
   ngOnInit() {
@@ -31,10 +31,10 @@ export class ViewUserComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       // MyComments: Subsequent load i.e, load after a new value is entered
-      this.filteredUsersData = changes['data'].currentValue
-      this.copyusersData = changes['data'].currentValue
+      this.filteredUsersData = changes['data'].currentValue;
+      this.copyusersData = changes['data'].currentValue;
       // console.log('On Change' + changes['data'].currentValue);
-      //this.loadUsers();
+      // this.loadUsers();
     }
   }
 
@@ -49,18 +49,15 @@ export class ViewUserComponent implements OnInit, OnChanges {
 
   sort(sortBy: Number): void {
     if (sortBy === 1) {
-      this.fNSrtOrdr = this._usrSrv.toggleOrder(this.fNSrtOrdr)
+      this.fNSrtOrdr = this._usrSrv.toggleOrder(this.fNSrtOrdr);
       this.filteredUsersData.sort(this._usrSrv.sortData('firstName', this.fNSrtOrdr));
-    }
-    else if (sortBy === 2) {
-      this.lNSrtOrdr = this._usrSrv.toggleOrder(this.lNSrtOrdr)
+    } else if (sortBy === 2) {
+      this.lNSrtOrdr = this._usrSrv.toggleOrder(this.lNSrtOrdr);
       this.filteredUsersData.sort(this._usrSrv.sortData('lastName', this.lNSrtOrdr));
-    }
-    else if (sortBy === 3) {
-      this.IdSrtOrdr = this._usrSrv.toggleOrder(this.IdSrtOrdr)
+    } else if (sortBy === 3) {
+      this.IdSrtOrdr = this._usrSrv.toggleOrder(this.IdSrtOrdr);
       this.filteredUsersData.sort(this._usrSrv.sortData('employeeId', this.IdSrtOrdr));
-    }
-    else {
+    } else {
       console.log('Invalid Sort request');
     }
     // console.log(this.usersData);
@@ -71,24 +68,23 @@ export class ViewUserComponent implements OnInit, OnChanges {
   // TODO: this._usrSrv.toggleOrder(this.IdSrtOrdr) .... compilation error
   searchUser(): void {
     // console.log('searchKey: ' + this.searchKey);
-    var searchKey = this.searchKey.toLowerCase();
+    const searchKey = this.searchKey.toLowerCase();
     if (this.searchKey.trim() !== '') {
       this.filteredUsersData = this.copyusersData;
       // TODO: Look for a filter that acts on all the keys on a Json
-      var dataByFN = this.filteredUsersData.filter(user => user.firstName.toLowerCase().indexOf(searchKey) !== -1);
-      var dataaByLN = this.filteredUsersData.filter(user => user.lastName.toLowerCase().indexOf(searchKey) !== -1);
-      var dataById = this.filteredUsersData.filter(user => user.employeeId.toLowerCase().indexOf(searchKey) !== -1);
+      const dataByFN = this.filteredUsersData.filter(user => user.firstName.toLowerCase().indexOf(searchKey) !== -1);
+      const dataaByLN = this.filteredUsersData.filter(user => user.lastName.toLowerCase().indexOf(searchKey) !== -1);
+      const dataById = this.filteredUsersData.filter(user => user.employeeId.toLowerCase().indexOf(searchKey) !== -1);
       this.filteredUsersData = Object.assign(dataByFN, dataaByLN, dataById);
       // this.usersData = this.usersData.filter(user => user.firstName.indexOf(this.searchKey) !== -1);
-    }
-    else {
+    } else {
       this.filteredUsersData = this.copyusersData;
     }
     // console.log('data' + this.data);
   }
 
   editUser(id: string): void {
-    // console.log(id);
+    // console.log('edit test' + id);
     this.updateUser.emit(id); // MyComments: Should have sent the User Object directly.!!!
   }
 
@@ -101,7 +97,7 @@ export class ViewUserComponent implements OnInit, OnChanges {
         (error) => {
           console.log('Failed user deletion:' + JSON.stringify(error));
           this.util.showAlert('Failed User deletion', 'OK');
-        })
+        });
   }
 
 }

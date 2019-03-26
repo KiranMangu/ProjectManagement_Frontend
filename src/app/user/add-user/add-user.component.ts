@@ -16,8 +16,8 @@ export class AddUserComponent implements OnInit, OnChanges {
   @Input() data;
   userAddGrp: FormGroup;
   newUser: User;
-  constructor(private _fb: FormBuilder, private _userSrv: UserService, 
-    private _snkBar: MatSnackBar, private util: UtilServiceService) { };
+  constructor(private _fb: FormBuilder, private _userSrv: UserService,
+    private _snkBar: MatSnackBar, private util: UtilServiceService) { }
   @ViewChild('form') form; // TODO ViewChild?
   buttonAction: string = ButtonActions.Submit;
   updateUserId: string;
@@ -32,7 +32,7 @@ export class AddUserComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
-      var userId = changes['data'].currentValue;
+      const userId = changes['data'].currentValue;
       if (userId !== undefined && userId.trim() !== '') {
         this.updateUserId = userId;
         this._userSrv.getUserById(changes['data'].currentValue)
@@ -61,35 +61,38 @@ export class AddUserComponent implements OnInit, OnChanges {
   }
 
   addUser(userAction): void {
-    if (userAction === ButtonActions.Submit) {
-      this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
-      this._userSrv.addUser(this.newUser)
-        .subscribe(() => {
-          this.util.showAlert('Successfully created the User', 'OK')
-          // this.showAlert('Successfully created the User', 'OK')
-          this.refreshData();
-          // this._viewCmp.loadUsers();
-        },
-          (error) => {
-            this.util.showAlert('Failed to create the User', 'OK');
-          });
-    }
-    else if (userAction === ButtonActions.Update) {
-      var updateUser = new User({
-        _id: this.updateUserId,
-        firstName: this.userAddGrp.controls.firstName.value,
-        lastName: this.userAddGrp.controls.lastName.value,
-        employeeId: this.userAddGrp.controls.employeeId.value
-      })
-      this._userSrv.updateUserById(updateUser)
-        .subscribe(() => {
-          this.buttonAction = ButtonActions.Submit;
-          this.util.showAlert('Successfully updated the User', 'OK');
-          this.refreshData();
-        },
-          (error) => {
-            this.util.showAlert('Failed to update the User', 'OK');
-          });
+    if (this.userAddGrp.invalid) {
+      return;
+    } else {
+      if (userAction === ButtonActions.Submit) {
+        this.newUser = new User(this.userAddGrp.value); // MyComments: Class with partial object constructor
+        this._userSrv.addUser(this.newUser)
+          .subscribe(() => {
+            this.util.showAlert('Successfully created the User', 'OK');
+            // this.showAlert('Successfully created the User', 'OK')
+            this.refreshData();
+            // this._viewCmp.loadUsers();
+          },
+            (error) => {
+              this.util.showAlert('Failed to create the User', 'OK');
+            });
+      } else if (userAction === ButtonActions.Update) {
+        const updateUser = new User({
+          _id: this.updateUserId,
+          firstName: this.userAddGrp.controls.firstName.value,
+          lastName: this.userAddGrp.controls.lastName.value,
+          employeeId: this.userAddGrp.controls.employeeId.value
+        });
+        this._userSrv.updateUserById(updateUser)
+          .subscribe(() => {
+            this.buttonAction = ButtonActions.Submit;
+            this.util.showAlert('Successfully updated the User', 'OK');
+            this.refreshData();
+          },
+            (error) => {
+              this.util.showAlert('Failed to update the User', 'OK');
+            });
+      }
     }
   }
 

@@ -15,10 +15,10 @@ export class ObserveService {
 
   editTask(currentTaskId): void {
     this.selectedTask.next(currentTaskId);
-  };
+  }
 
   tabChanged(currentTab: Number): void {
     this.tabNumber.next(currentTab);
-  };
+  }
 
 }

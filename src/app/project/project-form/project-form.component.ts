@@ -41,13 +41,13 @@ export class ProjectFormComponent implements OnInit {
       this._tskSrv.getAllTasksByProjectId(project._id)
         .subscribe((tasks) => {
           if (tasks) {
-            let taskObject = JSON.parse(JSON.stringify(tasks));
+            const taskObject = JSON.parse(JSON.stringify(tasks));
             if (taskObject) {
-              let totalTask = taskObject.length;
+              const totalTask = taskObject.length;
               project.noOfTasks = totalTask;
               project.completed = 0;
               if (totalTask > 0) {
-                var openedTask = 0;
+                let openedTask = 0;
                 taskObject.forEach(element => {
                   // element.status === undefined -> Initial data was having status as undefined
                   if (element.status === undefined || (element.status !== undefined && element.status === 'Open')) {
@@ -55,22 +55,20 @@ export class ProjectFormComponent implements OnInit {
                   }
                 });
                 project.completed = totalTask - openedTask;
-              }
-              else {
+              } else {
                 project.completed = 0;
               }
-            }
-            else {
+            } else {
               project.completed = 0;
               project.noOfTasks = 0;
             }
             // console.log('Tasks Count:' + JSON.parse(JSON.stringify(tasks)).length)
             if (project.manager !== undefined && project.manager !== null) {
-              this.getManagerName(project)
+              this.getManagerName(project);
             }
           }
-        })
-    })
+        });
+    });
   }
 
   getManagerName(project: any) {

@@ -13,7 +13,7 @@ describe('Project Model', () => {
     });
 
     it('Default value - ProjectList', () => {
-        newProjectList = new ProjectList()
+        newProjectList = new ProjectList();
         expect(newProjectList.completed).toEqual(0);
     });
 });

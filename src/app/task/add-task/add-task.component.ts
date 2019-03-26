@@ -22,7 +22,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
   editTask: Task;
   max: Number = 30;
   min: Number = 0;
-  thumbLabel: boolean = true;
+  thumbLabel: Boolean = true;
   taskGroup: FormGroup;
   buttonAction: string = ButtonActions.AddTask;
 
@@ -30,7 +30,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
     private _prjSrv: ProjectService, private _dialog: MatDialog,
     private _utilSrv: UtilServiceService, private _tskSrv: TaskService,
     private _obSrv: ObserveService, ) { }
-  disableControl: boolean = false;
+  disableControl: Boolean = false;
   targetData: DailogData = {
     title: '',
     list: [{
@@ -49,7 +49,8 @@ export class AddTaskComponent implements OnInit, OnChanges {
       isParentTask: [false],
       task: ['', [Validators.required]],
       taskId: [undefined],
-      parentTask: [''],// MyComments: [{ value: '', disabled: true }], disable at this level is holding the validations instead use readonly on  input
+      parentTask: [''], // MyComments: [{ value: '', disabled: true }], disable at this level is holding the validations
+      // instead use readonly on  input
       parentTaskId: [undefined],
       startDate: [undefined, [Validators.required]],
       endDate: [undefined, [Validators.required]],
@@ -116,7 +117,8 @@ export class AddTaskComponent implements OnInit, OnChanges {
       projectId: [''],
       isParentTask: [false],
       task: ['', [Validators.required]],
-      parentTask: [''],// MyComments: [{ value: '', disabled: true }], disable at this level is holding the validations instead use readonly on  input
+      parentTask: [''],// MyComments: [{ value: '', disabled: true }], disable at this level is holding the validations
+      instead use readonly on  input
       parentTaskId: [undefined],
       startDate: [{ value: undefined, disabled: true }],
       endDate: [{ value: undefined, disabled: true }],
@@ -149,8 +151,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
       this.taskGroup.controls.startDate.disable();
       this.taskGroup.controls.endDate.disable();
       this.taskGroup.controls.user.disable();
-    }
-    else {
+    } else {
       this.taskGroup.controls.projectName.enable();
       this.taskGroup.controls.parentTask.enable();
       this.taskGroup.controls.priority.enable();
@@ -163,7 +164,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
 
   getProjects(): void {
     // throw new Error("Method not implemented.");
-    var dialogRef;
+    let dialogRef;
     this._prjSrv.getProjects()
       .subscribe((projects) => {
         this.clearTagetObject();
@@ -188,12 +189,12 @@ export class AddTaskComponent implements OnInit, OnChanges {
 
   getParentTasks(): void {
     // throw new Error("Method not implemented.");
-    var dialogRef;
+    let dialogRef;
     this._tskSrv.getAllParentTasks()
       .subscribe((parentTasks) => {
         this.clearTagetObject();
         this._utilSrv.mapDailogData(this.targetData, parentTasks, 'ParentTasks');
-        this.targetData.title = 'ParentTasks'
+        this.targetData.title = 'ParentTasks';
 
         dialogRef = this._dialog.open(DialogComponent,
           { data: { title: this.targetData.title, data: this.targetData } });
@@ -209,13 +210,12 @@ export class AddTaskComponent implements OnInit, OnChanges {
               console.log('Failed getting Parent Task list: ' + JSON.stringify(error));
               this._utilSrv.showAlert('Failed getting Parent Task list', 'OK', true);
             });
-      })
-
+      });
   }
 
   getUsers(): void {
     // throw new Error("Method not implemented.");
-    var dialogRef;
+    let dialogRef;
     this._usrSrv.getUsers()
       .subscribe((users) => {
         this.clearTagetObject();
@@ -241,9 +241,9 @@ export class AddTaskComponent implements OnInit, OnChanges {
   addTask(): void {
     // throw new Error("Method not implemented.");
     // console.log(this.taskGroup.invalid);
-    if (this.taskGroup.invalid)
+    if (this.taskGroup.invalid) {
       return;
-    else {
+    } else {
       // console.log(this.taskGroup.controls.isParentTask.value);
       if (this.buttonAction === ButtonActions.AddTask) {
         if (this.taskGroup.controls.isParentTask.value) {
@@ -255,17 +255,17 @@ export class AddTaskComponent implements OnInit, OnChanges {
               // console.log('Success: Created a new Parent Task')
 
               this.resetControls();
-              this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK', true);
+              this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK');
               // console.log(res.parentTask._id);
               // this.taskGroup.controls.parentId.setValue(res.parentTask._id);
             },
               (error) => {
                 console.log('Failed creating parent task' + error);
                 this._utilSrv.showAlert('Failed creating the new Parent Task', 'OK', true);
-              })
-        }
-        else {
+              });
+        } else {
           const newTask = new Task(this.taskGroup.getRawValue()); // MyComments: getRawValue to get values even from disabled controls
+          newTask.status = 'Open';
           // console.log('parentTaskId:');
           // console.log('newTask:' + JSON.stringify(newTask));
           // console.log(new Date(temp.endDate).toISOString());
@@ -278,7 +278,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
                 taskId: res.taskId
               };
               console.log(JSON.stringify(res));
-              this._utilSrv.showAlert('Successfully created new Task', 'OK', true);
+              this._utilSrv.showAlert('Successfully created new Task', 'OK');
               this.resetControls();
 
             },
@@ -287,8 +287,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
                 this._utilSrv.showAlert('Failed new Task creation', 'OK', true);
               });
         }
-      }
-      else {
+      } else {
         if (this.taskGroup.controls.isParentTask.value) {
           // console.log('Update Parent Task');
           const newParentTask = {
@@ -296,8 +295,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
             'parentTask': this.taskGroup.controls.parentTask.value
           };
           // console.log('task:', JSON.stringify(newParentTask));
-        }
-        else {
+        } else {
           const updateTask = new Task(this.taskGroup.getRawValue());
           // console.log('update task:' + JSON.stringify(updateTask));
           // console.log('update task:' + this.taskGroup.controls.taskId.value);
@@ -326,7 +324,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
     this.targetData.list = [{
       name: '',
       Id: ''
-    }]
+    }];
   }
 
   resetControls(): void {

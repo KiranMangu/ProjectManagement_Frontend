@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 import { Task, ParentTask } from '../_models/task.model';
 import { UtilServiceService } from '../_util/util-service.service';
 
@@ -80,8 +80,7 @@ export class TaskService {
           return (-1 * sortOrder);
         }
         return 0;
-      }
-      else {
+      } else {
         if (a[sortOn] > b[sortOn]) {
           return (1 * sortOrder);
         } else if (a[sortOn] < b[sortOn]) {
@@ -89,26 +88,25 @@ export class TaskService {
         }
         return 0;
       }
-    }
+    };
   }
 
   sortByDate(sortOn, sorOrder): any {
     return (a, b) => {
       if (sortOn === 'startDate') {
-        var returnVal = new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+        const returnVal = new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
         return returnVal * sorOrder;
-      }
-      else if (sortOn === 'endDate') {
+      } else if (sortOn === 'endDate') {
         {
-          var returnVal = new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+          const returnVal = new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
           return returnVal * sorOrder;
         }
       }
-    }
+    };
   }
 
   toggleOrder(sortOrder: number): number {
-    return (sortOrder * -1)
+    return (sortOrder * -1);
   }
 
   mapParentIdToName(taskViewList: any, parentTasks: any): void {

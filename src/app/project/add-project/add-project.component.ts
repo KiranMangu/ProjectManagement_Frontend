@@ -22,7 +22,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
   editProjectId: string;
   newProject: Project;
   projectGroup: FormGroup;
-  dateDisable: boolean = true;
+  dateDisable: Boolean = true;
   thumbLabel = true;
   buttonAction: string = ButtonActions.Add;
   targetData: DailogData = {
@@ -34,14 +34,14 @@ export class AddProjectComponent implements OnInit, OnChanges {
   };
 
   @Input() data;
-  @Output() refreshProjectDetails = new EventEmitter<any>()
+  @Output() refreshProjectDetails = new EventEmitter<any>();
 
   constructor(private _fb: FormBuilder, private _usrSrv: UserService, private _projSrv: ProjectService,
     private _dialog: MatDialog, private util: UtilServiceService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
-      var currentProject = changes['data'].currentValue;
+      const currentProject = changes['data'].currentValue;
       // console.log('onChange' + JSON.stringify(currentProject));
       if (currentProject !== undefined && currentProject !== '') {
         this.resetControls();
@@ -49,7 +49,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
         this.projectGroup.controls.startDate.setValue(currentProject.startDate);
         this.projectGroup.controls.endDate.setValue(currentProject.endDate);
         this.projectGroup.controls.priority.setValue(currentProject.priority);
-        this.projectGroup.controls.managerId.setValue(currentProject.manager)
+        this.projectGroup.controls.managerId.setValue(currentProject.manager);
         this.projectGroup.controls.manager.setValue(currentProject.managerName);
 
         this.editProjectId = currentProject._id;
@@ -89,9 +89,8 @@ export class AddProjectComponent implements OnInit, OnChanges {
     if (this.dateDisable) {
       this.projectGroup.controls.startDate.setValue('');
       this.projectGroup.controls.endDate.setValue('');
-    }
-    else {
-      var today = new Date()
+    } else {
+      const today = new Date();
       this.projectGroup.controls.startDate.setValue(today);
       today.setDate(today.getDate() + 1);
       this.projectGroup.controls.endDate.setValue(today);
@@ -121,7 +120,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
         this.projectGroup.controls.manager.setValue(result.name);
         // console.log('manager: ' + this.projectGroup.controls.manager.value);
         this.projectGroup.controls.managerId.setValue(result.Id);
-        //Native For is better in this case than Foreach 
+        // Native For is better in this case than Foreach
         this.selectedUser = this._projSrv.getSelectedUser(this.usertList, result.Id);
 
         // console.log('selected:' + JSON.stringify(this.selectedUser));
@@ -154,11 +153,10 @@ export class AddProjectComponent implements OnInit, OnChanges {
               this.util.showAlert('Failed Project creation', 'OK');
               console.log(error);
             });
-      }
-      else if (this.buttonAction === ButtonActions.Update) {
+      } else if (this.buttonAction === ButtonActions.Update) {
         // console.log('grp' + JSON.stringify(this.projectGroup.value));
         // console.log('edit project:' + this.projectGroup.controls.manager.value);
-        var updateProject = new Project(this.projectGroup.getRawValue());
+        const updateProject = new Project(this.projectGroup.getRawValue());
         updateProject._id = this.editProjectId;
         updateProject.manager = this.projectGroup.controls.managerId.value;
 
@@ -187,8 +185,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
               this.util.showAlert('Failed Project updation', 'OK');
             });
       }
-    }
-    else {
+    } else {
       this.util.showAlert('Invalid/Missing Project entries', 'OK', true);
     }
   }
@@ -198,7 +195,7 @@ export class AddProjectComponent implements OnInit, OnChanges {
     this.targetData.list = [{
       name: '',
       Id: ''
-    }]
+    }];
   }
 
   resetControls(): void {
@@ -207,6 +204,6 @@ export class AddProjectComponent implements OnInit, OnChanges {
     this.projectGroup.controls.dateRequired.setValue(true);
     this.setDateFields();
     this.projectGroup.reset();
-    this.refreshProjectDetails.emit('refresh');
+    this.refreshProjectDetails.emit('refresh'); // TODO: Not needed all the time
   }
 }

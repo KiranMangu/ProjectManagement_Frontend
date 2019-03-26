@@ -51,8 +51,10 @@ export class ViewTaskComponent implements OnInit {
     // this._tskSrv.mapParentIdToName(this.filteredTasksList, this.parentList);
     // this.copyTasksList = this.filteredTasksList;
     this._obsSrv.changed
-      .subscribe((dummyValue) => {
-        this.loadTasks();
+      .subscribe((selectedTab) => {
+        if (selectedTab === 3) {
+          this.loadTasks();
+        }
       });
   }
 
@@ -76,20 +78,16 @@ export class ViewTaskComponent implements OnInit {
     if (param === 1) {
       this.sdSortToggle = this._tskSrv.toggleOrder(this.sdSortToggle);
       this.filteredTasksList.sort(this._tskSrv.sortByDate('startDate', this.sdSortToggle));
-    }
-    else if (param === 2) {
+    } else if (param === 2) {
       this.edSortToggle = this._tskSrv.toggleOrder(this.edSortToggle);
       this.filteredTasksList.sort(this._tskSrv.sortByDate('endDate', this.edSortToggle));
-    }
-    else if (param === 3) {
+    } else if (param === 3) {
       this.priSortToggle = this._tskSrv.toggleOrder(this.priSortToggle);
       this.filteredTasksList.sort(this._tskSrv.sortData('priority', this.priSortToggle));
-    }
-    else if (param === 4) {
+    } else if (param === 4) {
       this.stSortToggle = this._tskSrv.toggleOrder(this.stSortToggle);
       this.filteredTasksList.sort(this._tskSrv.sortData('status', this.stSortToggle));
-    }
-    else {
+    } else {
       this.filteredTasksList = this.copyTasksList;
     }
   }
@@ -110,18 +108,17 @@ export class ViewTaskComponent implements OnInit {
   }
 
   searchByProject() {
-    let fillteredTskLst: any[] = [];
+    const fillteredTskLst: any[] = [];
     if (this.searchKey === undefined || this.searchKey.trim() === '') {
       this.filteredTasksList = this.copyTasksList;
-    }
-    else {
-      var filterList = this.projectList.filter((project) => {
+    } else {
+      const filterList = this.projectList.filter((project) => {
         return project.project.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1;
       });
 
       if (filterList !== undefined && filterList.length > 0) {
-        for (var i = 0; i < filterList.length; i++) {
-          for (var j = 0; j < this.filteredTasksList.length; j++) {
+        for (let i = 0; i < filterList.length; i++) {
+          for (let j = 0; j < this.filteredTasksList.length; j++) {
             if (this.filteredTasksList[j].projectId !== undefined && (this.filteredTasksList[j].projectId === filterList[i]._id)) {
               fillteredTskLst.push(this.filteredTasksList[j]);
             }

@@ -12,9 +12,9 @@ export class User {
 }
 
 export enum ButtonActions {
-    Submit = "Submit",
-    Update = "Update",
-    Add = "Add",
-    AddTask = "Add Task",
-    UpdateTask = "Update Task"
+    Submit = 'Submit',
+    Update = 'Update',
+    Add = 'Add',
+    AddTask = 'Add Task',
+    UpdateTask = 'Update Task'
 }
