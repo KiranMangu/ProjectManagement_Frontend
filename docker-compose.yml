@@ -10,30 +10,7 @@ services:
     image: kiranmohanm/projectmanagamentfrontend
     ports:
       - 80:80
-
-#version: '3'
-
-#services:
-#  backend:
-#    build: ../.../backend/task-manager-backend
-#    ports:
-#      - 3031:3031
-  
-#  frontend:
-#    build: .
-#    ports:
-#      - 4201:80
-      
-#services:
-#  frontend:
-#    build: .
-#    ports:
-#      - 4201:80
-
-#   image: kiranfrontend
-#     ports:
-#     - 8080:80 
-
-#   image: kiranfrontend/toolbox
-#     ports:
-#     - 8080:80
+    environment:
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=3031
+    command: /bin/bash -c "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
