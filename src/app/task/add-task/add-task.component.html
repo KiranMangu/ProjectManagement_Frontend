@@ -16,8 +16,8 @@
                   </mat-form-field>
                 </td>
                 <td style='width:20%'>
-                  <button mat-raised-button color='primary' type='button' class='btn'
-                    (click)='getProjects()'>Search</button>
+                  <button mat-raised-button color='primary' type='button' class='btn' (click)='getProjects()'
+                    [disabled]='disableControl'>Search</button>
                 </td>
               </tr>
             </table>
@@ -89,7 +89,7 @@
                 <td>
                   <mat-form-field class='btn'>
                     <input matInput [matDatepicker]="startDate" placeholder="Start Date" formControlName='startDate'
-                      readonly>
+                      readonly class='dateFont'>
                     <mat-error>Start date required</mat-error>
                     <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
                     <mat-datepicker #startDate [disabled]='disableControl'></mat-datepicker>
@@ -97,7 +97,8 @@
                 </td>
                 <td>
                   <mat-form-field class='btn'>
-                    <input matInput [matDatepicker]="endDate" placeholder="End Date" formControlName='endDate' readonly>
+                    <input matInput [matDatepicker]="endDate" placeholder="End Date" formControlName='endDate' readonly
+                      class='dateFont'>
                     <mat-error>End date required</mat-error>
                     <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                     <mat-datepicker #endDate [disabled]='disableControl'></mat-datepicker>
@@ -131,7 +132,8 @@
           <td>
           </td>
           <td class='align-right'>
-            <button mat-raised-button color='primary' [disabled]='taskGroup.invalid && taskGroup.touched' class='btn' (click)='addTask()'>{{buttonAction}}</button>
+            <button mat-raised-button color='primary' [disabled]='taskGroup.invalid && taskGroup.touched' class='btn'
+              (click)='addTask()'>{{buttonAction}}</button>
             <button mat-raised-button color='primary' type='button' class='btn' (click)='resetControls()'>Reset</button>
           </td>
         </tr>

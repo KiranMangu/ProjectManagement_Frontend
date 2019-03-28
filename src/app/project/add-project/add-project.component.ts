@@ -62,11 +62,11 @@ export class AddProjectComponent implements OnInit, OnChanges {
     this.projectGroup = this._fb.group({
       project: ['', [Validators.required]],
       dateRequired: [false], // Not needed for backend operations
-      startDate: [{ value: '', disabled: true }],
-      endDate: [{ value: '', disabled: true }],
+      startDate: [''],
+      endDate: [''],
       priority: [0],
       // status: ['Open'],
-      manager: [{ value: '', disabled: true }, [Validators.required]],
+      manager: ['', [Validators.required]],
       managerId: ['']
     }, { validator: this.checkDates });
   }
@@ -186,7 +186,8 @@ export class AddProjectComponent implements OnInit, OnChanges {
             });
       }
     } else {
-      this.util.showAlert('Invalid/Missing Project entries', 'OK', true);
+      return;
+      // this.util.showAlert('Invalid/Missing Project entries', 'OK', true);
     }
   }
 

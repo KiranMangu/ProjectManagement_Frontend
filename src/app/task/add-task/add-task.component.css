@@ -11,6 +11,9 @@
   margin: 2px;
 }
 
+.dateFont {
+  color: white;
+}
 
 .align-right {
   float: right;

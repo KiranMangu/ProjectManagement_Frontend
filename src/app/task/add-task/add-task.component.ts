@@ -248,11 +248,13 @@ export class AddTaskComponent implements OnInit, OnChanges {
       if (this.buttonAction === ButtonActions.AddTask) {
         if (this.taskGroup.controls.isParentTask.value) {
           // console.log('Parent Task insertion');
-          const newParentTask = new ParentTask(this.taskGroup.controls.parentTask.value);
+          const newParentTask = new ParentTask(this.taskGroup.controls.task.value);
           // console.log('task:', JSON.stringify(newParentTask));
           this._tskSrv.addParentTask(newParentTask)
             .subscribe((res) => {
-              // console.log('Success: Created a new Parent Task')
+              // console.log('Success: Created a new Parent Task');
+              // this.taskGroup.controls.isParentTask.setValue(false);
+              // this.onParentTaskSelected();
 
               this.resetControls();
               this._utilSrv.showAlert('Successfully created the new Parent Task', 'OK');
@@ -260,7 +262,7 @@ export class AddTaskComponent implements OnInit, OnChanges {
               // this.taskGroup.controls.parentId.setValue(res.parentTask._id);
             },
               (error) => {
-                console.log('Failed creating parent task' + error);
+                console.log('Failed creating parent task' + JSON.stringify(error));
                 this._utilSrv.showAlert('Failed creating the new Parent Task', 'OK', true);
               });
         } else {
