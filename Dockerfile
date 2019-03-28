@@ -14,6 +14,8 @@
 
  FROM nginx:latest
  COPY wrapper.sh /
- WORKDIR dist/projectmanagement /user/share/nginx/html
+ # COPY nginx/nginx.conf /etc/nginx
+ COPY nginx/nginx.conf.template /etc/nginx/nginx.conf.template
+ COPY dist/proejctmanagement /usr/share/nginx/html
  RUN chmod 775 wrapper.sh
  CMD ["./wrapper.sh"]
