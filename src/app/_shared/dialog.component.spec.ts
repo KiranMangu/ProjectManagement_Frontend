@@ -40,6 +40,21 @@ xdescribe('DialogComponent', () => {
   it('onNoClick', () => {
     component.onNoClick();
   });
+
+  it('search', () => {
+    component.searchKey = undefined;
+    component.data.list = [{ name: 'test', Id: '000' }];
+    component.search();
+    expect(component.filteredData.list).toEqual(component.data.list);
+  });
+
+  it('search', () => {
+    const listdata = component.data;
+    listdata.list = [{ name: 'test', Id: '001' }];
+    component.searchKey = name;
+    component.search();
+    expect(component.filteredData.list).toEqual(component.data.list);
+  });
 });
 
 /** let component: DialogComponent;

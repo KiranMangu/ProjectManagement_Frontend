@@ -44,7 +44,7 @@ describe('ViewUserComponent', () => {
   });
 
   it('should contain ReactiveForm properties', () => {
-    //TODO
+    // TODO
   });
 
   it('should contain table control', () => {
@@ -53,11 +53,23 @@ describe('ViewUserComponent', () => {
 
   it('should containt search controls', () => {
     component.copyusersData = [
-      { '_id': 'id001', 'firstName': 'firstName1', 'lastName': 'lastName1', 'employeeId': 'e001', 'projectId': 'pId001', 'taskId': 'tId001' },
-      { '_id': 'id002', 'firstName': 'firstName2', 'lastName': 'lastName2', 'employeeId': 'e002', 'projectId': 'pId002', 'taskId': 'tId002' },
-      { '_id': 'id003', 'firstName': 'firstName3', 'lastName': 'lastName3', 'employeeId': 'e003', 'projectId': 'pId003', 'taskId': 'tId003' }
+      {
+        '_id': 'id001', 'firstName': 'firstName1', 'lastName': 'lastName1',
+        'employeeId': 'e001', 'projectId': 'pId001', 'taskId': 'tId001'
+      },
+      {
+        '_id': 'id002', 'firstName': 'firstName2', 'lastName': 'lastName2',
+        'employeeId': 'e002', 'projectId': 'pId002', 'taskId': 'tId002'
+      },
+      {
+        '_id': 'id003', 'firstName': 'firstName3', 'lastName': 'lastName3',
+        'employeeId': 'e003', 'projectId': 'pId003', 'taskId': 'tId003'
+      }
     ];
-    const test = [{ '_id': 'id001', 'firstName': 'firstName1', 'lastName': 'lastName1', 'employeeId': 'e001', 'projectId': 'pId001', 'taskId': 'tId001' }];
+    const test = [{
+      '_id': 'id001', 'firstName': 'firstName1', 'lastName': 'lastName1',
+      'employeeId': 'e001', 'projectId': 'pId001', 'taskId': 'tId001'
+    }];
     component.searchKey = 'firstName1';
     component.searchUser();
     expect(component.filteredUsersData).toEqual(test);
@@ -75,7 +87,7 @@ describe('ViewUserComponent', () => {
   it('deleteUser', () => {
     // TODO: Need to check for calling service methods which are initialized in contructor
     // TODO: For public variables/service objects shouldn't be an issue..!!!
-    spyOn(usrSrv, 'deleteUser').and.returnValue({ subscribe: () => { } });
+    spyOn(usrSrv, 'deleteUser').and.callThrough();
     component.deleteUser('000');
     expect(usrSrv.deleteUser).toHaveBeenCalled();
   });
@@ -85,7 +97,7 @@ describe('ViewUserComponent', () => {
       data: new SimpleChange('prevValue', 'currentValue', true)
     });
     expect(component.sort).toBeTruthy();
-  })
+  });
 
   it('sort ', () => {
     component.filteredUsersData = [];

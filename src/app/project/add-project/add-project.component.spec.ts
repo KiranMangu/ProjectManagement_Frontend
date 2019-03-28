@@ -52,9 +52,9 @@ describe('AddProjectComponent', () => {
     it('ngOnChanges', () => {
       component.ngOnChanges({
         data: new SimpleChange('prevValue', 'currValue', true)
-      })
+      });
       expect(component.ngOnChanges).toBeTruthy();
-      expect(component.buttonAction).toEqual(ButtonActions.Update)
+      expect(component.buttonAction).toEqual(ButtonActions.Update);
     });
 
     it('checkDates', () => {
@@ -82,22 +82,22 @@ describe('AddProjectComponent', () => {
       component.setDateFields();
     });
 
-    xit('getUsers', () => {
-      spyOn(usrSrv, 'getUsers').and.returnValue({ subscribe: () => { return true; } })
+    it('getUsers', () => {
+      spyOn(usrSrv, 'getUsers').and.returnValue({ subscribe: () => { return true; } });
       component.getUsers();
       expect(usrSrv.getUsers).toHaveBeenCalled();
       expect(component.getUsers).toBeTruthy();
     });
 
     it('addProject -add', () => {
-      component.buttonAction = ButtonActions.Add
+      component.buttonAction = ButtonActions.Add;
       // spyOn(prjSrv, 'addProject').and.returnValue({ subscribe: () => { } });
       component.addProject();
       // expect(prjSrv.addProject).toHaveBeenCalled();
     });
 
     it('addProject - update', () => {
-      component.buttonAction = ButtonActions.Update
+      component.buttonAction = ButtonActions.Update;
       // spyOn(prjSrv, 'updateProjectById').and.returnValue({ subscribe: () => { } });
       component.addProject();
       // expect(prjSrv.updateProjectById).toHaveBeenCalled();

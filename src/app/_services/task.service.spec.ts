@@ -110,6 +110,13 @@ describe('UserService calls', () => {
     expect(ret).toEqual('test');
   });
 
+  it('updateParenTsk', () => {
+    spyOn(http, 'post').and.returnValue('test');
+    const ret = service.updateParenTsk(newTask);
+    expect(service.updateParenTsk).toBeTruthy();
+    expect(ret).toEqual('test');
+  });
+
   it('addParentTask', () => {
     spyOn(http, 'post').and.returnValue('test');
     const ret = service.addParentTask(newTask);
@@ -136,7 +143,7 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(retValue);
@@ -146,11 +153,11 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
+    ];
     const jsonRevTest = [
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' },
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortByDate('startDate', -1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(jsonRevTest);
@@ -160,7 +167,27 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(retValue);
+  });
+
+  it('sort Date - start', () => {
+    const jsonTest = [
+      { 'endDate': '01/31/2019' },
+      { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(retValue);
+  });
+
+  it('sort Date - start', () => {
+    const jsonTest = [
+      { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
+      { 'endDate': '02/31/2019' }
+    ];
     const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(retValue);
@@ -169,9 +196,29 @@ describe('UserService calls', () => {
   it('Sort Date - enddate asc', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
+      { 'startDate': '02/02/2019' }
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('endDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(jsonTest);
+  });
+
+  it('Sort Date - enddate asc', () => {
+    const jsonTest = [
+      { 'startDate': '01/02/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
-    const retValue = jsonTest.sort(service.sortByDate('endDate', 1))
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('endDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(jsonTest);
+  });
+
+  it('Sort Date - enddate asc', () => {
+    const jsonTest = [
+      { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
+      { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('endDate', 1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
   });
@@ -180,11 +227,11 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'bcd', 'empId': '124' }
-    ]
+    ];
     const jsonRevTest = [
       { 'name': 'bcd', 'empId': '124' },
       { 'name': 'abc', 'empId': '123' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortData('name', -1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonRevTest);
@@ -194,11 +241,11 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'bcd', 'empId': '124' }
-    ]
+    ];
     const jsonRevTest = [
       { 'name': 'bcd', 'empId': '124' },
       { 'name': 'abc', 'empId': '123' }
-    ]
+    ];
     const retValue = jsonRevTest.sort(service.sortData('name', 1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
@@ -208,7 +255,7 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'abc', 'empId': '124' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortData('name', 1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
@@ -219,4 +266,4 @@ describe('UserService calls', () => {
     expect(service.toggleOrder).toBeTruthy();
     expect(retValue).toEqual(-1);
   });
-})
+});

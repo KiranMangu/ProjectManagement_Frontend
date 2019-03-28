@@ -3,11 +3,28 @@
     <h4 mat-dialog-title>{{data.title}}</h4>
   </div>
   <div class='contentDimension'>
-    <mat-radio-group class="example-radio-group" [(ngModel)]="dataSelected">
-      <mat-radio-button class="example-radio-button" *ngFor="let item of data.data.list" [value]='item.Id' (click)='selectedItem(item)'>
-        <div>{{item.name}}</div>
-      </mat-radio-button>
-    </mat-radio-group>
+    <div>
+      <table style='width:100%'>
+        <tr>
+          <td class="full-width-container">
+            <mat-form-field>
+              <input matInput placeholder='Search...' [(ngModel)]='searchKey'>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button class="btn" color='primary' (click)='search()'>Search</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <mat-radio-group class="example-radio-group" [(ngModel)]="dataSelected">
+        <mat-radio-button class="example-radio-button" *ngFor="let item of filteredData.data.list" [value]='item.Id'
+          (click)='selectedItem(item)'>
+          <div>{{item.name}}</div>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
   </div>
   <div class='footer'>
     <mat-dialog-actions align="end">

@@ -98,34 +98,34 @@ export class AddProjectComponent implements OnInit, OnChanges {
   }
 
   getUsers(): void {
+    let dialogRef;
     this._usrSrv.getUsers()
       .subscribe((users) => {
         this.usertList = users;
         // console.log(this.usertList);
         this.clearTagetObject();
         this.util.mapDailogData(this.targetData, this.usertList, 'Users'); // TODO Need to include a spinner
+
+        dialogRef = this._dialog.open(DialogComponent, {
+          data: { title: this.targetData.title, data: this.targetData }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (result !== undefined) {
+            // console.log('dialog closed' + result);
+            this.projectGroup.controls.manager.setValue(result.name);
+            // console.log('manager: ' + this.projectGroup.controls.manager.value);
+            this.projectGroup.controls.managerId.setValue(result.Id);
+            // Native For is better in this case than Foreach
+            this.selectedUser = this._projSrv.getSelectedUser(this.usertList, result.Id);
+            // console.log('selected:' + JSON.stringify(this.selectedUser));
+          }
+        });
       },
         (error) => {
           console.log('Error: add-project.component: ' + error);
           this.util.showAlert('Failed getting users', 'OK', true);
         });
-
-    const dialogRef = this._dialog.open(DialogComponent, {
-      data: { title: this.targetData.title, data: this.targetData }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        // console.log('dialog closed' + result);
-        this.projectGroup.controls.manager.setValue(result.name);
-        // console.log('manager: ' + this.projectGroup.controls.manager.value);
-        this.projectGroup.controls.managerId.setValue(result.Id);
-        // Native For is better in this case than Foreach
-        this.selectedUser = this._projSrv.getSelectedUser(this.usertList, result.Id);
-
-        // console.log('selected:' + JSON.stringify(this.selectedUser));
-      }
-    });
   }
 
   addProject(): void {

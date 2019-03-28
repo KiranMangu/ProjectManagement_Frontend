@@ -26,6 +26,9 @@ mat-card-content {
   width: 700px;
   height: 750px;
 }
+.btn{
+  margin: 2px;
+}
 
 .header{
   position:fixed;
@@ -53,4 +56,9 @@ mat-card-content {
   background-color: darkslategray;
   padding-left: 600px;
   padding-top: 10px;
+}
+
+.full-width-container {
+  display: flex;
+  flex-direction: column;
 }

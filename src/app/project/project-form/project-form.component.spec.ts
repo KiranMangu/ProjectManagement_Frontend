@@ -62,9 +62,25 @@ describe('ProjectFormComponent', () => {
       expect(usrSrv.getUserById).toHaveBeenCalled();
     });
 
-    xit('getTasksOnProjectId', () => {
+    it('getTasksOnProjectId', () => {
+      const projTemp = [{
+        _id: '001',
+        manager: 'manager1',
+        project: 'project1',
+        startDate: new Date(),
+        endDate: new Date(),
+        priority: 0
+      },
+      {
+        _id: '002',
+        manager: 'manager2',
+        project: 'project2',
+        startDate: new Date(),
+        endDate: new Date(),
+        priority: 0
+      }];
       spyOn(taskSrv, 'getAllTasksByProjectId').and.returnValue({ subscribe: () => { } });
-      component.getTasksOnProjectId(newProject);
+      component.getTasksOnProjectId(projTemp);
       expect(taskSrv.getAllTasksByProjectId).toHaveBeenCalled();
     });
 

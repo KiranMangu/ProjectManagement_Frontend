@@ -74,7 +74,7 @@ export class ViewProjectComponent implements OnInit, OnChanges {
           if (tasks) {
             const taskObject = JSON.parse(JSON.stringify(tasks));
             const totalTask = taskObject.length;
-            console.log('noOfTasks' + JSON.stringify(tasks));
+            // console.log('noOfTasks' + JSON.stringify(tasks));
             project.noOfTasks = totalTask;
             project.completed = 0;
             if (totalTask > 0) {
@@ -86,7 +86,7 @@ export class ViewProjectComponent implements OnInit, OnChanges {
                 }
               });
               project.completed = totalTask - openedTask;
-              console.log('project.completed' + project.completed);
+              // console.log('project.completed' + project.completed);
             } else {
               project.completed = 0;
             }

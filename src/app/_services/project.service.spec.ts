@@ -92,14 +92,14 @@ describe('Project Service calls', () => {
   it('ngOnInit', () => {
     service.ngOnInit();
   });
-  
+
   it('getSelectedUser', () => {
     const usertList: User[] = [
       new User({ _id: '1', firstName: 'firstName1', lastName: 'lastName1', employeeId: 'Emp001' }),
       new User({ _id: '2', firstName: 'firstName2', lastName: 'lastName2', employeeId: 'Emp002' }),
       new User({ _id: '3', firstName: 'firstName3', lastName: 'lastName3', employeeId: 'Emp003' })
     ];
-    const selectedUserId: string = '2'
+    const selectedUserId: String = '2';
     const retrunValue: User = new User({ _id: '2', firstName: 'firstName2', lastName: 'lastName2', employeeId: 'Emp002' });
     const retValue = service.getSelectedUser(usertList, selectedUserId);
     expect(service.suspendProject).toBeTruthy();
@@ -110,7 +110,27 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(retValue);
+  });
+
+  it('sort Date - start asc', () => {
+    const jsonTest = [
+      { 'endDate': '01/31/2019' },
+      { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(retValue);
+  });
+
+  it('sort Date - start asc', () => {
+    const jsonTest = [
+      { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
+      { 'endDate': '02/31/2019' }
+    ];
     const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(retValue);
@@ -120,11 +140,11 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
+    ];
     const jsonRevTest = [
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' },
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortByDate('startDate', -1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(jsonRevTest);
@@ -134,7 +154,7 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortByDate('startDate', 1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(retValue);
@@ -144,8 +164,28 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
       { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
-    ]
-    const retValue = jsonTest.sort(service.sortByDate('endDate', 1))
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('endDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(jsonTest);
+  });
+
+  it('Sort Date - enddate', () => {
+    const jsonTest = [
+      { 'startDate': '01/02/2019'},
+      { 'startDate': '02/02/2019', 'endDate': '02/31/2019' }
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('endDate', 1));
+    expect(service.sortByDate).toBeTruthy();
+    expect(retValue).toEqual(jsonTest);
+  });
+
+  it('Sort Date - enddate', () => {
+    const jsonTest = [
+      { 'startDate': '01/02/2019', 'endDate': '01/31/2019' },
+      { 'startDate': '02/02/2019' }
+    ];
+    const retValue = jsonTest.sort(service.sortByDate('endDate', 1));
     expect(service.sortByDate).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
   });
@@ -154,11 +194,11 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'bcd', 'empId': '124' }
-    ]
+    ];
     const jsonRevTest = [
       { 'name': 'bcd', 'empId': '124' },
       { 'name': 'abc', 'empId': '123' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortData('name', -1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonRevTest);
@@ -168,11 +208,11 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'bcd', 'empId': '124' }
-    ]
+    ];
     const jsonRevTest = [
       { 'name': 'bcd', 'empId': '124' },
       { 'name': 'abc', 'empId': '123' }
-    ]
+    ];
     const retValue = jsonRevTest.sort(service.sortData('name', 1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
@@ -182,7 +222,7 @@ describe('Project Service calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'abc', 'empId': '124' }
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortData('name', 1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
@@ -193,4 +233,4 @@ describe('Project Service calls', () => {
     expect(service.toggleOrder).toBeTruthy();
     expect(retValue).toEqual(-1);
   });
-})
+});

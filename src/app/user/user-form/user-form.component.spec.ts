@@ -34,16 +34,15 @@ describe('UserFormComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('app-add-user')).toBeTruthy();
     expect(compiled.querySelector('app-view-user')).toBeTruthy();
-  })
-
+  });
 
   describe('method calls', () => {
 
     beforeEach(async(() => {
     }));
 
-   it('loadUsers', () => {
-      spyOn(usrSrv, 'getUsers').and.returnValue({ subscribe: () => { } });
+    it('loadUsers', () => {
+      spyOn(usrSrv, 'getUsers').and.callThrough();
       component.loadUsers();
       // expect(component.loadUsers).toBeTruthy();
       expect(usrSrv.getUsers).toHaveBeenCalled();
@@ -52,13 +51,13 @@ describe('UserFormComponent', () => {
     it('reloadView', () => {
       const palyLoad = '000';
       spyOn(component, 'loadUsers');
-      component.reloadView(palyLoad);;
+      component.reloadView(palyLoad);
       expect(component.loadUsers).toHaveBeenCalled();
       expect(component.reloadView).toBeTruthy();
     });
 
     it('updateUser', () => {
-      const userId = '000'
+      const userId = '000';
       component.updateUser(userId);
       expect(component.userId).toEqual(userId);
     });

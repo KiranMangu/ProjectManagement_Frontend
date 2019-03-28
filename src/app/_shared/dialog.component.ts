@@ -10,11 +10,25 @@ import { DailogData } from '../_models/dialog.model';
 })
 export class DialogComponent {
   dataSelected: String;
+  filteredData: any;
+  searchKey: String;
   // MyComments: Inject in constructor
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DailogData) {
+    this.filteredData = this.data;
     // console.log('data');
     // console.log(data);
+  }
+
+  search(): void {
+    // console.log(this.filteredData);
+    if (this.searchKey === undefined || this.searchKey.trim() === '') {
+      this.filteredData = this.data;
+    } else {
+      this.filteredData.data.list =
+      this.filteredData.data.list.filter(item => item.name.toLowerCase().indexOf(this.searchKey.toLowerCase()) !== -1);
+    }
+    // console.log(this.filteredData.data.list);
   }
 
   onNoClick(): void {
