@@ -40,7 +40,7 @@ describe('Project Service calls', () => {
         startDate: new Date(),
         endDate: new Date(),
         manager: 'manager'
-      })
+      });
 
     });
   })

@@ -118,11 +118,11 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'bcd', 'empId': '124' },
-    ]
+    ];
     const jsonRevTest = [
       { 'name': 'bcd', 'empId': '124' },
       { 'name': 'abc', 'empId': '123' },
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortData('name', -1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonRevTest);
@@ -132,11 +132,11 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'bcd', 'empId': '124' },
-    ]
+    ];
     const jsonRevTest = [
       { 'name': 'bcd', 'empId': '124' },
       { 'name': 'abc', 'empId': '123' },
-    ]
+    ];
     const retValue = jsonRevTest.sort(service.sortData('name', 1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
@@ -146,16 +146,17 @@ describe('UserService calls', () => {
     const jsonTest = [
       { 'name': 'abc', 'empId': '123' },
       { 'name': 'abc', 'empId': '124' },
-    ]
+    ];
     const retValue = jsonTest.sort(service.sortData('name', 1));
     expect(service.sortData).toBeTruthy();
     expect(retValue).toEqual(jsonTest);
-  })
+  });
 
   it('toggleOrder', () => {
     const retValue = service.toggleOrder(1);
     expect(service.toggleOrder).toBeTruthy();
     expect(retValue).toEqual(-1);
-  })
+  });
 
-})
+});
+

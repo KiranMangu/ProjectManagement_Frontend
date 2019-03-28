@@ -42,7 +42,7 @@ describe('UserFormComponent', () => {
     }));
 
     it('loadUsers', () => {
-      spyOn(usrSrv, 'getUsers').and.callThrough();
+      spyOn(usrSrv, 'getUsers').and.returnValue({ subscribe: () => { } });
       component.loadUsers();
       // expect(component.loadUsers).toBeTruthy();
       expect(usrSrv.getUsers).toHaveBeenCalled();

@@ -87,7 +87,7 @@ describe('ViewUserComponent', () => {
   it('deleteUser', () => {
     // TODO: Need to check for calling service methods which are initialized in contructor
     // TODO: For public variables/service objects shouldn't be an issue..!!!
-    spyOn(usrSrv, 'deleteUser').and.callThrough();
+    spyOn(usrSrv, 'deleteUser').and.returnValue({ subscribe: () => { } });
     component.deleteUser('000');
     expect(usrSrv.deleteUser).toHaveBeenCalled();
   });
