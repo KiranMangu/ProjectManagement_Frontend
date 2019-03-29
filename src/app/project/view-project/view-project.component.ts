@@ -147,7 +147,7 @@ export class ViewProjectComponent implements OnInit, OnChanges {
   // TODO: Small letter data types vs Capital letter data types Number vs number and String vs string
   // TODO: user.firstName.indexOf(this.searchKey) .... compilation error
   // TODO: this._prjSrv.toggleOrder(this.IdSrtOrdr) .... compilation error
-  searchProject(searchKey: string): void {
+  searchProject(searchKey: String): void {
     // console.log('searchKey: ' + searchKey);
     if (searchKey !== undefined && searchKey.trim() !== '') {
       this.filteredProjecList = this.copyProjectList;
@@ -166,7 +166,7 @@ export class ViewProjectComponent implements OnInit, OnChanges {
     this.updateProject.emit(project);
   }
 
-  suspendProject(id: string): void {
+  suspendProject(id: String): void {
     this.util.showAlert('Implementation details not avalialble', 'OK');
     console.log('Implementation details avalialble..!!!');
     // this._prjSrv.suspendProject(id)
