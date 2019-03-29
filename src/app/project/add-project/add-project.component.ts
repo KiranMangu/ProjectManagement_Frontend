@@ -16,6 +16,8 @@ import { UtilServiceService } from '../../_util/util-service.service';
 })
 export class AddProjectComponent implements OnInit, OnChanges {
 
+  min: Number = 0;
+  max: Number = 30;
   usertList: User[];
   selectedUser: User;
   editUser: User;
