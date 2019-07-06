@@ -18,7 +18,7 @@ export class AddUserComponent implements OnInit, OnChanges {
   newUser: User;
   constructor(private _fb: FormBuilder, private _userSrv: UserService,
     private _snkBar: MatSnackBar, private util: UtilServiceService) { }
-  @ViewChild('form') form; // TODO ViewChild?
+  @ViewChild('form', { static: true }) form; // TODO ViewChild?
   buttonAction: string = ButtonActions.Submit;
   updateUserId: string;
 
